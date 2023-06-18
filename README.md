@@ -11,3 +11,4 @@
 - ЛКМ - атака
 
 - ПКМ - блок
+## Ссылка на готовую сборку: https://drive.google.com/drive/folders/1npjBG-Sdiog3ZAMFTW0OzDkfALBrt4Wa?usp=sharing
