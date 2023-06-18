@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkeletonBowman_Attack_0_1
+  serializedVersion: 6
+  m_Legacy: 0
+  m_Compressed: 0
+  m_UseHighQualityCurve: 1
+  m_RotationCurves: []
+  m_CompressedRotationCurves: []
+  m_EulerCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves: []
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 461d0b62b48e9c249bd2367ae4dacf86, type: 3}
+    - time: 0.14285715
+      value: {fileID: 21300000, guid: 750203820d68bcb4b9be03b8e6a32ba0, type: 3}
+    - time: 0.2857143
+      value: {fileID: 21300000, guid: affdb22a0f4b75a45bcceb4f9ac56907, type: 3}
+    - time: 0.42857143
+      value: {fileID: 21300000, guid: 53fcd2d25c868d54b91132e41a09fa3f, type: 3}
+    - time: 0.5714286
+      value: {fileID: 21300000, guid: ce1ba0b850b5d7241abf6908328986a3, type: 3}
+    - time: 0.71428573
+      value: {fileID: 21300000, guid: f37e51ac160faa8489fe79df4e9b33b4, type: 3}
+    - time: 0.85714287
+      value: {fileID: 21300000, guid: 4165ef64b439bbd408352bd192baad7a, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: cf687e5acbda2464f8be8823ecd7e222, type: 3}
+    - time: 1.1428572
+      value: {fileID: 21300000, guid: afbe5a4d7db3ebe46ab7a0ab328e644e, type: 3}
+    - time: 1.2857143
+      value: {fileID: 21300000, guid: 0520ea67f15c54445878f976439e95f5, type: 3}
+    - time: 1.4285715
+      value: {fileID: 21300000, guid: cb08bec3982558845953422bf984676a, type: 3}
+    - time: 1.5714285
+      value: {fileID: 21300000, guid: 382b4313c9290254497b5742f997a23c, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 7
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_ClipBindingConstant:
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: 461d0b62b48e9c249bd2367ae4dacf86, type: 3}
+    - {fileID: 21300000, guid: 750203820d68bcb4b9be03b8e6a32ba0, type: 3}
+    - {fileID: 21300000, guid: affdb22a0f4b75a45bcceb4f9ac56907, type: 3}
+    - {fileID: 21300000, guid: 53fcd2d25c868d54b91132e41a09fa3f, type: 3}
+    - {fileID: 21300000, guid: ce1ba0b850b5d7241abf6908328986a3, type: 3}
+    - {fileID: 21300000, guid: f37e51ac160faa8489fe79df4e9b33b4, type: 3}
+    - {fileID: 21300000, guid: 4165ef64b439bbd408352bd192baad7a, type: 3}
+    - {fileID: 21300000, guid: cf687e5acbda2464f8be8823ecd7e222, type: 3}
+    - {fileID: 21300000, guid: afbe5a4d7db3ebe46ab7a0ab328e644e, type: 3}
+    - {fileID: 21300000, guid: 0520ea67f15c54445878f976439e95f5, type: 3}
+    - {fileID: 21300000, guid: cb08bec3982558845953422bf984676a, type: 3}
+    - {fileID: 21300000, guid: 382b4313c9290254497b5742f997a23c, type: 3}
+  m_AnimationClipSettings:
+    serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
+    m_StartTime: 0
+    m_StopTime: 1.7142857
+    m_OrientationOffsetY: 0
+    m_Level: 0
+    m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
+    m_LoopTime: 1
+    m_LoopBlend: 0
+    m_LoopBlendOrientation: 0
+    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionXZ: 0
+    m_KeepOriginalOrientation: 0
+    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionXZ: 0
+    m_HeightFromFeet: 0
+    m_Mirror: 0
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_Events:
+  - time: 0
+    functionName: StartShotAnim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1
+    functionName: StartToAim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1428572
+    functionName: MakeShot
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.5714285
+    functionName: StopShotAnim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
