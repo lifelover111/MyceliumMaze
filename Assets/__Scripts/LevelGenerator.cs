@@ -33,6 +33,12 @@ public static class LevelGenerator
             byte[] bytes = Encoding.ASCII.GetBytes(seed);
             if (System.BitConverter.IsLittleEndian)
             {
+                if (bytes.Length < 4)
+                {
+                    byte[] newBytes = new byte[4];
+                    System.Array.Copy(bytes, 0, newBytes, newBytes.Length - bytes.Length, bytes.Length);
+                    bytes = newBytes;
+                }
                 System.Array.Reverse(bytes);
             }
             intSeed = System.BitConverter.ToInt32(bytes, 0);
