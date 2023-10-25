@@ -21,24 +21,27 @@ public class Item : ScriptableObject
 
     public void PickUp()
     {
-        onPickUp.Invoke();
+        onPickUp?.Invoke();
     }
     public void Remove()
     {
-        onRemove.Invoke();
+        onRemove?.Invoke();
     }
     public void Use()
     {
-        onUse.Invoke();
+        onUse?.Invoke();
     }
 
     public Item Copy()
     {
-        Item copy = new Item();
-        copy.itemName = this.itemName;
-        copy.type = this.type;
-        copy.description = this.description;
-        copy.icon = this.icon;
+        Item copy = CreateInstance<Item>();
+        copy.itemName = itemName;
+        copy.type = type;
+        copy.description = description;
+        copy.icon = icon;
+        copy.onPickUp = onPickUp;
+        copy.onUse = onUse;
+        copy.onRemove = onRemove;
         return copy;
     }
 
@@ -51,10 +54,5 @@ public class Item : ScriptableObject
         {
             return this.itemName == objAsItem.itemName;
         }
-    }
-
-    public override int GetHashCode()
-    {
-        return this.itemName.GetHashCode();
     }
 }
