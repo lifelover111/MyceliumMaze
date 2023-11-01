@@ -224,7 +224,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                 {
                     if (Time.time >= nextSpawnDirtTime)
                     {
-                        DirtParticleSystemHandler.Instance.SpawnDirt(transform.position, vel * -0.4f);
+                        DirtParticleSystemHandler.Instance?.SpawnDirt(transform.position, vel * -0.4f);
                         nextSpawnDirtTime = Time.time + 0.5f;
                     }
                 }
@@ -242,7 +242,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                 anim.speed = 1;
                 if (Time.time >= nextSpawnDirtTime)
                 {
-                    DirtParticleSystemHandler.Instance.SpawnDirt(transform.position, dir * -0.2f);
+                    DirtParticleSystemHandler.Instance?.SpawnDirt(transform.position, dir * -0.2f);
                     nextSpawnDirtTime = Time.time + 0.285f;   
                 }
                 if (concentration > 0)

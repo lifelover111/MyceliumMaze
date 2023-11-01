@@ -1,7 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using System.Xml.Serialization;
+using System.IO;
 
 public static class LevelGenerator
 {
@@ -153,4 +155,122 @@ public static class LevelGenerator
         return Random.value <= chance;
     }
 
+
+
+    // Новый код
+    static int maxDoorsForwardNum = 3;
+
+
+    static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>(){
+        { LevelType.prison, 5},
+        { LevelType.mines, 6},
+    };
+
+    static Dictionary<LevelType, int> levelWidthDict = new Dictionary<LevelType, int>(){
+        { LevelType.prison, 4},
+        { LevelType.mines, 5},
+    };
+
+    public enum LevelType 
+    {
+        prison,
+        mines,
+    }
+    public class RoomNode
+    {
+        public enum RoomType
+        {
+            start,
+            end,
+            quickFight,
+            longFight,
+            bonfire,
+            chest,
+            requiredRoom,
+        }
+        public RoomType type;
+        public RoomNode[] children = new RoomNode[0];
+        public RoomNode[] parents = new RoomNode[0]; 
+        public int depth = 0;
+        public int? id = null;
+
+        public void AddParent(RoomNode node)
+        {
+            RoomNode[] parentsTmp = new RoomNode[parents.Length + 1];
+            for(int i = 0; i < parents.Length; i++)
+            {
+                parentsTmp[i] = parents[i];
+            }
+            parentsTmp[parents.Length] = node;
+            parents = parentsTmp;
+        }
+    }
+
+    public static RoomNode[] GenerateLevel(LevelType type)
+    {
+        RoomNode startNode = new RoomNode();
+        startNode.depth = 0;
+        startNode.type = RoomNode.RoomType.start;
+        RoomNode[] startContainer = new RoomNode[1];
+        startContainer[0] = startNode;
+        RecursiveGraphGeneration(type, startContainer);
+        return startContainer;
+    }
+    
+    static void RecursiveGraphGeneration(LevelType type, RoomNode[] nodes, int currentDepth = 0)
+    {
+        if (currentDepth == levelDepthDict[type])
+        {
+            RoomNode endNode = new RoomNode();
+            endNode.depth = currentDepth + 1;
+            endNode.type = RoomNode.RoomType.end;
+            int exitRoomsNum = Random.Range(1, nodes.Length + 1);
+            List<int> indexes = new List<int>();
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                nodes[i].depth = currentDepth;
+                indexes.Add(i);
+            }
+            for (int i = 0; i < exitRoomsNum; i++)
+            {
+                int nodeIndex = Random.Range(0, indexes.Count);
+                nodes[indexes[nodeIndex]].children = new RoomNode[1];
+                nodes[indexes[nodeIndex]].children[0] = endNode;
+                indexes.RemoveAt(nodeIndex);
+            }
+            return; 
+        }
+
+        List<RoomNode> nextDepthNodes = new List<RoomNode>(); 
+        int maxWidth = levelWidthDict[type];
+        bool connectedWithNextDepthNodes = false;
+        RoomNode lastConnectedNode = new RoomNode();
+        for(int n = 0; n < nodes.Length; n++)
+        {
+            nodes[n].depth = currentDepth;
+            int connectionsNumber = Random.Range(0, maxWidth < maxDoorsForwardNum + 1 ? maxWidth + 1 : maxDoorsForwardNum + 1);
+            if(connectionsNumber == 0 && !connectedWithNextDepthNodes)
+            {
+                if (GetRandomChance((n + 1) / nodes.Length))
+                    connectionsNumber = Random.Range(1, maxWidth < maxDoorsForwardNum + 1 ? maxWidth + 1 : maxDoorsForwardNum + 1);
+            }
+            maxWidth -= connectionsNumber;
+            connectedWithNextDepthNodes = connectionsNumber > 0 ? true : connectedWithNextDepthNodes;
+            nodes[n].children = new RoomNode[connectionsNumber];
+            
+            for (int i = 0; i < connectionsNumber; i++)
+            {
+                if (i == 0)
+                    nodes[n].children[i] = GetRandomChance(0.65f * (1 - (lastConnectedNode.parents.Length >= maxDoorsForwardNum ? 1 : 0))) ? lastConnectedNode : new RoomNode();
+                else
+                    nodes[n].children[i] = new RoomNode();
+                nodes[n].children[i].AddParent(nodes[n]);
+                if (!nextDepthNodes.Contains(nodes[n].children[i]))
+                    nextDepthNodes.Add(nodes[n].children[i]);
+
+                lastConnectedNode = nodes[n].children[i];
+            }
+        }
+        RecursiveGraphGeneration(type, nextDepthNodes.ToArray(), ++currentDepth);
+    }
 }
