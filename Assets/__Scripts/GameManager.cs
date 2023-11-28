@@ -9,7 +9,7 @@ public static class GameManager
     public static Texture2D cursor;
     public static void PrepareSceneBeforeLoad()
     {
-        Door.enemiesInCurrentRoom?.Clear();
+        OldProject.Door.enemiesInCurrentRoom?.Clear();
         Object.Destroy(MusicSource.instance?.gameObject);
     }
 

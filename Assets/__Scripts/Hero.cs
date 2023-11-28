@@ -8,7 +8,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
 
     [Header("Set in Inspector")]
     public float speed = 5;
-    public float transitionDelay = 0.5f;
+    public float transitionDelay = 2f;
     public int maxHealth = 10;
     public int maxSanity = 20;
     public float knockbackSpeed = 2;
@@ -43,7 +43,6 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
     private float knockbackDone = 0;
     private float invincibleDone = 0;
     private Vector3 knockbackVel;
-    private SpriteRenderer sRend;
     private Rigidbody rigid;
     private Animator anim;
     private InRoom inRm;
@@ -55,6 +54,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
     private Vector2 atkStepVel = Vector2.zero;
     private bool nextAtk = false;
     private bool animCancelable = true;
+
     public bool canRotate { get { return animCancelable; } }
     private bool blockInSchedule = false;
     private float blockPlacedTime;
@@ -81,11 +81,19 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
     float timeBetweenSteps = 0.3f;
     float stepDone;
     int stepCounter = 0;
-        
+
+    private void Start()
+    {
+        Door.OnTransition += () =>
+        {
+            transitionDone = Time.time + transitionDelay;
+            mode = eMode.transition;
+        };
+    }
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        sRend = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         inRm = GetComponent<InRoom>();
@@ -126,12 +134,8 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                 return;
         }
         if ( mode == eMode.transition ) {
-            rigid.velocity = Vector3.zero;
-            anim.speed = 0;
-            roomPos = transitionPos;
-            if (Time.time < transitionDone) 
-                return;
-            mode = eMode.idle;
+            DoorTransition();
+            return;
         }
         if ( mode == eMode.rest )
             return;
@@ -378,7 +382,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
     {
         if (mode != eMode.attack)
             atkHitBox.SetActive(false);
-
+        /*
         Vector2 rPos = GetRoomPosOnGrid( 0.5f );
         int doorNum;
         for (doorNum=0; doorNum<4; doorNum++) 
@@ -413,7 +417,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                 transitionDone = Time.time + transitionDelay;
             }
         }
-
+        */
     }
     
     private void OnTriggerStay(Collider other)
@@ -528,6 +532,19 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
         DeathCamera.instance.Invoke("Load", 5f);
     }
 
+    void DoorTransition()
+    {
+        /*
+        rigid.velocity = Vector3.zero;
+        anim.speed = 0;
+        roomPos = transitionPos;
+        */
+        facing = CalcFacing(Quaternion.Euler(0,0,-45)*dir);
+        anim.CrossFade("Hero_Move_T" + facing, 0);
+        if (Time.time < transitionDone)
+            return;
+        mode = eMode.idle;
+    }
 
     void MakeAtkStep()
     {

@@ -318,7 +318,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
         sRend.sortingLayerName = "Default";
         InvokeRepeating("FadeSprite", 2, 0.1f);
         knockback = true;
-        Door.removeInRoom(inRm);
+        OldProject.Door.removeInRoom(inRm);
         anim.CrossFade(name + "_Die_" + facing, 0);
         anim.speed = 2;
         audioSource.clip = dieClip;

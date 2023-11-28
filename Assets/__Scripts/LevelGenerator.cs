@@ -4,13 +4,14 @@ using UnityEngine;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using System.Linq;
 
 public static class LevelGenerator
 {
-    static Room[,] _level;
-    static public Room[,] level { get { return _level; } private set { _level = value; } }
-    static Room _startRoom;
-    static public Room startRoom { get { return _startRoom; } private set { _startRoom = value; } }
+    static OldProject.Room[,] _level;
+    static public OldProject.Room[,] level { get { return _level; } private set { _level = value; } }
+    static OldProject.Room _startRoom;
+    static public OldProject.Room startRoom { get { return _startRoom; } private set { _startRoom = value; } }
 
     static int intSeed;
     static public int numRoomsX;
@@ -56,18 +57,18 @@ public static class LevelGenerator
         H = numRoomsY*roomHeight;
     }
 
-    public static Room[,] GenerateLevel()
+    public static OldProject.Room[,] GenerateLevel()
     {
-        level = new Room[numRoomsX, numRoomsY];
+        level = new OldProject.Room[numRoomsX, numRoomsY];
         for (int x = 0; x < numRoomsX; x++)
             for (int y = 0; y < numRoomsY; y++)
-                level[x, y] = new Room(x, y);
-        Stack<Room> stack = new Stack<Room>();
-        Room current = level[Random.Range(0, numRoomsX), Random.Range(0, numRoomsY)];
+                level[x, y] = new OldProject.Room(x, y);
+        Stack<OldProject.Room> stack = new Stack<OldProject.Room>();
+        OldProject.Room current = level[Random.Range(0, numRoomsX), Random.Range(0, numRoomsY)];
         current.visited = true;
         while (true)
         {
-            List<Room> neighbors = new List<Room>();
+            List<OldProject.Room> neighbors = new List<OldProject.Room>();
             for (int i = -1; i < 2; i += 2)
             {
                 if (current.x + i >= 0 && current.x + i < numRoomsX)
@@ -83,7 +84,7 @@ public static class LevelGenerator
             }
             if(neighbors.Count > 0)
             {
-                Room next = neighbors[Random.Range(0, neighbors.Count)];
+                OldProject.Room next = neighbors[Random.Range(0, neighbors.Count)];
                 current.Connect(next);
                 stack.Push(current);
                 current = next;
@@ -100,14 +101,14 @@ public static class LevelGenerator
         }
 
         startRoom = level[Random.Range(0, numRoomsX), Random.Range(0, numRoomsY)];
-        startRoom.SetType(Room.eRoomType.rest);
-        foreach (Room room in level)
+        startRoom.SetType(OldProject.Room.eRoomType.rest);
+        foreach (OldProject.Room room in level)
             room.visited = false;
 
 
         SetRoomsDepth(startRoom, 0);
 
-        foreach (Room room in level)
+        foreach (OldProject.Room room in level)
             room.visited = false;
         
         SetRoomsRest(startRoom, 0);
@@ -115,11 +116,11 @@ public static class LevelGenerator
         return level;
     }
 
-    static void SetRoomsDepth(Room room, int depth)
+    static void SetRoomsDepth(OldProject.Room room, int depth)
     {
         room.depth = depth;
         room.visited = true;
-        foreach(Room.eDoorLoc doorLoc in room.doorLocs)
+        foreach(OldProject.Room.eDoorLoc doorLoc in room.doorLocs)
         {
             Vector2 bypassDir = new Vector2(Mathf.Cos(Mathf.PI/2*(int)doorLoc), Mathf.Sin(Mathf.PI/2 * (int)doorLoc));
             if (!level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)].visited)
@@ -127,7 +128,7 @@ public static class LevelGenerator
         }
     }
 
-    static void SetRoomsRest(Room room, float chance)
+    static void SetRoomsRest(OldProject.Room room, float chance)
     {
         room.visited = true;
         float nxtChance = chance + 0.025f;
@@ -135,13 +136,13 @@ public static class LevelGenerator
         {
             if (GetRandomChance(nxtChance))
             {
-                room.type = Room.eRoomType.rest;
+                room.type = OldProject.Room.eRoomType.rest;
                 nxtChance = 0;
             }
             else
-                room.type = Room.eRoomType.fight;
+                room.type = OldProject.Room.eRoomType.fight;
         }
-        foreach (Room.eDoorLoc doorLoc in room.doorLocs)
+        foreach (OldProject.Room.eDoorLoc doorLoc in room.doorLocs)
         {
             Vector2 bypassDir = new Vector2(Mathf.Cos(Mathf.PI / 2 * (int)doorLoc), Mathf.Sin(Mathf.PI / 2 * (int)doorLoc));
             if (!level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)].visited)
@@ -159,16 +160,27 @@ public static class LevelGenerator
 
     // Новый код
     static int maxDoorsForwardNum = 3;
-
-
-    static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>(){
-        { LevelType.prison, 5},
-        { LevelType.mines, 6},
+    public static Dictionary<LevelType, List<RoomNode.RoomType>> requiredLevelRoomNodesDict = new Dictionary<LevelType, List<RoomNode.RoomType>>
+    {
+        { LevelType.prison, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest } },
     };
 
-    static Dictionary<LevelType, int> levelWidthDict = new Dictionary<LevelType, int>(){
-        { LevelType.prison, 4},
-        { LevelType.mines, 5},
+    static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>()
+    {
+        { LevelType.prison, 3},
+        { LevelType.mines, 4},
+    };
+
+    static Dictionary<LevelType, int> levelWidthDict = new Dictionary<LevelType, int>()
+    {
+        { LevelType.prison, 3},
+        { LevelType.mines, 3},
+    };
+
+    static Dictionary<LevelType, int> levelMeanNumRooms = new Dictionary<LevelType, int>()
+    {
+        { LevelType.prison, 10},
+        { LevelType.mines, 15},
     };
 
     public enum LevelType 
@@ -187,12 +199,15 @@ public static class LevelGenerator
             bonfire,
             chest,
             requiredRoom,
+            any,
         }
-        public RoomType type;
+        public RoomType type = RoomType.any;
         public RoomNode[] children = new RoomNode[0];
-        public RoomNode[] parents = new RoomNode[0]; 
+        public RoomNode[] parents = new RoomNode[0];
+        public RoomNode[] additionalChildren = new RoomNode[0];
         public int depth = 0;
         public int? id = null;
+        
 
         public void AddParent(RoomNode node)
         {
@@ -204,6 +219,14 @@ public static class LevelGenerator
             parentsTmp[parents.Length] = node;
             parents = parentsTmp;
         }
+
+        public void SetRequiredType(LevelType levelType)
+        {
+            if (requiredLevelRoomNodesDict[levelType].Count == 0)
+                return;
+            type = requiredLevelRoomNodesDict[levelType][Random.Range(0, requiredLevelRoomNodesDict[levelType].Count)];
+            if (type != RoomType.any) requiredLevelRoomNodesDict[levelType].Remove(type);
+        }
     }
 
     public static RoomNode[] GenerateLevel(LevelType type)
@@ -214,10 +237,13 @@ public static class LevelGenerator
         RoomNode[] startContainer = new RoomNode[1];
         startContainer[0] = startNode;
         RecursiveGraphGeneration(type, startContainer);
+        Dictionary<RoomNode, GameObject> correspondedNodes = new Dictionary<RoomNode, GameObject>();
+        CorrespondNodesToRooms(startContainer, type, correspondedNodes);
+        ArrangeRooms(correspondedNodes);
         return startContainer;
     }
     
-    static void RecursiveGraphGeneration(LevelType type, RoomNode[] nodes, int currentDepth = 0)
+    static void RecursiveGraphGeneration(LevelType type, RoomNode[] nodes, int currentDepth = 0, int nodesTotal = 0)
     {
         if (currentDepth == levelDepthDict[type])
         {
@@ -236,6 +262,7 @@ public static class LevelGenerator
                 int nodeIndex = Random.Range(0, indexes.Count);
                 nodes[indexes[nodeIndex]].children = new RoomNode[1];
                 nodes[indexes[nodeIndex]].children[0] = endNode;
+                endNode.AddParent(nodes[indexes[nodeIndex]]);
                 indexes.RemoveAt(nodeIndex);
             }
             return; 
@@ -254,6 +281,16 @@ public static class LevelGenerator
                 if (GetRandomChance((n + 1) / nodes.Length))
                     connectionsNumber = Random.Range(1, maxWidth < maxDoorsForwardNum + 1 ? maxWidth + 1 : maxDoorsForwardNum + 1);
             }
+            if (connectionsNumber == 1 && nodesTotal / (currentDepth + 1) < levelMeanNumRooms[type] / levelDepthDict[type] + 1)
+            {
+                if (GetRandomChance(1 - (nodesTotal / (currentDepth + 1)) / (levelMeanNumRooms[type] / levelDepthDict[type] + 1)))
+                    connectionsNumber = Random.Range(2, maxWidth < maxDoorsForwardNum + 1 ? maxWidth + 1 : maxDoorsForwardNum + 1);
+            }
+            else if(connectionsNumber > 1 && nodesTotal / (currentDepth + 1) > levelMeanNumRooms[type] / levelDepthDict[type] + 1)
+            {
+                if (GetRandomChance(1 - (levelMeanNumRooms[type] / levelDepthDict[type] + 1) / (nodesTotal + connectionsNumber / (currentDepth + 2))))
+                    connectionsNumber = connectedWithNextDepthNodes ? 0 : 1;
+            }
             maxWidth -= connectionsNumber;
             connectedWithNextDepthNodes = connectionsNumber > 0 ? true : connectedWithNextDepthNodes;
             nodes[n].children = new RoomNode[connectionsNumber];
@@ -261,9 +298,14 @@ public static class LevelGenerator
             for (int i = 0; i < connectionsNumber; i++)
             {
                 if (i == 0)
-                    nodes[n].children[i] = GetRandomChance(0.65f * (1 - (lastConnectedNode.parents.Length >= maxDoorsForwardNum ? 1 : 0))) ? lastConnectedNode : new RoomNode();
+                    nodes[n].children[i] = GetRandomChance(0.75f * (1 - (lastConnectedNode.parents.Length >= maxDoorsForwardNum ? 1 : 0))) ? lastConnectedNode : new RoomNode();
                 else
                     nodes[n].children[i] = new RoomNode();
+
+                if (nodes[n].children[i].type == RoomNode.RoomType.any && GetRandomChance(0.25f))
+                {
+                    nodes[n].children[i].SetRequiredType(type);
+                }
                 nodes[n].children[i].AddParent(nodes[n]);
                 if (!nextDepthNodes.Contains(nodes[n].children[i]))
                     nextDepthNodes.Add(nodes[n].children[i]);
@@ -271,6 +313,122 @@ public static class LevelGenerator
                 lastConnectedNode = nodes[n].children[i];
             }
         }
-        RecursiveGraphGeneration(type, nextDepthNodes.ToArray(), ++currentDepth);
+        RecursiveGraphGeneration(type, nextDepthNodes.ToArray(), ++currentDepth, nodesTotal + nodes.Length);
+    }
+
+    public static Dictionary<int, RoomNode> GetIndexedRoomNodeDictionary(RoomNode[] startNodes)
+    {
+        Dictionary<int, RoomNode> dict = new Dictionary<int, RoomNode>();
+        IndexNodes(startNodes, dict);
+        return dict;
+    }
+
+    static void IndexNodes(RoomNode[] nodes, Dictionary<int, RoomNode> dict, int nextId = 0)
+    {
+        List<RoomNode> nextNodes = new List<RoomNode>();
+        foreach (RoomNode node in nodes)
+        {
+            if (node.id == null)
+            {
+                node.id = nextId;
+                nextId++;
+                dict.Add((int)node.id, node);
+                foreach (RoomNode child in node.children)
+                {
+                    if (!nextNodes.Contains(child))
+                        nextNodes.Add(child);
+                }
+            }
+        }
+        if (nextNodes.Count == 0)
+            return;
+        else
+            IndexNodes(nextNodes.ToArray(), dict, nextId);
+    }
+
+    static void IndexNodes(RoomNode[] nodes, int nextId = 0)
+    {
+        List<RoomNode> nextNodes = new List<RoomNode>();
+        foreach (RoomNode node in nodes)
+        {
+            if (node.id == null)
+            {
+                node.id = nextId;
+                nextId++;
+                foreach (RoomNode child in node.children)
+                {
+                    if (!nextNodes.Contains(child))
+                        nextNodes.Add(child);
+                }
+            }
+        }
+        if (nextNodes.Count == 0)
+            return;
+        else
+            IndexNodes(nextNodes.ToArray(), nextId);
+    }
+
+    static void UnindexNodes(RoomNode[] nodes)
+    {
+        List<RoomNode> nextNodes = new List<RoomNode>();
+        foreach (RoomNode node in nodes)
+        {
+            if (node.id != null)
+            {
+                node.id = null;
+                foreach (RoomNode child in node.children)
+                {
+                    if (!nextNodes.Contains(child))
+                        nextNodes.Add(child);
+                }
+            }
+        }
+        if (nextNodes.Count == 0)
+            return;
+        else
+            UnindexNodes(nextNodes.ToArray());
+    }
+
+    static void CorrespondNodesToRooms(RoomNode[] rootNodes, LevelType type, Dictionary<RoomNode, GameObject> corresponded)
+    {
+        List<RoomNode> nextNodes = new List<RoomNode>();
+        foreach (RoomNode node in rootNodes)
+        {
+            foreach (RoomNode child in node.children)
+            {
+                if (!nextNodes.Contains(child))
+                    nextNodes.Add(child);
+            }
+            GameObject room = RoomManager.instance.GetRoom(type, node.type, node.parents.Length, node.children.Length);
+            if (room == null) {
+                room = RoomManager.instance.GetRoom(type, RoomNode.RoomType.any, node.parents.Length, node.children.Length);
+            }
+            room = Object.Instantiate(room);
+            corresponded.Add(node, room);
+        }
+        if (nextNodes.Count == 0)
+            return;
+        else
+            CorrespondNodesToRooms(nextNodes.ToArray(), type, corresponded);
+
+    }
+
+    static void ArrangeRooms(Dictionary<RoomNode, GameObject> nodeRoomDict)
+    {
+        int x = 0;
+        int y = 0;
+        foreach(var pair in nodeRoomDict)
+        {
+            if(y != pair.Key.depth)
+            {
+                x = 0;
+                y++;
+            }
+            pair.Value.transform.position = new Vector3(x * 100 , y * 100, 0);
+            Room[] roomsToConnectWith = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(x => x.Value.GetComponent<Room>()).ToArray();
+            int[] connectionsBackward = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(p => p.Key.parents.Length).ToArray();
+            pair.Value.GetComponent<Room>().ConnectWith(roomsToConnectWith, connectionsBackward);
+            x++;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class TileCamera : MonoBehaviour
     static public Transform ENVIRONMENT_ANCHOR;
     static public Transform BONFIRE_ANCHOR;
     static public Tile[,] TILES;
-    static public Room[,] level;
+    static public OldProject.Room[,] level;
     static public List<InRoom> enemyInrms;
 
     static public InRoom heroInrm;
@@ -56,7 +56,7 @@ public class TileCamera : MonoBehaviour
         MAP = new int[W, H];
         level = LevelGenerator.GenerateLevel();
 
-        foreach (Room room in level)
+        foreach (OldProject.Room room in level)
         {
             int[,] tileNums = room.GetIntPresentation();
             int roomH = tileNums.GetLength(0);
@@ -119,7 +119,7 @@ public class TileCamera : MonoBehaviour
         }
         foreach(InRoom inrm in currentInrms)
         {
-            Door.enemiesInCurrentRoom.Add(inrm);
+            OldProject.Door.enemiesInCurrentRoom.Add(inrm);
             enemyInrms.Remove(inrm);
         }
     }

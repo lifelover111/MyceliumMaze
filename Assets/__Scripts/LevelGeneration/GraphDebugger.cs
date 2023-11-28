@@ -46,8 +46,7 @@ public class GraphDebugger : MonoBehaviour
         GraphData[] graphDatas = new GraphData[graphs.Count];
         for (int i = 0; i < graphs.Count; i++)
         {
-            Dictionary<int, RoomNode> dict = new Dictionary<int, RoomNode>();
-            IndexNodes(graphs[i], dict);
+            Dictionary<int, RoomNode> dict = LevelGenerator.GetIndexedRoomNodeDictionary(graphs[i]);
             GraphData graphData = new GraphData(dict);
             graphDatas[i] = graphData;
         }
@@ -59,29 +58,5 @@ public class GraphDebugger : MonoBehaviour
         {
             serializer.Serialize(stream, graphDatas);
         }
-    }
-
-
-    static void IndexNodes(RoomNode[] nodes, Dictionary<int, RoomNode> dict, int nextId = 0)
-    {
-        List<RoomNode> nextNodes = new List<RoomNode>();
-        foreach (RoomNode node in nodes)
-        {
-            if (node.id == null)
-            {
-                node.id = nextId;
-                nextId++;
-                dict.Add((int)node.id, node);
-                foreach (RoomNode child in node.children)
-                {
-                    if (!nextNodes.Contains(child))
-                        nextNodes.Add(child);
-                }
-            }
-        }
-        if (nextNodes.Count == 0)
-            return;
-        else
-            IndexNodes(nextNodes.ToArray(), dict, nextId);
     }
 }

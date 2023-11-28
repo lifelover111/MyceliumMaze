@@ -11,7 +11,7 @@ public class Fog : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.enabled = false;
-        rotation = transform.GetComponentInParent<Door>().rotation;
+        rotation = transform.GetComponentInParent<OldProject.Door>().rotation;
     }
 
     public void CreateFog()
