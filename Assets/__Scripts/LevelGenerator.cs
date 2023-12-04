@@ -250,7 +250,7 @@ public static class LevelGenerator
             RoomNode endNode = new RoomNode();
             endNode.depth = currentDepth + 1;
             endNode.type = RoomNode.RoomType.end;
-            int exitRoomsNum = Random.Range(1, nodes.Length + 1);
+            int exitRoomsNum = Random.Range(1, nodes.Length > maxDoorsForwardNum ? maxDoorsForwardNum : nodes.Length);
             List<int> indexes = new List<int>();
             for (int i = 0; i < nodes.Length; i++)
             {
@@ -424,10 +424,15 @@ public static class LevelGenerator
                 x = 0;
                 y++;
             }
-            pair.Value.transform.position = new Vector3(x * 100 , y * 100, 0);
+            pair.Value.transform.position = new Vector3(x * 100, 0, y * 100);
             Room[] roomsToConnectWith = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(x => x.Value.GetComponent<Room>()).ToArray();
             int[] connectionsBackward = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(p => p.Key.parents.Length).ToArray();
-            pair.Value.GetComponent<Room>().ConnectWith(roomsToConnectWith, connectionsBackward);
+
+            Room room = pair.Value.GetComponent<Room>();
+            room.ConnectWith(roomsToConnectWith, connectionsBackward);
+
+            room.SpawnEnemies();
+
             x++;
         }
     }

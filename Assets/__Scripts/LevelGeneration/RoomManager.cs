@@ -13,6 +13,9 @@ public class RoomManager : MonoBehaviour
     {
         instance = this;
         roomsPrefabDict.Add(LevelGenerator.LevelType.prison, roomsPrison);
+    }
+    private void Start()
+    {
         LevelGenerator.Init();
         LevelGenerator.GenerateLevel(LevelGenerator.LevelType.prison);
     }
@@ -27,8 +30,13 @@ public class RoomManager : MonoBehaviour
             ).ToArray();
         if (suitableRooms.Length == 0)
         { 
-            Debug.LogError("Cannot find some room: roomType " + roomType + ", enters " + entersNum + ", exits " + exitNum);
-            return null;
+            Debug.LogWarning("Cannot find some room: roomType " + roomType + ", enters " + entersNum + ", exits " + exitNum);
+            suitableRooms = roomsPrefabDict[leveltype].Where(room =>
+                    room.GetRoomType() != LevelGenerator.RoomNode.RoomType.start && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.end && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.requiredRoom
+                    && (room.GetEntersNum() >= entersNum)
+                    && (room.GetExitsNum() >= exitNum)
+                    ).ToArray();
+            return suitableRooms.Where(room => room.GetEntersNum() == suitableRooms.Min(x => x.GetEntersNum()) || room.GetExitsNum() == suitableRooms.Min(x => x.GetExitsNum())).OrderBy(o => Random.value > 0.5f).FirstOrDefault().gameObject;
         }
         return suitableRooms.Where(room => room.GetEntersNum() == suitableRooms.Min(x => x.GetEntersNum()) || room.GetExitsNum() == suitableRooms.Min(x => x.GetExitsNum())).OrderBy(o => Random.value > 0.5f).FirstOrDefault().gameObject;
     }    

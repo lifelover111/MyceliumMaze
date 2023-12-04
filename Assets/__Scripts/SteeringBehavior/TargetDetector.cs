@@ -23,7 +23,7 @@ public class TargetDetector : Detector
         Collider playerCollider = playerColliders.Length == 0 ? null : playerColliders[0];
         if (playerCollider != null)
         {
-            Vector2 direction = (playerCollider.transform.position - transform.position).normalized;
+            Vector3 direction = (playerCollider.transform.position - transform.position).normalized;
             RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, targetDetectionRange, obstaclesLayerMask | playerLayerMask);
             
             if (hits.Length > 0)

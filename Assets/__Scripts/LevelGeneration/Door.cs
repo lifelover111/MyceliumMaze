@@ -10,11 +10,13 @@ public class Door : MonoBehaviour
     Collider coll;
     public static event System.Action OnTransition;
     static Transform player;
+    Room currentRoom;
 
     private void Awake()
     {
         OnTransition = () => { };
         coll = GetComponent<Collider>();
+        currentRoom = GetComponentInParent<Room>();
     }
     private void Start()
     {
@@ -38,7 +40,8 @@ public class Door : MonoBehaviour
         {
             yield return null;
         }
-        player.position = transitionTo.transform.position + transitionTo.enterPositionShift + 0.5f * Vector3.back;
+        player.position = transitionTo.transform.position + transitionTo.enterPositionShift + 0.5f * Vector3.up;
+        transitionTo.currentRoom.WakeEnemies();
     }
 
     public void ConnectWith(Door toConnect)

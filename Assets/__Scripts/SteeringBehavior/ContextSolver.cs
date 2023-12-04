@@ -8,7 +8,7 @@ public class ContextSolver : MonoBehaviour
     private bool showGizmos = true;
 
     float[] interestGizmo = new float[0];
-    Vector2 resultDirection = Vector2.zero;
+    Vector3 resultDirection = Vector3.zero;
     private float rayLength = 2;
 
     private void Start()
@@ -16,7 +16,7 @@ public class ContextSolver : MonoBehaviour
         interestGizmo = new float[8];
     }
 
-    public Vector2 GetDirectionToMove(List<SteeringBehaviour> behaviours, AIData aiData, float zRot = 0)
+    public Vector3 GetDirectionToMove(List<SteeringBehaviour> behaviours, AIData aiData, float zRot = 0)
     {
         float[] danger = new float[8];
         float[] interest = new float[8];
@@ -33,7 +33,7 @@ public class ContextSolver : MonoBehaviour
 
         interestGizmo = interest;
 
-        Vector2 outputDirection = Vector2.zero;
+        Vector3 outputDirection = Vector3.zero;
         for (int i = 0; i < 8; i++)
         {
             outputDirection += Directions.eightDirections[i] * interest[i];

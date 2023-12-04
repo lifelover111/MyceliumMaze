@@ -24,7 +24,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
 
     [Header("Set Dynamically")]
     public bool dirHeld = false;
-    public Vector2 dir;
+    public Vector3 dir;
     public int facing = 1;
     public eMode mode = eMode.idle;
     public int maxNumFlasks = 3;
@@ -39,7 +39,6 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
     public int souls = 0;
 
     private float transitionDone = 0;
-    private Vector2 transitionPos;
     private float knockbackDone = 0;
     private float invincibleDone = 0;
     private Vector3 knockbackVel;
@@ -51,7 +50,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
 
     private GameObject atkHitBox;
     private int atkCounter = 0;
-    private Vector2 atkStepVel = Vector2.zero;
+    private Vector3 atkStepVel = Vector3.zero;
     private bool nextAtk = false;
     private bool animCancelable = true;
 
@@ -142,10 +141,10 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
 
 
         dirHeld = false;
-        dir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        dir = Quaternion.Euler(0, -45, 0) * dir;
         if ( dir.magnitude > 0 ) dirHeld = true;
         dir.Normalize();
-
        
         if (blockInSchedule && mode != eMode.attack && animCancelable)
         {
@@ -274,7 +273,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                     vel = knockbackVel;
                     if (Time.time >= nextSpawnDirtTime)
                     {
-                        DirtParticleSystemHandler.Instance.SpawnDirt(transform.position, vel * -0.1f);
+                        DirtParticleSystemHandler.Instance?.SpawnDirt(transform.position, vel * -0.1f);
                         nextSpawnDirtTime = Time.time + 0.05f;
                     }
                 }
@@ -325,20 +324,23 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
 
     int CalcFacing(Vector3 direction)
     {
-        float angle = Mathf.Atan2(direction.y, direction.x)*(180/Mathf.PI);
+        float angle = Mathf.Atan2(direction.z, direction.x)*(180/Mathf.PI);
         if (angle < 0) angle += 360;
         int facing = (int)Mathf.Floor((angle + 22.5f)/45);
         if (facing == 8) facing = 0;
+
+        facing = facing == 0 ? 7 : facing - 1;
+
         return facing;
     }
 
     char CalcBodyDirection(Vector3 direction)
     {
         char[] cd = { 'T', 'L', 'B', 'R' };
-        Vector3 relDir = new Vector3(Mathf.Cos(facing * Mathf.PI / 4), Mathf.Sin(facing * Mathf.PI / 4), 0);
-        float angle = Vector3.SignedAngle(relDir, direction, Vector3.forward);
+        Vector3 relDir = new Vector3(Mathf.Cos(facing * Mathf.PI / 4), 0, Mathf.Sin(facing * Mathf.PI / 4));
+        float angle = Vector3.SignedAngle(relDir, direction, Vector3.down);
         if (angle < 0) angle += 360;
-        int i = (int)Mathf.Floor((angle + 45) / 90);
+        int i = (int)Mathf.Floor((angle) / 90);
         if (i == 4) i = 0;
         return cd[i];
     }
@@ -454,7 +456,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
         Vector3 delta = transform.position - coll.transform.position;
         if (mode == eMode.block)
         {
-            Vector2 blockDirection = coll.gameObject.transform.position - transform.position;
+            Vector3 blockDirection = coll.gameObject.transform.position - transform.position;
             if(Mathf.Abs(CalcFacing(blockDirection) - facing) <= 1 || Mathf.Abs(CalcFacing(blockDirection) - facing) >= 7)
             {
                 if (Time.time - blockPlacedTime <= parryTimeWindow)
@@ -526,7 +528,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
         anim.speed = 1;
         mode = eMode.die;
         rigid.velocity = Vector3.zero;
-        audioSource.clip = SoundBank.instance.Death;
+        audioSource.clip = SoundBank.instance?.Death;
         System.Action playSound = delegate () { audioSource.Play(); };
         Invoke(playSound.Method.Name, 6.5f);
         DeathCamera.instance.Invoke("Load", 5f);
@@ -553,7 +555,7 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
             audioSource.clip = atkCounter%2 == 0? SoundBank.instance?.Footstep_Hero_0: SoundBank.instance?.Footstep_Hero_1;
             if (!audioSource.isPlaying)
                 audioSource.Play();
-            atkStepVel = 0.35f * new Vector2(Mathf.Cos(facing * Mathf.PI / 4), Mathf.Sin(facing * Mathf.PI / 4));
+            atkStepVel = 0.35f * new Vector3(Mathf.Cos((facing + 1) * Mathf.PI / 4), 0, Mathf.Sin((facing + 1) * Mathf.PI / 4));
         }
     }
 
@@ -567,15 +569,16 @@ public class Hero : MonoBehaviour, IFacingMover, IHavingConcentration
                 audioSource.Play();
 
             animCancelable = false;
-            
-            atkHitBox.transform.localRotation = Quaternion.Euler(0, 0, 45 * facing);
+
+            atkHitBox.transform.localRotation = Quaternion.Euler(45, 0, 45 * facing);
+            //atkHitBox.transform.localPosition = Vector3.ProjectOnPlane(atkHitBox.transform.localPosition, Vector3.up) + 0.5f*Vector3.up;
             atkHitBox.SetActive(true);
         }
     }
 
     void StopAttack()
     {
-        atkStepVel = Vector2.zero;
+        atkStepVel = Vector3.zero;
         atkHitBox.SetActive(false);
         animCancelable = true;
         if (!nextAtk)

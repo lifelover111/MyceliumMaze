@@ -18,8 +18,8 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
         {
             if(obstacleCollider != null)
             {
-                Vector2 directionToObstacle
-                    = (Vector2)obstacleCollider.ClosestPoint(transform.position) - (Vector2)transform.position;
+                Vector3 directionToObstacle
+                    = obstacleCollider.ClosestPoint(transform.position) - transform.position;
                 float distanceToObstacle = directionToObstacle.magnitude;
 
                 float weight
@@ -27,11 +27,11 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
                     ? 1
                     : (radius - distanceToObstacle) / radius;
 
-                Vector2 directionToObstacleNormalized = directionToObstacle.normalized;
+                Vector3 directionToObstacleNormalized = directionToObstacle.normalized;
 
                 for (int i = 0; i < Directions.eightDirections.Count; i++)
                 {
-                    float result = Vector2.Dot(directionToObstacleNormalized, Directions.eightDirections[i]);
+                    float result = Vector3.Dot(directionToObstacleNormalized, Directions.eightDirections[i]);
 
                     float valueToPutIn = result * weight;
 
@@ -72,14 +72,14 @@ public class ObstacleAvoidanceBehaviour : SteeringBehaviour
 
 public static class Directions
 {
-    public static List<Vector2> eightDirections = new List<Vector2>{
-            new Vector2(0,1).normalized,
-            new Vector2(1,1).normalized,
-            new Vector2(1,0).normalized,
-            new Vector2(1,-1).normalized,
-            new Vector2(0,-1).normalized,
-            new Vector2(-1,-1).normalized,
-            new Vector2(-1,0).normalized,
-            new Vector2(-1,1).normalized
+    public static List<Vector3> eightDirections = new List<Vector3>{
+            Vector3.forward,
+            new Vector3(1, 0, 1).normalized,
+            Vector3.right,
+            new Vector3(1, 0, -1).normalized,
+            Vector3.back,
+            new Vector3(-1, 0, -1).normalized,
+            Vector3.left,
+            new Vector3(-1, 0, 1).normalized
         };
 }

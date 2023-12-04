@@ -213,10 +213,10 @@ namespace EnemyBehaviors
             protected char CalcBodyDirection(Vector3 direction)
             {
                 char[] cd = { 'T', 'L', 'B', 'R' };
-                Vector3 relDir = new Vector3(Mathf.Cos(enemy.facing * Mathf.PI / 4), Mathf.Sin(enemy.facing * Mathf.PI / 4), 0);
-                float angle = Vector3.SignedAngle(relDir, direction, Vector3.forward);
+                Vector3 relDir = new Vector3(Mathf.Cos(enemy.facing * Mathf.PI / 4), 0, Mathf.Sin(enemy.facing * Mathf.PI / 4));
+                float angle = Vector3.SignedAngle(relDir, direction, Vector3.down);
                 if (angle < 0) angle += 360;
-                int i = (int)Mathf.Floor((angle + 45) / 90);
+                int i = (int)Mathf.Floor((angle) / 90);
                 if (i == 4) i = 0;
                 return cd[i];
             }
@@ -231,7 +231,7 @@ namespace EnemyBehaviors
             {
                 base.Update();
 
-                Vector2 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData);
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData);
                 
                 body.velocity = speed * movementDirection;
                 if (body.velocity.magnitude <= 0.01f)
@@ -269,7 +269,7 @@ namespace EnemyBehaviors
 
                 enemy.facing = enemy.CalcFacing(target.transform.position - enemy.gameObject.transform.position);
 
-                Vector2 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, 180);
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, 180);
 
                 body.velocity = 0.5f * speed * movementDirection;
                 anim.CrossFade(animationName + CalcBodyDirection(movementDirection) + '_' + enemy.facing, 0);
@@ -307,7 +307,7 @@ namespace EnemyBehaviors
 
                 enemy.facing = enemy.CalcFacing(target.transform.position - enemy.gameObject.transform.position);
 
-                Vector2 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, dirCoeff*90);
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, dirCoeff*90);
                 body.velocity = 0.8f * speed * movementDirection;
                 anim.CrossFade(animationName + CalcBodyDirection(movementDirection) + '_' + enemy.facing, 0);
                 anim.speed = 1;
@@ -341,7 +341,7 @@ namespace EnemyBehaviors
 
                 int angle = ((enemy.gameObject.transform.position - target.transform.position).magnitude > distance) ? 0 : 180;
 
-                Vector2 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, angle);
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, angle);
 
                 body.velocity = speed * movementDirection;
                 if (body.velocity.magnitude <= 0.01f)
@@ -404,7 +404,7 @@ namespace EnemyBehaviors
             {
                 enemy.canChooseBehavior = Time.time - enemy.blockPlacedTime < 2 ? false : true;
 
-                body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 0.15f);
+                body.velocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.15f);
 
                 enemy.facing = enemy.CalcFacing(target.transform.position - enemy.gameObject.transform.position);
 

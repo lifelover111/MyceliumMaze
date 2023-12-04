@@ -58,7 +58,7 @@ public class SkeletonSwordsman : Enemy
         hit = true;
         facing = CalcFacing(target.transform.position - gameObject.transform.position);
         isAttacking = true;
-        currentAtkHitbox.transform.localRotation = Quaternion.Euler(0, 0, 45 * facing);
+        currentAtkHitbox.transform.localRotation = Quaternion.Euler(45, 0, 45 * facing);
         currentAtkHitbox.SetActive(true);
     }
     void StopSerialHit()

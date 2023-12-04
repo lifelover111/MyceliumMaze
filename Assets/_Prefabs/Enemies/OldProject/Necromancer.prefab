@@ -379,7 +379,7 @@ MonoBehaviour:
   agressivity: 0
   facing: 0
   currentAtkHitbox: {fileID: 0}
-  atkStepVel: {x: 0, y: 0}
+  atkStepVel: {x: 0, y: 0, z: 0}
   isBlockUp: 0
   blockPlacedTime: 0
   canChooseBehavior: 1
@@ -404,7 +404,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &7903590605007693089
 MonoBehaviour:

@@ -50,7 +50,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
     
     protected List<GameObject> atkHitBoxes;
     public GameObject currentAtkHitbox;
-    public Vector2 atkStepVel;
+    public Vector3 atkStepVel;
 
     public bool isBlockUp = false;
     public float blockPlacedTime;
@@ -67,7 +67,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
 
     public float lastMoveTime = 0;
     public Vector3 avoidDecisionPosition;
-    private Vector2 viewDirection;
+    private Vector3 viewDirection;
 
     protected AudioSource audioSource;
     protected AudioClip hitClip;
@@ -137,7 +137,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
         }
         CurrentBehaviorDelegate.Invoke();
 
-        viewDirection = new Vector2(Mathf.Cos(facing * Mathf.PI / 4), Mathf.Sin(facing * Mathf.PI / 4));
+        viewDirection = new Vector3(Mathf.Cos(facing * Mathf.PI / 4), 0, Mathf.Sin(facing * Mathf.PI / 4));
 
 
         if (concentration > 0)
@@ -170,7 +170,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
         {
             if (Time.time >= nextSpawnDirtTime)
             {
-                DirtParticleSystemHandler.Instance.SpawnDirt(transform.position, rigid.velocity * -0.2f);
+                DirtParticleSystemHandler.Instance?.SpawnDirt(transform.position, rigid.velocity * -0.2f);
                 nextSpawnDirtTime = Time.time + 0.285f;
             }
             if(Time.time - stepDone > timeBetweenSteps)
@@ -182,7 +182,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
         }
         if (!isAttacking)
         {
-            atkStepVel = Vector2.zero;
+            atkStepVel = Vector3.zero;
             foreach (GameObject go in atkHitBoxes)
                 go.SetActive(false);
         }
@@ -231,7 +231,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
 
         if (isBlockUp)
         {
-            Vector2 blockDirection = coll.gameObject.transform.position - transform.position;
+            Vector3 blockDirection = coll.gameObject.transform.position - transform.position;
             if (CalcFacing(blockDirection) == facing)
             {
                 if (Time.time - blockPlacedTime <= parryTimeWindow)
@@ -268,8 +268,8 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
         audioSource.clip = damageClip;
         audioSource.Play();
 
-        rigid.velocity = Vector2.zero;
-        knockbackVel = Vector2.zero;
+        rigid.velocity = Vector3.zero;
+        knockbackVel = Vector3.zero;
         concentration += dEf.concentrationDamage / 2;
         ConcentrationOverflowCheck();
         agressivity *= 0.25f;
@@ -373,10 +373,13 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
 
     public int CalcFacing(Vector3 direction)
     {
-        float angle = Mathf.Atan2(direction.y, direction.x) * (180 / Mathf.PI);
+        float angle = Mathf.Atan2(direction.z, direction.x) * (180 / Mathf.PI);
         if (angle < 0) angle += 360;
         int facing = (int)Mathf.Floor((angle + 22.5f) / 45);
         if (facing == 8) facing = 0;
+
+        facing = facing == 0 ? 7 : facing - 1;
+
         return facing;
     }
 
@@ -418,7 +421,7 @@ public abstract class Enemy : MonoBehaviour, IFacingMover, IHavingConcentration
     {
         hit = true;
         atkStepVel = 1.3f * speed * viewDirection;
-        currentAtkHitbox.transform.localRotation = Quaternion.Euler(0, 0, 45 * facing);
+        currentAtkHitbox.transform.localRotation = Quaternion.Euler(45, 0, 45 * facing);
         currentAtkHitbox.SetActive(true);
         
         if (Random.value > 0.5)

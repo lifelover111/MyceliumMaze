@@ -8,8 +8,10 @@ public class Room : MonoBehaviour
     [SerializeField] LevelGenerator.RoomNode.RoomType type;
     [SerializeField] Transform[] doorsForward;
     [SerializeField] Transform[] doorsBackward;
+    [SerializeField] Transform[] enemySpawnPoints;
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
+    List<GameObject> enemies = new List<GameObject>();
     private void Awake()
     {
         transitionsForward = new Door[doorsForward.Length];
@@ -55,5 +57,25 @@ public class Room : MonoBehaviour
     public int GetExitsNum() 
     {
         return doorsForward.Length;
+    }
+
+    public void SpawnEnemies()
+    {
+        foreach (var p in enemySpawnPoints)
+        {
+            GameObject enemy = Instantiate(EnemyPrafabs.instance.enemyPrefabs[Random.Range(0, EnemyPrafabs.instance.enemyPrefabs.Length)]);
+            enemy.transform.position = p.position;
+            enemies.Add(enemy);
+            enemy.SetActive(false);
+        }
+    }
+
+    public void WakeEnemies()
+    {
+        foreach (GameObject e in enemies)
+        {
+            e.SetActive(true);
+        }
+        enemies.Clear();
     }
 }
