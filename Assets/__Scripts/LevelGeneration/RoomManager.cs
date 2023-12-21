@@ -7,17 +7,17 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
-    [SerializeField] Room[] roomsPrison;
+    [SerializeField] Room[] roomsCastle;
     Dictionary<LevelGenerator.LevelType, Room[]> roomsPrefabDict = new Dictionary<LevelGenerator.LevelType, Room[]>();
     private void Awake()
     {
         instance = this;
-        roomsPrefabDict.Add(LevelGenerator.LevelType.prison, roomsPrison);
+        roomsPrefabDict.Add(LevelGenerator.LevelType.castle, roomsCastle);
     }
     private void Start()
     {
         LevelGenerator.Init();
-        LevelGenerator.GenerateLevel(LevelGenerator.LevelType.prison);
+        LevelGenerator.GenerateLevel(LevelGenerator.LevelType.castle);
     }
     public GameObject GetRoom(LevelGenerator.LevelType leveltype, LevelGenerator.RoomNode.RoomType roomType, int entersNum, int exitNum)
     {

@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <ui:VisualElement class="mbs-container">
+        <ui:VisualElement class="mbs-row" style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <ui:Label text="MBS Construction" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+            <ui:Button text="Edit" display-tooltip-when-elided="true" name="edit-button" style="min-width: 100px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        </ui:VisualElement>
+        <ui:ListView focusable="true" header-title="Areas" show-border="true" show-add-remove-footer="false" show-foldout-header="true" name="areas-listview" fixed-item-height="54" class="mbs-row" />
+    </ui:VisualElement>
+    <ui:VisualElement />
+</ui:UXML>

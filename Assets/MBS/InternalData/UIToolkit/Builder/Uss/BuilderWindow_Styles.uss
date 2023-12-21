@@ -1,0 +1,16 @@
+.unity-toolbar-toggle {
+    background-color: var(--unity-colors-toolbar_button-background);
+    border-color: var(--unity-colors-default-border);
+}
+
+.unity-toolbar-toggle:hover {
+    background-color: var(--unity-colors-toolbar_button-background-hover);
+}
+
+.unity-toolbar-toggle:checked {
+    background-color: var(--unity-colors-toolbar_button-background-checked);
+}
+
+.unity-toolbar-toggle:checked:hover {
+    background-color: var(--unity-colors-toolbar_button-background-checked);
+}

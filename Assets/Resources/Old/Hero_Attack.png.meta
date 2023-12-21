@@ -243,7 +243,7 @@ TextureImporter:
       213: 1444907731467349466
     second: Hero_Attack_79
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -260,10 +260,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -302,6 +304,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -313,6 +317,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -325,6 +330,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -337,6 +343,33 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -2032,9 +2065,89 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Hero_Attack_0: 5634463054920521783
+      Hero_Attack_1: -1081304972222262319
+      Hero_Attack_10: 329345363294010745
+      Hero_Attack_11: -5742212961339164351
+      Hero_Attack_12: -8754557690378239507
+      Hero_Attack_13: 3701128781656485056
+      Hero_Attack_14: -3420553672951857185
+      Hero_Attack_15: -2272635996280706036
+      Hero_Attack_16: -1908619565575370204
+      Hero_Attack_17: -7985887942444556127
+      Hero_Attack_18: 7576663835860788792
+      Hero_Attack_19: -2472981391155699042
+      Hero_Attack_2: -7832687100973110509
+      Hero_Attack_20: 438100281494549701
+      Hero_Attack_21: 2537626830577503845
+      Hero_Attack_22: -8447270511901836968
+      Hero_Attack_23: 2161976810992134602
+      Hero_Attack_24: -3350542719438839765
+      Hero_Attack_25: 4821114873077705824
+      Hero_Attack_26: -6651723981531915266
+      Hero_Attack_27: 5714863520584290253
+      Hero_Attack_28: 7157411010795467342
+      Hero_Attack_29: -8418696959694227207
+      Hero_Attack_3: 7118181494140925705
+      Hero_Attack_30: -8342244402356685037
+      Hero_Attack_31: 4595941193814309659
+      Hero_Attack_32: 3293706557813993668
+      Hero_Attack_33: 5965399538612989648
+      Hero_Attack_34: 7695343403333956335
+      Hero_Attack_35: -8573301428286615868
+      Hero_Attack_36: 4742286867229973416
+      Hero_Attack_37: 6706811749781345281
+      Hero_Attack_38: 3275201155320986349
+      Hero_Attack_39: 7094731464209582079
+      Hero_Attack_4: -4728888310143211181
+      Hero_Attack_40: 119061502707019220
+      Hero_Attack_41: -6180538667969844372
+      Hero_Attack_42: -2796474077821075759
+      Hero_Attack_43: -5889325547094033435
+      Hero_Attack_44: 225880698830289568
+      Hero_Attack_45: -396691808896654950
+      Hero_Attack_46: 5681778751905292437
+      Hero_Attack_47: 2603718226302819613
+      Hero_Attack_48: 1994446387348461410
+      Hero_Attack_49: 6254378392162636809
+      Hero_Attack_5: 7438810841172438835
+      Hero_Attack_50: 101525777515804147
+      Hero_Attack_51: -7296646100373866657
+      Hero_Attack_52: 7080596219020403969
+      Hero_Attack_53: 3664927026497232566
+      Hero_Attack_54: -397062905117669553
+      Hero_Attack_55: 5567884167730911055
+      Hero_Attack_56: 7772500926535576674
+      Hero_Attack_57: 3693825785715139553
+      Hero_Attack_58: -5325441628826620131
+      Hero_Attack_59: 9132547989947007906
+      Hero_Attack_6: 2498592381114517888
+      Hero_Attack_60: -7055748568140696276
+      Hero_Attack_61: -6853026526385755311
+      Hero_Attack_62: 2963403574546242853
+      Hero_Attack_63: -1707411335000156383
+      Hero_Attack_64: -1982424037196196766
+      Hero_Attack_65: 7643582467438843764
+      Hero_Attack_66: 4562608690043820048
+      Hero_Attack_67: -4340726885856622732
+      Hero_Attack_68: -5398466616065658186
+      Hero_Attack_69: -8354948331331028970
+      Hero_Attack_7: -8751231963901712430
+      Hero_Attack_70: 97389914411152536
+      Hero_Attack_71: 2284432442547113263
+      Hero_Attack_72: 2021097556862993220
+      Hero_Attack_73: 7859093049768206088
+      Hero_Attack_74: 1823136169432136838
+      Hero_Attack_75: -7261122437231210725
+      Hero_Attack_76: 7935673530206933464
+      Hero_Attack_77: -730171415503026108
+      Hero_Attack_78: -2457932888218105470
+      Hero_Attack_79: 1444907731467349466
+      Hero_Attack_8: 8117034123582291085
+      Hero_Attack_9: -4116261613954408433
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance"
+         engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <ui:ScrollView class="mbs-container mbs-asset-editor__placer" style="min-width: 400px; align-items: auto; justify-content: flex-start; min-height: 220px;">
+        <ui:Label text="Placer Group Editor" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+        <ui:TextField picking-mode="Ignore" label="Placer Group Name" value="filler text" text="New Modular Group" name="modular-group-name-textfield" class="asset-name-textfield mbs-row" />
+        <ui:VisualElement class="mbs-row" style="flex-direction: row; align-items: stretch; flex-wrap: nowrap; flex-grow: 1; justify-content: space-between; min-width: 380px; display: none;">
+            <ui:DropdownField label="Category" index="0" choices="None" name="categories-dropdown" style="align-items: stretch; overflow: hidden; flex-shrink: 1; flex-grow: 1;" />
+            <ui:Button text="Manage" display-tooltip-when-elided="true" name="manage-categories-button" style="margin-left: 0; margin-right: 0;" />
+        </ui:VisualElement>
+        <ui:ListView focusable="true" show-foldout-header="true" show-border="true" header-title="Modules" show-add-remove-footer="true" reorderable="true" name="modules-listview" fixed-item-height="40" reorder-mode="Animated" show-bound-collection-size="true" class="mbs-list-view mbs-row" />
+        <ui:VisualElement>
+            <ui:VisualElement class="unity-help-box assetsManager-element" style="flex-direction: row-reverse; flex-wrap: nowrap; align-items: center; margin-top: 5px; justify-content: space-around;">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:VisualElement class="unity-help-box__icon unity-help-box__icon--info" />
+                    <ui:Label text="The first module in the list is used as the default module for the initial placement in the scene and for the preview icon. " display-tooltip-when-elided="true" class="unity-help-box__label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="mbs-row" style="flex-wrap: nowrap; flex-direction: row-reverse;">
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="cancel-button" style="align-items: stretch;" />
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="save-button" style="align-items: stretch;" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

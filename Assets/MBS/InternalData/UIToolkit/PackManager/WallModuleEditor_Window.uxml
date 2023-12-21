@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+         xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/USS/globalStyles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#globalStyles"/>
+    <ui:ScrollView class="mbs-container mbs-asset-editor__placer"
+                   style="min-width: 400px; align-items: auto; justify-content: flex-start; min-height: 180px;">
+        <ui:Label text="Wall Module Editor" display-tooltip-when-elided="true" style="-unity-font-style: bold;"/>
+        <ui:TextField picking-mode="Ignore" label="Module Name" value="New module" text="New Module"
+                      name="module-name-textfield" class="asset-name-textfield mbs-row"/>
+        <uie:ObjectField label="Default prefab" type="UnityEngine.GameObject, UnityEngine.CoreModule"
+                         name="default-prefab-objectfield" allow-scene-objects="false" class="mbs-row"/>
+        <uie:ObjectField label="Extended prefab" type="UnityEngine.GameObject, UnityEngine.CoreModule"
+                         name="extended-prefab-objectfield" allow-scene-objects="false" class="mbs-row"/>
+        <ui:Foldout text="Info" value="false" name="info-foldout" class="info-foldout"
+                    style="margin-top: 10px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(108, 108, 108); border-right-color: rgb(108, 108, 108); border-top-color: rgb(108, 108, 108); border-bottom-color: rgb(108, 108, 108); border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; margin-left: 3px; margin-right: 3px;">
+            <ui:Label
+                    text="MBS can stretch and shrink wall prefabs to fill gaps between walls.&#10;In order to make the stretch and shrink effect less noticeable to the eye (in cases where walls use textures), MBS uses two prefabs for one wall module.&#10;MBS uses the default prefab in cases where the wall does not need to be stretched, and also in cases where the wall needs to be shrunk (when the space to be filled is less than the length of the Default prefab).&#10;Expanded prefab is used when the wall is placed diagonally on the grid cell, i.e. at 45/135 degrees (in a snap to grid mode), and also when shrinking the Expanded prefab will be less noticeable than stretching the Default prefab too much."
+                    display-tooltip-when-elided="true" name="info-label"
+                    style="flex-wrap: wrap; white-space: normal; margin-bottom: 10px; color: rgba(9, 9, 9, 0.8); margin-right: 10px; margin-left: -5px; margin-top: 5px;"/>
+        </ui:Foldout>
+        <ui:VisualElement class="mbs-row" style="flex-wrap: nowrap; flex-direction: row-reverse;">
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="cancel-button"
+                       style="align-items: stretch; margin-right: 0;"/>
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="save-button"
+                       style="align-items: stretch;"/>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

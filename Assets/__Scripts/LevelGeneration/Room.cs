@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     [SerializeField] Transform[] doorsForward;
     [SerializeField] Transform[] doorsBackward;
     [SerializeField] Transform[] enemySpawnPoints;
+    [Header("Sets dynamycally")]
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
     List<GameObject> enemies = new List<GameObject>();

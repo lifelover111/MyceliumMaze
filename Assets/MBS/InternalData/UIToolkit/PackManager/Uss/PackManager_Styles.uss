@@ -1,0 +1,75 @@
+.mbs-manager-window .unity-list-view__item .unity-button {
+    opacity: 0;
+}
+
+.mbs-manager-window .unity-list-view__item:hover .unity-button {
+    opacity: 1;
+}
+
+.mbs-manager-window .unity-list-view__item:focus .unity-button {
+    opacity: 1;
+}
+
+.mbs-manager-window .unity-list-view__item:active .unity-button {
+    opacity: 1;
+}
+
+.mbs-manager-window .unity-list-view .unity-list-view__reorderable-handle {
+    padding-left: 5px;
+}
+
+.mbs-manager-window .unity-list-view .unity-list-view__reorderable-item__container {
+    padding: 0px;
+}
+
+.mbs-manager-window .unity-list-view .unity-list-view__reorderable-item:hover .mbs-list-item {
+    background-color: transparent;
+}
+
+
+.mbs-manager-window .remove-pack-button {
+
+}
+
+.mbs-manager-window .remove-pack-button:hover {
+
+    background-color: brown;
+    color: white;
+}
+
+.mbs-manager-window .remove-pack-button:focus {
+
+    background-color: brown;
+    color: white;
+}
+
+.mbs-manager-window.remove-pack-button:active {
+
+    background-color: brown;
+    color: white;
+}
+
+
+/*
+.am-container .unity-list-view .unity-scroll-view{
+    width: 100%;
+    display: block;
+}
+.am-container .unity-list-view .unity-scroll-view__content-viewport{
+    width: 400px;
+}
+.am-container .unity-list-view .unity-scroll-view__content-container{
+    flex-wrap: wrap;
+ 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.am-container .unity-list-view .unity-list-view__item{
+    height: 64px;
+    display: block;
+    width: 32%;
+}
+
+*/

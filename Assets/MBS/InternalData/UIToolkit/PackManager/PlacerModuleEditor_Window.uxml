@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <ui:ScrollView class="mbs-container mbs-asset-editor__placer" style="min-width: 400px; align-items: auto; justify-content: flex-start; min-height: 115px;">
+        <ui:Label text="Placer Module Editor" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+        <ui:TextField picking-mode="Ignore" label="Module Name" value="New Module" text="New Module" name="module-name-textfield" class="asset-name-textfield mbs-row" />
+        <uie:ObjectField label="Default prefab" type="UnityEngine.GameObject, UnityEngine.CoreModule" name="default-prefab-objectfield" allow-scene-objects="false" class="mbs-row" />
+        <ui:VisualElement class="mbs-row" style="flex-wrap: nowrap; flex-direction: row-reverse;">
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="cancel-button" style="align-items: stretch; margin-right: 0;" />
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="save-button" style="align-items: stretch;" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52e5f476d3be0d46b7cae89ecb9a082, type: 3}
+  m_Name: InputConfig
+  m_EditorClassIdentifier: 
+  CancelKey: 27
+  WallToolInputs:
+    WallMoveGridOrigin: 122
+    WallSnapToGrid: 120
+    WallSnapToEnds: 99
+    ChangeSnapAccuracy: 118
+    IncreaseLevelNumber: 98
+    DecreaseLevelNumber: 110
+  FloorToolInputs:
+    FloorMoveGridOrigin: 122
+    FloorAutofill: 120
+  PlacerToolInputs:
+    Placement:
+      PlacementType: 122
+      PlacementFacing: 120
+      CollisionToggle: 99
+      RandomModuleToggle: 118
+      AdjustHeightToggle: 98
+      SnapToGrid: 110
+      RotationMode: 114
+      ScalingMode: 116
+      NextModule: 101
+    Rotation:
+      ResetRotation: 99
+      XAxis: 120
+      YAxis: 121
+      ZAxis: 122
+      ChangeRotationSpace: 118
+      SnapAngleToggle: 98
+      ChangeSnapAccuracy: 110
+    Scaling:
+      ResetScale: 99
+      AllAxis: 113
+      XAxis: 120
+      YAxis: 121
+      ZAxis: 122
+      ChangeSnapAccuracy: 110
+    PlacerMoveGridOrigin: 122
+  PickerToolInputs:
+    BoundsType: 122
+    AxisParameter: 120

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <ui:VisualElement class="areas-listview__item" style="flex-direction: column; align-items: center; justify-content: space-between; margin-left: 10px; margin-right: 10px; margin-top: 5px; margin-bottom: 5px;">
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 100%; flex-direction: row; justify-content: space-between; align-self: flex-start; align-items: center;">
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="area-name_label" style="flex-direction: column;" />
+            <ui:Button text="Generate Mesh" display-tooltip-when-elided="true" name="generate-mesh_button" style="width: 115px;" />
+        </ui:VisualElement>
+        <ui:VisualElement class="mbs-row" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 100%; flex-direction: row; justify-content: space-between; align-self: flex-start; align-items: center;">
+            <ui:Label text="Turn walls" display-tooltip-when-elided="true" name="turn-walls_label" style="flex-direction: column; font-size: 12px;" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-end;">
+                <ui:Button text="Inside" display-tooltip-when-elided="true" name="turn-inside_button" style="align-self: flex-end;" />
+                <ui:Button text="Outside" display-tooltip-when-elided="true" name="turn-outside_button" style="align-self: flex-end;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!49 &4900000
+TextAsset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mbs-pack-descriptor
+  m_Script: "{\n    \"guid\": \"29336bae2cdc4ab99b811e2bb89aea6d\",\n    \"_name\":
+    \"Second example pack\",\n    \"_wallGroups\": [\n        {\n            \"guid\":
+    \"4ce5ed8a25ab4a58b917871aa8ed788b\",\n            \"name\": \"Inclined Wall\",\n           
+    \"_modules\": [\n                {\n                    \"guid\": \"9add37d227444a18ad843794238e2b4e\",\n                   
+    \"name\": \"Solid\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 5560554987267386446,\n                           
+    \"guid\": \"abdfdd2076dd40344b3d125ea2962bf3\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"7457bb29ba0a45fba0335aa06cd0727b\",\n                   
+    \"name\": \"Window\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 2832512833572160116,\n                           
+    \"guid\": \"71a120b537adc534b8752ca2932e9453\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"3d6c2fdc5cb94be1883f80e70a489f27\",\n                   
+    \"name\": \"Door\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 8650420095959073846,\n                           
+    \"guid\": \"04879a9a074a934478585e7c73440679\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        },\n        {\n            \"guid\": \"039b0a943f254ca58e7274c0313c431c\",\n           
+    \"name\": \"Stable Wall Outer\",\n            \"_modules\": [\n               
+    {\n                    \"guid\": \"c98687f5870e4812919bbd5129b7ef43\",\n                   
+    \"name\": \"Solid\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 2331551712338680590,\n                           
+    \"guid\": \"31f5dca4f9995fa45aecddb2054edb52\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"fb99a4f634b6460c92e31c40ac97be8f\",\n                   
+    \"name\": \"Window\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 3013726827106026985,\n                           
+    \"guid\": \"05302916337b4ad48b8482325562fd2f\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"bf03d339d21f4f77b25e9f72f3c5644a\",\n                   
+    \"name\": \"Door\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 5169715011795548271,\n                           
+    \"guid\": \"9b614346c6c876e49bc90b8748a9c934\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        },\n        {\n            \"guid\": \"c468d30d962e4d50abdc57542ee500c3\",\n           
+    \"name\": \"Stable Wall Inner\",\n            \"_modules\": [\n               
+    {\n                    \"guid\": \"d087a4d2cc2145ac9b3979c81c35f8b3\",\n                   
+    \"name\": \"New Wall Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 1260498775222466155,\n                           
+    \"guid\": \"0de456118e230304c991f7cbdbd20a3d\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"990321fc692942dda4dbee9899cd4e95\",\n                   
+    \"name\": \"New Wall Module (2)\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 2795567457477597655,\n                           
+    \"guid\": \"26a6c109702e4f54dbc801e3a670cc5c\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"e163050260334090a6851415cc3a9f9e\",\n                   
+    \"name\": \"New Wall Module (1)\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 3832508139504536923,\n                           
+    \"guid\": \"f9e3bd9086801474ca014212cdd02f10\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        },\n        {\n            \"guid\": \"b46982865d594cc1a59e52065afefe95\",\n           
+    \"name\": \"Stable Big Door\",\n            \"_modules\": [\n               
+    {\n                    \"guid\": \"2e8b9370869e44caadc5c2da3d66ce83\",\n                   
+    \"name\": \"New Wall Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 5139338024122821290,\n                           
+    \"guid\": \"83b19bada90e3554fa9adbde2c00878e\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        }\n    ],\n    \"_floorGroups\": [\n        {\n           
+    \"guid\": \"e2c41d409acd4b929b5803259c36a91e\",\n            \"name\": \"Wooden
+    Floor\",\n            \"_modules\": [\n                {\n                   
+    \"guid\": \"b984970b8c544a129e498009951f56de\",\n                    \"name\":
+    \"New Floor Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 1523536193428878102,\n                           
+    \"guid\": \"d86817cd9d96a4e4a9c0368e8510d621\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"fileID\": 8082355067167871092,\n                            \"guid\": \"8af5976a5b87e284389e27d17c5ecf17\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    }\n            ]\n        }\n    ],\n    \"_decoratorGroups\": [],\n    \"_decoratorCategories\":
+    [\n        {\n            \"guid\": \"5fc266ce03f84b9ca392049a28ef4c36\",\n           
+    \"_name\": \"All\"\n        }\n    ]\n}"

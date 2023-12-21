@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement class="unity-help-box assetsManager-element"
+                      style="flex-direction: row-reverse; flex-wrap: nowrap; align-items: center; margin-top: 5px; justify-content: space-around;">
+        <ui:VisualElement style="flex-direction: row; align-items: center;">
+            <ui:VisualElement class="unity-help-box__icon unity-help-box__icon--info"/>
+            <ui:Label
+                    text="The first module in the list is used as the default module for the initial placement in the scene and for the preview icon. "
+                    display-tooltip-when-elided="true" class="unity-help-box__label"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

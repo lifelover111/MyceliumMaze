@@ -1,0 +1,68 @@
+.mbs-container {
+    padding: 10px;
+}
+
+.mbs-row {
+    margin-top: 5px;
+}
+
+.unity-list-view .unity-foldout__content {
+    padding-top: 3px;
+}
+
+.disabled {
+    display: none;
+    visibility: visible;
+    overflow: visible;
+}
+
+.enabled {
+    display: flex;
+}
+
+.unity-list-view .unity-list-view__reorderable-handle {
+    padding-left: 5px;
+}
+
+.unity-list-view .unity-list-view__reorderable-item__container {
+    padding: 0px;
+}
+
+.unity-list-view .unity-list-view__reorderable-item:hover .mbs-list-item {
+    background-color: transparent;
+}
+
+
+.mbs-asset-editor__placer .unity-list-view .unity-collection-view__item {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    align-items: center;
+
+}
+
+.info-foldout {
+    background-color: var(--unity-colors-toolbar_button-background-hover);
+    border-color: var(--unity-colors-default-border);
+}
+
+#areas-listview #listItem .unity-button{
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+
+#areas-listview .unity-list-view__item #turn-walls_label,
+#areas-listview .unity-list-view__item #turn-inside_button,
+#areas-listview .unity-list-view__item #turn-outside_button{
+    display: none;
+}
+
+#areas-listview .unity-list-view__item:hover #turn-walls_label,
+#areas-listview .unity-list-view__item:hover #turn-inside_button, 
+#areas-listview .unity-list-view__item:hover #turn-outside_button{
+    display: flex;
+}
+
+
+
+

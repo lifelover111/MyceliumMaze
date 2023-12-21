@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/USS/globalStyles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#globalStyles"/>
+    <ui:VisualElement class="mbs-container"
+                      style="-unity-text-align: middle-center; justify-content: center; height: 353px; align-items: center;">
+        <ui:Label text="Please select &lt;b&gt;MBS Construction&lt;/b&gt; object&#10;in hierarchy or create new one"
+                  display-tooltip-when-elided="true" style="-unity-text-align: upper-center; flex-wrap: wrap;"/>
+        <ui:Button text="Create" display-tooltip-when-elided="true"
+                   style="align-items: center; width: 98px; margin-top: 10px;"/>
+    </ui:VisualElement>
+</ui:UXML>

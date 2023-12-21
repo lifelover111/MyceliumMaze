@@ -162,29 +162,30 @@ public static class LevelGenerator
     static int maxDoorsForwardNum = 3;
     public static Dictionary<LevelType, List<RoomNode.RoomType>> requiredLevelRoomNodesDict = new Dictionary<LevelType, List<RoomNode.RoomType>>
     {
-        { LevelType.prison, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest } },
+        { LevelType.castle, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest } },
     };
 
     static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>()
     {
-        { LevelType.prison, 3},
-        { LevelType.mines, 4},
+        { LevelType.castle, 3},
+        { LevelType.prison, 4},
     };
 
     static Dictionary<LevelType, int> levelWidthDict = new Dictionary<LevelType, int>()
     {
+        { LevelType.castle, 3},
         { LevelType.prison, 3},
-        { LevelType.mines, 3},
     };
 
     static Dictionary<LevelType, int> levelMeanNumRooms = new Dictionary<LevelType, int>()
     {
-        { LevelType.prison, 10},
-        { LevelType.mines, 15},
+        { LevelType.castle, 10},
+        { LevelType.prison, 15},
     };
 
     public enum LevelType 
     {
+        castle,
         prison,
         mines,
     }

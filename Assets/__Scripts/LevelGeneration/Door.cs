@@ -49,16 +49,12 @@ public class Door : MonoBehaviour
         transitionTo = toConnect;
         toConnect.transitionTo = this;
 
-        //Скрытие объектов дверей
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(false);
 
-        for (int i = 0; i < transitionTo.transform.childCount; i++)
-        {
-            transitionTo.transform.GetChild(i).gameObject.SetActive(false);
-        }
+        transitionTo.transform.GetChild(0).gameObject.SetActive(true);
+        transitionTo.transform.GetChild(1).gameObject.SetActive(false);
+
     }
 
     public bool IsEmptyTransition()

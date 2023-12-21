@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!49 &4900000
+TextAsset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mbs-pack-descriptor
+  m_Script: "{\n    \"guid\": \"c7799a98c38a4ccf9a132ad11dfe187b\",\n    \"_name\":
+    \"Castle\",\n    \"_wallGroups\": [\n        {\n            \"guid\": \"ab0841eb0c2b4cc6a42634a714b37757\",\n           
+    \"name\": \"Wall Group 1\",\n            \"_modules\": [\n                {\n                   
+    \"guid\": \"719253436a4046759abbe063e89726bb\",\n                    \"name\":
+    \"Solid\",\n                    \"prefabs\": [\n                        {\n                           
+    \"fileID\": 6517184508489584946,\n                            \"guid\": \"9bbb5245987b43043972821dcbdd765b\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"7cc0dccefb9e4d7e83db6e174ca8d219\",\n                   
+    \"name\": \"Solid2\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 4808101341289430985,\n                           
+    \"guid\": \"2e85d1506bb7a5c48bf1c391515f5261\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"d7d39923a3d749f3a731f3f65eb83e4b\",\n                   
+    \"name\": \"Window\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 3466943587159078440,\n                           
+    \"guid\": \"c0228a7a743dfee43b2381e6eb1f2be7\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"a12be5574fa649809acaee6fbb698e10\",\n                   
+    \"name\": \"Door\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 4397162205553716605,\n                           
+    \"guid\": \"a88728279c9ff77439e3768970fce445\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"e02bad7a34b5438bbe08125838a54158\",\n                   
+    \"name\": \"New Wall Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 919132149155446097,\n                           
+    \"guid\": \"dd41abc040aa57d449592ae5a29ec2c8\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        },\n        {\n            \"guid\": \"dd750c710d1b4e3aab087c945e9ae0ef\",\n           
+    \"name\": \"New Wall Group\",\n            \"_modules\": []\n        },\n       
+    {\n            \"guid\": \"7d3d6f6894084f8a8e44b8d147fa36bf\",\n            \"name\":
+    \"Roof Wall\",\n            \"_modules\": [\n                {\n                   
+    \"guid\": \"18d668fd512b485b9d9778100c8caae0\",\n                    \"name\":
+    \"New Wall Module\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 5276729755987282141,\n                           
+    \"guid\": \"1649879ee516b8e4f917c54da89754a8\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        }\n    ],\n    \"_floorGroups\": [\n        {\n           
+    \"guid\": \"d194447eb296491cbd0000d6f2bea8e4\",\n            \"name\": \"Inner\",\n           
+    \"_modules\": [\n                {\n                    \"guid\": \"8d4b73c920cf4f71aa2b0ebb8b68b14c\",\n                   
+    \"name\": \"Floor\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 490313454677958679,\n                           
+    \"guid\": \"0646289dde1e8a544800d3790d629971\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"abcfc62f604c4cc38d91c100ae972717\",\n                   
+    \"name\": \"Floor2\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 3894254861789127725,\n                           
+    \"guid\": \"c894645c79a0f764ea20a47ea34a8ff9\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"04d20163b1774675bfa9e48a357d5089\",\n                   
+    \"name\": \"Floor3\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 2916157309270767877,\n                           
+    \"guid\": \"0b9060156802c1c45925fc0536b9bd44\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"820677c5c38c456f9dce891dd9dd5dac\",\n                   
+    \"name\": \"Floor4\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 6177955446382480677,\n                           
+    \"guid\": \"de6e8ec0b4ccf7a42ba81b3b399f3256\",\n                           
+    \"type\": 3\n                        },\n                        {\n                           
+    \"instanceID\": 0\n                        }\n                    ]\n               
+    }\n            ]\n        }\n    ],\n    \"_decoratorGroups\": [\n        {\n           
+    \"guid\": \"57358d56a68e428397dfcf931eea0120\",\n            \"name\": \"Column\",\n           
+    \"_modules\": [\n                {\n                    \"guid\": \"ed526f62a5e54fb7b82fd268f4825e03\",\n                   
+    \"name\": \"Col1\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 816969783768130297,\n                           
+    \"guid\": \"f58268a6683cb49408153b9982f987ec\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"0bea3823788f47488a9d2c30cce42e7a\",\n                   
+    \"name\": \"Column2\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 4342671295866585447,\n                           
+    \"guid\": \"27f210ed52b6c0f409f410ac194d0a7c\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"431085d593a948ea92c892c456aecb3a\",\n                   
+    \"name\": \"col3\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 3713104444964819695,\n                           
+    \"guid\": \"2f3f7d4927009b84583c02fcbc509217\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"555019950f9a453681696976c8192ea1\",\n                   
+    \"name\": \"Stairs\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 2006959220475323954,\n                           
+    \"guid\": \"f2799c2d549259841b9b95372363edc2\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    }\n            ],\n            \"_assetCategoryGuid\": \"c04ffa89f3c74b12b4eb1170dec69946\"\n       
+    },\n        {\n            \"guid\": \"aba76e1b78a646988205c4aefd9ed1e9\",\n           
+    \"name\": \"Lightning\",\n            \"_modules\": [\n                {\n                   
+    \"guid\": \"146751f715df4e779546ab8130b62cf4\",\n                    \"name\":
+    \"Torch1\",\n                    \"prefabs\": [\n                        {\n                           
+    \"fileID\": 8583780524957933453,\n                            \"guid\": \"5fbfbee0f9885764383291c4c5e18668\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    },\n                {\n                    \"guid\": \"27ef3c924d854e099281a4f7779051da\",\n                   
+    \"name\": \"Candle\",\n                    \"prefabs\": [\n                       
+    {\n                            \"fileID\": 4725356937742542618,\n                           
+    \"guid\": \"c559a22601843db4c927941c06a8b94b\",\n                           
+    \"type\": 3\n                        }\n                    ]\n               
+    }\n            ],\n            \"_assetCategoryGuid\": \"c04ffa89f3c74b12b4eb1170dec69946\"\n       
+    }\n    ],\n    \"_decoratorCategories\": [\n        {\n            \"guid\":
+    \"c04ffa89f3c74b12b4eb1170dec69946\",\n            \"_name\": \"All\"\n       
+    }\n    ]\n}"

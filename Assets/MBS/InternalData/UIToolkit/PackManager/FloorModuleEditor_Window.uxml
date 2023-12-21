@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+         xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/USS/globalStyles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#globalStyles"/>
+    <ui:ScrollView class="mbs-container"
+                   style="min-width: 410px; min-height: 180px; height: 100%; transition-duration: 0.3s; transition-timing-function: ease-in-out;">
+        <ui:Label text="Floor Module Editor" display-tooltip-when-elided="true"
+                  style="-unity-font-style: bold; flex-direction: column;"/>
+        <ui:TextField picking-mode="Ignore" label="Module name" value="New Module" text="New Module"
+                      name="module-name-textfield" class="asset-name-textfield mbs-row"/>
+        <uie:ObjectField label="Square prefab" type="UnityEngine.GameObject, UnityEngine.CoreModule"
+                         name="square-prefab-objectfield" allow-scene-objects="false" class="mbs-row"/>
+        <uie:ObjectField label="Triangular prefab" type="UnityEngine.GameObject, UnityEngine.CoreModule"
+                         name="triangular-prefab-objectfield" allow-scene-objects="false" class="mbs-row"/>
+        <ui:Foldout text="Info" value="false" name="info-foldout" class="info-foldout"
+                    style="margin-top: 10px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(108, 108, 108); border-right-color: rgb(108, 108, 108); border-top-color: rgb(108, 108, 108); border-bottom-color: rgb(108, 108, 108); border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; margin-left: 3px; margin-right: 3px; flex-grow: 0;">
+            <ui:Label text="Placeholder" display-tooltip-when-elided="true" name="info-label"
+                      style="flex-wrap: wrap; white-space: normal; margin-bottom: 10px; color: rgba(9, 9, 9, 0.8); margin-right: 10px; margin-left: -5px; margin-top: 5px;"/>
+        </ui:Foldout>
+        <ui:VisualElement class="mbs-row" style="flex-wrap: nowrap; flex-direction: row-reverse;">
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="cancel-button"
+                       style="align-items: stretch; margin-right: 0;"/>
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="save-button"
+                       style="align-items: stretch;"/>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

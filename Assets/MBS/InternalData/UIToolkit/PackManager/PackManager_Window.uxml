@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance"
+         engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/PackManager/Uss/PackManager_Styles.uss?fileID=7433441132597879392&amp;guid=31f2c7d2d6d0bf0468df7de421301146&amp;type=3#PackManager_Styles" />
+    <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" class="mbs-container mbs-manager-window" style="min-width: 480px;">
+        <ui:VisualElement name="Row_selector" style="flex-direction: row; justify-content: flex-start; min-height: auto; min-width: auto; padding-bottom: 5px; border-bottom-width: 1px; border-bottom-color: rgb(147, 147, 147); margin-top: 0; overflow: visible;">
+            <ui:DropdownField label="Modular Packs" index="0" choices="None" name="pack-selector-dropdown" style="width: auto; min-width: 355px; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; align-items: auto; max-width: none; max-height: none; flex-shrink: 1; margin-left: 0; margin-right: 0; flex-basis: auto;" />
+            <ui:Button text="Create new" display-tooltip-when-elided="true" enable-rich-text="false" name="create-new-pack-button" style="margin-right: 0; overflow: visible;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Row_name" class="mbs-row" style="width: 100%; margin-top: 8px;">
+            <ui:Label text="Modular Pack Properties" display-tooltip-when-elided="false" enable-rich-text="false" name="pack-properties-label" style="-unity-font-style: bold; height: auto; -unity-slice-top: 0; margin-top: 5px;" />
+            <ui:TextField picking-mode="Ignore" label="Name" value="New Unnamed Pack" text="New Unnamed Pack" mask-character="1-9" name="pack-name-textfield" class="mbs-row" style="border-bottom-width: 0; border-bottom-color: rgb(142, 142, 142); padding-bottom: 5px; margin-bottom: 0; padding-top: 5px; height: 25px; margin-top: 5px; -unity-font-style: normal; min-width: 280px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Row_lists" style="width: 100%;">
+            <ui:VisualElement class="mbs-row">
+                <ui:ListView focusable="true" show-add-remove-footer="true" header-title="Wall Groups" show-foldout-header="true" reorderable="true" show-border="true" virtualization-method="FixedHeight" name="wall-list" reorder-mode="Animated" fixed-item-height="40" class="mbs-list-view" style="height: auto; border-bottom-width: 1px; border-bottom-color: rgba(91, 91, 91, 0.33); padding-bottom: 5px; border-top-color: rgb(0, 0, 0); border-top-width: 0; padding-top: 0; width: auto; margin-top: 5px; min-height: 20px; min-width: 290px;" />
+            </ui:VisualElement>
+            <ui:VisualElement class="mbs-row">
+                <ui:ListView focusable="true" show-add-remove-footer="true" header-title="Floor Groups" show-foldout-header="true" name="floor-list" reorderable="true" show-border="true" virtualization-method="FixedHeight" reorder-mode="Animated" fixed-item-height="40" class="mbs-list-view" style="height: auto; padding-bottom: 5px; border-bottom-color: rgba(91, 91, 91, 0.33); border-bottom-width: 1px; min-height: 20px; min-width: 290px;" />
+            </ui:VisualElement>
+            <ui:VisualElement class="mbs-row" style="margin-top: 8px;">
+                <ui:ListView focusable="true" reorderable="true" show-add-remove-footer="true" name="placer-list" show-foldout-header="true" header-title="Decorator Groups" show-border="true" virtualization-method="FixedHeight" reorder-mode="Animated" fixed-item-height="40" class="mbs-list-view" style="height: auto; border-bottom-color: rgba(91, 91, 91, 0.33); border-bottom-width: 0; padding-bottom: 5px; min-height: 20px; min-width: 290px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Row_buttons" class="mbs-row" style="align-items: stretch; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; width: 100%; border-top-color: rgb(147, 147, 147); border-top-width: 1px; -unity-slice-top: 5; padding-top: 5px; padding-bottom: 5px;">
+            <ui:VisualElement style="width: 50%; flex-direction: row;">
+                <ui:Button text="Remove pack" display-tooltip-when-elided="true" name="remove-pack-button" class="remove-pack-button" style="overflow: visible; margin-right: 3px; margin-left: 0;" />
+                <ui:Button text="Hide pack" display-tooltip-when-elided="true" name="hide-pack-button" style="overflow: visible;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="width: 50%; flex-direction: row; justify-content: flex-end;">
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-changes-button" class="save-button" />
+                <ui:Button text="Discard" display-tooltip-when-elided="true" name="discard-changes-button" class="discard-button" />
+                <ui:Button text="Close" display-tooltip-when-elided="true" name="close-button" class="discard-button" style="margin-right: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

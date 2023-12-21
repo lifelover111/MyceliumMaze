@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance"
+         engine="UnityEngine.UIElements" editor="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/Global_Styles.uss?fileID=7433441132597879392&amp;guid=d325d73397b149f4a8a5922437f62239&amp;type=3#Global_Styles" />
+    <Style src="project://database/Assets/MBS/InternalData/UIToolkit/PackManager/Uss/CategoriesManagerWindow_Styles.uss?fileID=7433441132597879392&amp;guid=521ba28868e70a2468cfe76ac23749e7&amp;type=3#CategoriesManagerWindow_Styles" />
+    <ui:ScrollView class="mbs-container mbs-category-manager" style="min-height: 220px;">
+        <ui:Label text="Categories Manager" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+        <ui:VisualElement class="am-row" style="flex-direction: row; align-items: stretch; flex-wrap: nowrap; flex-grow: 1; justify-content: space-between; min-width: 380px;" />
+        <ui:ListView focusable="true" show-foldout-header="true" show-border="true" header-title="Default Categories" show-add-remove-footer="false" reorderable="true" name="default-categories-listview" virtualization-method="FixedHeight" reorder-mode="Animated" picking-mode="Ignore" selection-type="None" fixed-item-height="24" show-bound-collection-size="false" class="prefabs-listview mbs-list-view mbs-row" />
+        <ui:ListView focusable="true" header-title="User Categories" show-border="true" show-foldout-header="true" show-add-remove-footer="true" reorderable="true" reorder-mode="Animated" fixed-item-height="24" name="user-categories-listview" show-bound-collection-size="false" class="mbs-list-view mbs-row user-categories-list" />
+        <ui:VisualElement class="mbs-row" style="flex-wrap: nowrap; flex-direction: row-reverse;">
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="cancel-button" style="align-items: stretch;" />
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" class="save-button" style="align-items: stretch;" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
