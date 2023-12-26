@@ -1,25 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.UIElements.Experimental;
 using static Hero;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 2;
+    [SerializeField] float speedForward;
+    [SerializeField] float speedBackward;
+    [SerializeField] float speedToSide;
+
+    float speed;
     [SerializeField] Animator anim;
     bool dirHeld = false;
     Vector3 dir;
     public eMode mode = eMode.idle;
-    const string goForwardKey = "GoForward";
-    private ViewDirectionController viewDirectionController;
+
     private Rigidbody rigid;
     Vector3 viewDirection;
+
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        viewDirectionController = GetComponent<ViewDirectionController>();
     }
 
     void Update()
@@ -27,13 +31,25 @@ public class Player : MonoBehaviour
         viewDirection = Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         viewDirection = new Vector3(viewDirection.x, 0, viewDirection.z).normalized;
 
-        if (mode != eMode.attack && mode != eMode.healing && mode != eMode.knockback && mode != eMode.rest)
-            transform.rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), viewDirection);
+        if(mode != eMode.idle)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.left, viewDirection), 2.2f);
+        }
+
 
         dirHeld = false;
         dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         dir = Quaternion.Euler(0, -45, 0) * dir;
-        if (dir.magnitude > 0) dirHeld = true;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            dir = transform.rotation * Vector3.left; //viewDirection.normalized;
+        }
+
+        if (dir.magnitude > 0) 
+        {
+            dirHeld = true;
+        };
         dir.Normalize();
 
         if (!dirHeld)
@@ -43,36 +59,64 @@ public class Player : MonoBehaviour
         else
             mode = eMode.move;
 
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            transform.rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), viewDirection);
+            anim.SetTrigger("Attack");
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            //transform.rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), viewDirection);
+            anim.SetBool("Block", true);
+        }
+        else if(Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            //transform.rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), viewDirection);
+            anim.SetBool("Block", false);
+        }
+
 
         Vector3 vel = Vector3.zero;
         switch (mode)
         {
             case eMode.idle:
-                //anim.transform.localPosition = Vector3.zero;
-                //anim.transform.localRotation = Quaternion.identity;
-                anim.CrossFade("Idle", 0);
-                anim.speed = 1;
+                anim.SetFloat("x", 0);
+                anim.SetFloat("y", 0);
+
+                float p = Mathf.Sin(Mathf.Deg2Rad * Vector3.SignedAngle(transform.rotation * Vector3.left, viewDirection, Vector3.up));
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.left, viewDirection), 2.2f);
+
+                anim.SetFloat("turn", p);
+
                 break;
             case eMode.move:
-                //anim.transform.localPosition = Vector3.zero;
-                //anim.transform.localRotation = Quaternion.identity;
                 vel = dir;
-                string a = CalcBodyMoveDirection(dir);
-                anim.CrossFade(a, 0);
-                anim.speed = 1;
+                SetSpeed(dir);
+                float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
+                Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * dir).normalized;
+                anim.SetFloat("x", walkTree.x);
+                anim.SetFloat("y", walkTree.z);
                 break;
         }
         rigid.velocity = vel * speed;
     }
 
-    string CalcBodyMoveDirection(Vector3 direction)
+    void SetSpeed(Vector3 direction)
     {
-        string[] cd = { "MoveForward", "MoveLeft", "MoveBackward", "MoveRight" };
         float angle = Vector3.SignedAngle(viewDirection, direction, Vector3.down);
         if (angle < 0) angle += 360;
 
-        int i = Mathf.RoundToInt((angle) / 90);
-        if (i == 4) i = 0;
-        return cd[i];
+        if ((angle >= 0 && angle < 30) || angle > 330)
+        {
+            speed = speedForward;
+        }
+        else if (angle > 150 && angle < 210)
+        {
+            speed = speedBackward;
+        }
+        else
+        {
+            speed = speedToSide;
+        }
     }
 }
