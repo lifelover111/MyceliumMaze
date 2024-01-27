@@ -7,9 +7,10 @@ namespace EnemyBehaviors
     namespace AttackBehaviors
     {
         using System.Linq;
+        /*
         public abstract class AttackBehaviorBase
         {
-            protected Enemy enemy;
+            protected OldProject.Enemy enemy;
             protected Rigidbody body;
             protected GameObject target;
             protected float speed;
@@ -20,7 +21,7 @@ namespace EnemyBehaviors
             private float dmgCoefficient;
             private float concDmgCoefficient;
 
-            public AttackBehaviorBase(Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient)
+            public AttackBehaviorBase(OldProject.Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient)
             {
                 this.dmgCoefficient = dmgCoefficient;
                 this.concDmgCoefficient = concDmgCoefficient;
@@ -44,7 +45,7 @@ namespace EnemyBehaviors
 
         public class CommonAttackBehavior : AttackBehaviorBase, IEnemyBehavior
         {
-            public CommonAttackBehavior(Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient) :base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient) 
+            public CommonAttackBehavior(OldProject.Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient) :base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient) 
             {
                 DamageEffect dmgEf = atkHitbox.GetComponent<DamageEffect>();
                 dmgEf.damage = enemy.stats.Dexterity * dmgCoefficient;
@@ -85,7 +86,7 @@ namespace EnemyBehaviors
 
         public class SerialAttackBehavior : AttackBehaviorBase, IEnemyBehavior
         {
-            public SerialAttackBehavior(Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient) : base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient)
+            public SerialAttackBehavior(OldProject.Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float concDmgCoefficient) : base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient)
             {
                 DamageEffect dmgEf = atkHitbox.GetComponent<DamageEffect>();
                 dmgEf.damage = enemy.stats.Dexterity * dmgCoefficient;
@@ -126,7 +127,7 @@ namespace EnemyBehaviors
         {
             LayerMask shotLayerMask;
             int onView = 0;
-            public ShotBehavior(Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float sanityDmgCoefficient, float concDmgCoefficient, LayerMask shotLayerMask) : base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient)
+            public ShotBehavior(OldProject.Enemy enemy, string animName, GameObject atkHitbox, float atkRange, float dmgCoefficient, float sanityDmgCoefficient, float concDmgCoefficient, LayerMask shotLayerMask) : base(enemy, animName, atkHitbox, atkRange, dmgCoefficient, concDmgCoefficient)
             {
                 DamageEffect dmgEf = atkHitbox.GetComponent<DamageEffect>();
                 dmgEf.damage = enemy.stats.Dexterity * dmgCoefficient;
@@ -173,13 +174,78 @@ namespace EnemyBehaviors
                 enemy.isAttacking = true;
             }
         }
+        */
 
+        public abstract class NewAttackBehaviorBase
+        {
+            protected Enemy enemy;
+            protected Rigidbody body;
+            protected GameObject target;
+            protected float speed;
+            protected Animator anim;
+            protected GameObject weapon;
+            protected float atkRange;
+            private float dmgCoefficient;
+            private float concDmgCoefficient;
+
+            public NewAttackBehaviorBase(Enemy enemy, GameObject weapon, float atkRange, float dmgCoefficient, float concDmgCoefficient)
+            {
+                this.dmgCoefficient = dmgCoefficient;
+                this.concDmgCoefficient = concDmgCoefficient;
+                this.enemy = enemy;
+                body = enemy.rigid;
+                this.anim = enemy.anim;
+                this.weapon = weapon;
+                this.atkRange = atkRange;
+                DamageEffect dmgEf = this.weapon.GetComponent<DamageEffect>();
+            }
+
+            public void InitNewStats()
+            {
+            }
+        }
+        public class NewCommonAttackBehavior : NewAttackBehaviorBase, IEnemyBehavior
+        {
+            public NewCommonAttackBehavior(Enemy enemy, GameObject weapon, float atkRange, float dmgCoefficient, float concDmgCoefficient) : base(enemy, weapon, atkRange, dmgCoefficient, concDmgCoefficient)
+            {
+            }
+            public void Update()
+            {
+                if (!enemy.isAttacking)
+                    enemy.canChooseBehavior = true;
+                else
+                { 
+                    anim.SetTrigger("Attack");
+                    enemy.isAttacking = false;
+                }
+            }
+
+            public float Analyze()
+            {
+
+                target = enemy.target;
+                float result;
+
+                result = atkRange * enemy.baseAgressivity * Mathf.Sqrt(enemy.agressivity) / (enemy.gameObject.transform.position - target.transform.position).magnitude;
+
+                return result;
+            }
+
+            public void PrepareBehavior()
+            {
+                enemy.canChooseBehavior = false;
+                body.velocity = Vector3.zero;
+                enemy.isBlockUp = false;
+                enemy.isAttacking = true;
+            }
+        }
     }
     namespace MoveBehaviors
     {
+        /*
         public abstract class MoveBehaviorBase
         {
-            protected Enemy enemy;
+            protected OldProject.Enemy enemy;
             protected MovingAI ai;
             protected AIData aiData;
             protected List<SteeringBehaviour> steeringBehaviors;
@@ -190,7 +256,7 @@ namespace EnemyBehaviors
             protected string animationName;
             protected float avoidDecisionTime = 5;
 
-            public MoveBehaviorBase(Enemy enemy, string animName)
+            public MoveBehaviorBase(OldProject.Enemy enemy, string animName)
             {
                 this.enemy = enemy;
                 body = enemy.rigid;
@@ -226,7 +292,7 @@ namespace EnemyBehaviors
 
         public class FollowBehavior : MoveBehaviorBase, IEnemyBehavior
         {
-            public FollowBehavior(Enemy enemy, string animName) : base(enemy, animName){}
+            public FollowBehavior(OldProject.Enemy enemy, string animName) : base(enemy, animName){}
             public override void Update()
             {
                 base.Update();
@@ -243,7 +309,7 @@ namespace EnemyBehaviors
                 {
                     anim.CrossFade(animationName + CalcBodyDirection(movementDirection) + '_' + enemy.facing, 0);
                     anim.speed = 1;
-                    enemy.facing = enemy.CalcFacing(movementDirection/*target.transform.position - enemy.gameObject.transform.position*/);
+                    enemy.facing = enemy.CalcFacing(movementDirection);
 
                 }
                 enemy.agressivity += Time.deltaTime;
@@ -262,7 +328,7 @@ namespace EnemyBehaviors
         }
         public class AvoidBehavior : MoveBehaviorBase, IEnemyBehavior
         {
-            public AvoidBehavior(Enemy enemy, string animName) : base(enemy, animName) { }
+            public AvoidBehavior(OldProject.Enemy enemy, string animName) : base(enemy, animName) { }
             public override void Update()
             {
                 base.Update();
@@ -294,7 +360,7 @@ namespace EnemyBehaviors
             private float timeDirChanged;
             private float dirChangeDelay = 3f;
             int dirCoeff;
-            public SurroundBehavior(Enemy enemy, string animName) : base(enemy, animName) { }
+            public SurroundBehavior(OldProject.Enemy enemy, string animName) : base(enemy, animName) { }
             public override void Update()
             {
                 base.Update();
@@ -330,7 +396,7 @@ namespace EnemyBehaviors
         {
             float distance;
             bool jib;
-            public KeepDistanceBehavior(Enemy enemy, string animName, float distance, bool jib = false) : base(enemy, animName) 
+            public KeepDistanceBehavior(OldProject.Enemy enemy, string animName, float distance, bool jib = false) : base(enemy, animName) 
             {
                 this.distance = distance;
                 this.jib = jib;
@@ -374,20 +440,158 @@ namespace EnemyBehaviors
                 enemy.isAttacking = false;
             }
         }
+        */
 
 
+
+        public abstract class NewMoveBehaviorBase
+        {
+            protected Enemy enemy;
+            protected MovingAI ai;
+            protected AIData aiData;
+            protected List<SteeringBehaviour> steeringBehaviors;
+            protected Rigidbody body;
+            protected GameObject target;
+            protected float speed;
+            protected Animator anim;
+            protected string animationName;
+            protected float avoidDecisionTime = 5;
+
+
+            public NewMoveBehaviorBase(Enemy enemy)
+            {
+                this.enemy = enemy;
+                body = enemy.rigid;
+                speed = enemy.speed;
+                this.anim = enemy.anim;
+                ai = enemy.gameObject.GetComponent<MovingAI>();
+                steeringBehaviors = ai.steeringBehaviours;
+                aiData = enemy.gameObject.GetComponent<AIData>();
+            }
+
+            public virtual void Update()
+            {
+                if ((enemy.gameObject.transform.position - enemy.avoidDecisionPosition).magnitude >= body.velocity.magnitude * Time.deltaTime)
+                {
+                    enemy.lastMoveTime = Time.time;//Mathf.Lerp(enemy.lastMoveTime, Time.time, (enemy.lastMoveTime+Time.deltaTime)/Time.time);
+                }
+            }
+
+
+            public void InitNewStats() { }
+        }
+        public class NewFollowBehavior : NewMoveBehaviorBase, IEnemyBehavior
+        {
+            public NewFollowBehavior(Enemy enemy) : base(enemy) { }
+            public override void Update()
+            {
+                if (!anim.GetBool("Idle"))
+                    return;
+                base.Update();
+
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData);
+
+                body.velocity = speed * movementDirection;
+                Vector3 viewDirection = enemy.transform.rotation * Vector3.left;
+                float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
+                Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * movementDirection).normalized;
+                anim.SetFloat("x", walkTree.x);
+                anim.SetFloat("y", walkTree.z);
+                enemy.agressivity += Time.deltaTime;
+            }
+
+            public float Analyze()
+            {
+                target = enemy.target;
+                return 2 * (enemy.gameObject.transform.position - target.transform.position).magnitude * Mathf.Sqrt(enemy.agressivity) * Mathf.Clamp((avoidDecisionTime + enemy.lastMoveTime - Time.time) / avoidDecisionTime, 0, 1);
+            }
+            public void PrepareBehavior()
+            {
+                enemy.isBlockUp = false;
+                enemy.isAttacking = false;
+            }
+        }
+        public class NewAvoidBehavior : NewMoveBehaviorBase, IEnemyBehavior
+        {
+            public NewAvoidBehavior(Enemy enemy) : base(enemy) { }
+            public override void Update()
+            {
+                if (!anim.GetBool("Idle"))
+                    return;
+                base.Update();
+
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, 180);
+
+                body.velocity = speed * movementDirection;
+                Vector3 viewDirection = enemy.transform.rotation * Vector3.left;
+                float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
+                Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * movementDirection).normalized;
+                anim.SetFloat("x", walkTree.x);
+                anim.SetFloat("y", walkTree.z);
+                enemy.agressivity += Time.deltaTime;
+            }
+
+            public float Analyze()
+            {
+                target = enemy.target;
+                return (enemy.baseAgressivity * 20 / (enemy.agressivity * (enemy.gameObject.transform.position - target.transform.position).magnitude)) * (1 + Mathf.Exp((Time.time - enemy.lastMoveTime) / avoidDecisionTime));
+            }
+            public void PrepareBehavior()
+            {
+                enemy.isBlockUp = false;
+                enemy.isAttacking = false;
+            }
+        }
+        public class NewSurroundBehavior : NewMoveBehaviorBase, IEnemyBehavior
+        {
+            private float timeDirChanged;
+            private float dirChangeDelay = 3f;
+            int dirCoeff;
+            public NewSurroundBehavior(Enemy enemy) : base(enemy) { }
+            public override void Update()
+            {
+                if (!anim.GetBool("Idle"))
+                    return;
+                base.Update();
+                if (Time.time > timeDirChanged + dirChangeDelay)
+                {
+                    timeDirChanged = Time.time;
+                    dirCoeff = Random.value > 0.5f ? 1 : -1;
+                }
+                Vector3 movementDirection = ai.movementDirectionSolver.GetDirectionToMove(steeringBehaviors, aiData, dirCoeff * 90);
+                body.velocity = speed * movementDirection;
+                Vector3 viewDirection = enemy.transform.rotation * Vector3.left;
+                float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
+                Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * movementDirection).normalized;
+                anim.SetFloat("x", walkTree.x);
+                anim.SetFloat("y", walkTree.z);
+                enemy.agressivity += 2 * Time.deltaTime;
+            }
+
+            public float Analyze()
+            {
+                target = enemy.target;
+                return (-10 * enemy.agressivity / (enemy.gameObject.transform.position - target.transform.position).magnitude + 2.5f * enemy.baseAgressivity) * (1 + Mathf.Exp((Time.time - enemy.lastMoveTime) / avoidDecisionTime));
+            }
+            public void PrepareBehavior()
+            {
+                enemy.isBlockUp = false;
+                enemy.isAttacking = false;
+            }
+        }
     }
     namespace DefendBehaviors
     {
+        /*
         public abstract class DefendBehaviorBase
         {
-            protected Enemy enemy;
+            protected OldProject.Enemy enemy;
             protected GameObject target;
             protected Animator anim;
             protected Rigidbody body;
             protected string animationName;
             protected float heroAtkRange;
-            public DefendBehaviorBase(Enemy enemy, string animName)
+            public DefendBehaviorBase(OldProject.Enemy enemy, string animName)
             {
                 this.enemy = enemy;
                 anim = enemy.anim;
@@ -399,7 +603,7 @@ namespace EnemyBehaviors
         }
         public class BlockBehavior : DefendBehaviorBase, IEnemyBehavior
         {
-            public BlockBehavior(Enemy enemy, string animName) : base(enemy, animName) { }
+            public BlockBehavior(OldProject.Enemy enemy, string animName) : base(enemy, animName) { }
             public void Update()
             {
                 enemy.canChooseBehavior = Time.time - enemy.blockPlacedTime < 2 ? false : true;
@@ -418,7 +622,7 @@ namespace EnemyBehaviors
             {
                 target = enemy.target;
 
-                int k = target.GetComponent<Hero>().mode == Hero.eMode.attack ? 1 : 0;
+                int k = target.GetComponent<Player>().mode == Hero.eMode.attack ? 1 : 0;
 
                 float distance = (enemy.gameObject.transform.position - target.transform.position).magnitude;
 
@@ -432,5 +636,6 @@ namespace EnemyBehaviors
                 enemy.isAttacking = false;
             }
         }
+        */
     }
 }

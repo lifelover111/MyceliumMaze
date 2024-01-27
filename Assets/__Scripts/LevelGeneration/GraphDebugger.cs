@@ -31,6 +31,7 @@ public class GraphDebugger : MonoBehaviour
 
     void Start()
     {
+        /*
         LevelGenerator.Init();
         List<RoomNode[]> graphs = new List<RoomNode[]>();
         for (int i = 0; i < graphsToGenerate; i++)
@@ -38,6 +39,7 @@ public class GraphDebugger : MonoBehaviour
             graphs.Add(LevelGenerator.GenerateLevel(LevelGenerator.LevelType.prison));
         }
         DebugGraph(graphs);
+        */
     }
 
 

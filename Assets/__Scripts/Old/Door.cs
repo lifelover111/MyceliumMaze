@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 namespace OldProject
 {
     public class Door : MonoBehaviour
@@ -43,6 +43,7 @@ namespace OldProject
 
         private void Update()
         {
+            /*
             if (TileCamera.heroInrm.roomNum == inrm.roomNum)
             {
                 if (enemiesInCurrentRoom.Count > 0)
@@ -61,7 +62,9 @@ namespace OldProject
                     TileCamera.heroInrm.keepInRoom = false;
                 }
             }
+            
         }
 
     }
 }
+*/

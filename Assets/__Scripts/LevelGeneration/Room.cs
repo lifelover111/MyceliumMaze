@@ -13,6 +13,7 @@ public class Room : MonoBehaviour
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
     List<GameObject> enemies = new List<GameObject>();
+    int depth;
     private void Awake()
     {
         transitionsForward = new Door[doorsForward.Length];
@@ -64,7 +65,7 @@ public class Room : MonoBehaviour
     {
         foreach (var p in enemySpawnPoints)
         {
-            GameObject enemy = Instantiate(EnemyPrafabs.instance.enemyPrefabs[Random.Range(0, EnemyPrafabs.instance.enemyPrefabs.Length)]);
+            GameObject enemy = Instantiate(EnemyPrefabManager.instance.enemyPrefabs[Random.Range(0, EnemyPrefabManager.instance.enemyPrefabs.Length)]);
             enemy.transform.position = p.position;
             enemies.Add(enemy);
             enemy.SetActive(false);
@@ -78,5 +79,14 @@ public class Room : MonoBehaviour
             e.SetActive(true);
         }
         enemies.Clear();
+    }
+
+    public int GetDepth()
+    {
+        return depth;
+    }
+    public void SetDepth(int d)
+    {
+        depth = d;
     }
 }

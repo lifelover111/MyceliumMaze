@@ -11,6 +11,7 @@ public class Door : MonoBehaviour
     public static event System.Action OnTransition;
     static Transform player;
     Room currentRoom;
+    public Room room { get { return currentRoom; } }
 
     private void Awake()
     {
@@ -28,18 +29,21 @@ public class Door : MonoBehaviour
     {
         if (other.tag != "Player")
             return;
+        //LevelGenerator.DisableRooms(RoomManager.instance.nodesRoomsDictionary, transitionTo.room.GetDepth());
         OnTransition?.Invoke();
         player = other.transform;
-        StartCoroutine(nameof(TranslatePlayer));
+        StartCoroutine(TranslatePlayer());
     }
 
     IEnumerator TranslatePlayer()
     {
+        transitionTo.room.gameObject.SetActive(true);
         float time = Time.time;
         while (Mathf.Sin(Time.time - time) < 0.99)
         {
             yield return null;
         }
+        currentRoom.gameObject.SetActive(false);
         player.position = transitionTo.transform.position + transitionTo.enterPositionShift + 0.5f * Vector3.up;
         transitionTo.currentRoom.WakeEnemies();
     }

@@ -8,158 +8,8 @@ using System.Linq;
 
 public static class LevelGenerator
 {
-    static OldProject.Room[,] _level;
-    static public OldProject.Room[,] level { get { return _level; } private set { _level = value; } }
-    static OldProject.Room _startRoom;
-    static public OldProject.Room startRoom { get { return _startRoom; } private set { _startRoom = value; } }
-
-    static int intSeed;
-    static public int numRoomsX;
-    static public int numRoomsY;
-    static public int roomWidth = 21;
-    static public int roomHeight = 15;
-
-    static int minWidthInRooms = 5;
-    static int minHeightInRooms = 5;
-    static int maxWidthInRooms = 10;
-    static int maxHeightInRooms = 10;
-
-    static public int H;
-    static public int W;
-
-    static public Vector2[] environmentsCenters = { new Vector2(5f, 4.5f), new Vector2(5f, 9.5f), new Vector2(16f, 4.5f), new Vector2(16f, 9.5f), new Vector2(10.5f, 7f) };
-
-    public static void Init(string seed = null)
-    {
-        if (seed != null)
-        {
-            byte[] bytes = Encoding.ASCII.GetBytes(seed);
-            if (System.BitConverter.IsLittleEndian)
-            {
-                if (bytes.Length < 4)
-                {
-                    byte[] newBytes = new byte[4];
-                    System.Array.Copy(bytes, 0, newBytes, newBytes.Length - bytes.Length, bytes.Length);
-                    bytes = newBytes;
-                }
-                System.Array.Reverse(bytes);
-            }
-            intSeed = System.BitConverter.ToInt32(bytes, 0);
-            Random.InitState(intSeed);
-        }
-
-
-        numRoomsX = Random.Range(minWidthInRooms, maxWidthInRooms);
-        numRoomsY = Random.Range(minHeightInRooms, maxHeightInRooms);
-
-
-        W = numRoomsX*roomWidth;
-        H = numRoomsY*roomHeight;
-    }
-
-    public static OldProject.Room[,] GenerateLevel()
-    {
-        level = new OldProject.Room[numRoomsX, numRoomsY];
-        for (int x = 0; x < numRoomsX; x++)
-            for (int y = 0; y < numRoomsY; y++)
-                level[x, y] = new OldProject.Room(x, y);
-        Stack<OldProject.Room> stack = new Stack<OldProject.Room>();
-        OldProject.Room current = level[Random.Range(0, numRoomsX), Random.Range(0, numRoomsY)];
-        current.visited = true;
-        while (true)
-        {
-            List<OldProject.Room> neighbors = new List<OldProject.Room>();
-            for (int i = -1; i < 2; i += 2)
-            {
-                if (current.x + i >= 0 && current.x + i < numRoomsX)
-                {
-                    if (!level[current.x + i, current.y].visited)
-                        neighbors.Add(level[current.x + i, current.y]);
-                }
-                if (current.y + i >= 0 && current.y + i < numRoomsY)
-                {
-                    if (!level[current.x, current.y + i].visited)
-                        neighbors.Add(level[current.x, current.y + i]);
-                }
-            }
-            if(neighbors.Count > 0)
-            {
-                OldProject.Room next = neighbors[Random.Range(0, neighbors.Count)];
-                current.Connect(next);
-                stack.Push(current);
-                current = next;
-                current.visited = true;
-            }
-            else if (stack.Count > 0)
-            {
-                current = stack.Pop();
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        startRoom = level[Random.Range(0, numRoomsX), Random.Range(0, numRoomsY)];
-        startRoom.SetType(OldProject.Room.eRoomType.rest);
-        foreach (OldProject.Room room in level)
-            room.visited = false;
-
-
-        SetRoomsDepth(startRoom, 0);
-
-        foreach (OldProject.Room room in level)
-            room.visited = false;
-        
-        SetRoomsRest(startRoom, 0);
-
-        return level;
-    }
-
-    static void SetRoomsDepth(OldProject.Room room, int depth)
-    {
-        room.depth = depth;
-        room.visited = true;
-        foreach(OldProject.Room.eDoorLoc doorLoc in room.doorLocs)
-        {
-            Vector2 bypassDir = new Vector2(Mathf.Cos(Mathf.PI/2*(int)doorLoc), Mathf.Sin(Mathf.PI/2 * (int)doorLoc));
-            if (!level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)].visited)
-                SetRoomsDepth(level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)], depth + 1);
-        }
-    }
-
-    static void SetRoomsRest(OldProject.Room room, float chance)
-    {
-        room.visited = true;
-        float nxtChance = chance + 0.025f;
-        if (room.type == null)
-        {
-            if (GetRandomChance(nxtChance))
-            {
-                room.type = OldProject.Room.eRoomType.rest;
-                nxtChance = 0;
-            }
-            else
-                room.type = OldProject.Room.eRoomType.fight;
-        }
-        foreach (OldProject.Room.eDoorLoc doorLoc in room.doorLocs)
-        {
-            Vector2 bypassDir = new Vector2(Mathf.Cos(Mathf.PI / 2 * (int)doorLoc), Mathf.Sin(Mathf.PI / 2 * (int)doorLoc));
-            if (!level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)].visited)
-                SetRoomsRest(level[room.x + Mathf.RoundToInt(bypassDir.x), room.y + Mathf.RoundToInt(bypassDir.y)], nxtChance);
-        }
-    }
-
-
-    public static bool GetRandomChance(float chance)
-    {
-        return Random.value <= chance;
-    }
-
-
-
-    // Новый код
     static int maxDoorsForwardNum = 3;
+
     public static Dictionary<LevelType, List<RoomNode.RoomType>> requiredLevelRoomNodesDict = new Dictionary<LevelType, List<RoomNode.RoomType>>
     {
         { LevelType.castle, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest } },
@@ -230,7 +80,7 @@ public static class LevelGenerator
         }
     }
 
-    public static RoomNode[] GenerateLevel(LevelType type)
+    public static Dictionary<RoomNode, GameObject> GenerateLevel(LevelType type)
     {
         RoomNode startNode = new RoomNode();
         startNode.depth = 0;
@@ -241,9 +91,19 @@ public static class LevelGenerator
         Dictionary<RoomNode, GameObject> correspondedNodes = new Dictionary<RoomNode, GameObject>();
         CorrespondNodesToRooms(startContainer, type, correspondedNodes);
         ArrangeRooms(correspondedNodes);
-        return startContainer;
+        DisableRooms(correspondedNodes);
+        return correspondedNodes;
     }
-    
+    public static void DisableRooms(Dictionary<RoomNode, GameObject> rooms, int depth = 0)
+    {
+        foreach(var pair in rooms)
+        {
+            if(Mathf.Abs(pair.Key.depth - depth) > 0)
+                pair.Value.gameObject.SetActive(false);
+            else 
+                pair.Value.gameObject.SetActive(true);
+        }
+    }
     static void RecursiveGraphGeneration(LevelType type, RoomNode[] nodes, int currentDepth = 0, int nodesTotal = 0)
     {
         if (currentDepth == levelDepthDict[type])
@@ -405,6 +265,7 @@ public static class LevelGenerator
                 room = RoomManager.instance.GetRoom(type, RoomNode.RoomType.any, node.parents.Length, node.children.Length);
             }
             room = Object.Instantiate(room);
+            room.GetComponent<Room>().SetDepth(node.depth);
             corresponded.Add(node, room);
         }
         if (nextNodes.Count == 0)
@@ -437,4 +298,13 @@ public static class LevelGenerator
             x++;
         }
     }
+
+
+
+    public static bool GetRandomChance(float chance)
+    {
+        return Random.value <= chance;
+    }
+
+
 }

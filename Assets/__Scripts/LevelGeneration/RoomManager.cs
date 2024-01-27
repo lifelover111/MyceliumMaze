@@ -1,4 +1,3 @@
-using OldProject;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ public class RoomManager : MonoBehaviour
     public static RoomManager instance;
     [SerializeField] Room[] roomsCastle;
     Dictionary<LevelGenerator.LevelType, Room[]> roomsPrefabDict = new Dictionary<LevelGenerator.LevelType, Room[]>();
+    public Dictionary<LevelGenerator.RoomNode, GameObject> nodesRoomsDictionary { get; private set; }
     private void Awake()
     {
         instance = this;
@@ -16,8 +16,7 @@ public class RoomManager : MonoBehaviour
     }
     private void Start()
     {
-        LevelGenerator.Init();
-        LevelGenerator.GenerateLevel(LevelGenerator.LevelType.castle);
+        nodesRoomsDictionary = LevelGenerator.GenerateLevel(LevelGenerator.LevelType.castle);
     }
     public GameObject GetRoom(LevelGenerator.LevelType leveltype, LevelGenerator.RoomNode.RoomType roomType, int entersNum, int exitNum)
     {

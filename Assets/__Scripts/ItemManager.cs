@@ -5,11 +5,11 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] ItemActions itemActions;
-    Hero hero;
+    Player player;
     Inventory inventory = new Inventory();
     private void Awake()
     {
-        hero = GetComponent<Hero>();
-        itemActions.hero = hero;
+        player = GetComponent<Player>();
+        itemActions.player = player;
     }
 }
