@@ -9,6 +9,7 @@ public class PixelizeFeature : ScriptableRendererFeature
     [System.Serializable]
     public class CustomPassSettings
     {
+        public LayerMask excludeLayer;
         public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
         public int screenHeight = 144;
     }

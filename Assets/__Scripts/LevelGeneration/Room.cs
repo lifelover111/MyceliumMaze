@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     [SerializeField] Transform[] doorsForward;
     [SerializeField] Transform[] doorsBackward;
     [SerializeField] Transform[] enemySpawnPoints;
+    Transform EnemyAnchor;
     [Header("Sets dynamycally")]
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
@@ -26,6 +27,8 @@ public class Room : MonoBehaviour
         {
             transitionsBackward[i] = doorsBackward[i].GetComponent<Door>();
         }
+        EnemyAnchor = new GameObject(nameof(EnemyAnchor)).transform;
+        EnemyAnchor.SetParent(transform);
     }
 
     public void ConnectWith(Room[] toConnect, int[] connectionsBackwardCount)
@@ -63,12 +66,19 @@ public class Room : MonoBehaviour
 
     public void SpawnEnemies()
     {
+        if (enemySpawnPoints.Length == 0)
+            return;
+        if (enemySpawnPoints == null)
+            Debug.Log(gameObject.name);
         foreach (var p in enemySpawnPoints)
         {
+            if (EnemyPrefabManager.instance.enemyPrefabs.Length == 0)
+                return;
             GameObject enemy = Instantiate(EnemyPrefabManager.instance.enemyPrefabs[Random.Range(0, EnemyPrefabManager.instance.enemyPrefabs.Length)]);
             enemy.transform.position = p.position;
             enemies.Add(enemy);
             enemy.SetActive(false);
+            enemy.transform.SetParent(EnemyAnchor, true);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace EnemyBehaviors
 {
@@ -214,7 +215,7 @@ namespace EnemyBehaviors
                 if (!enemy.isAttacking)
                     enemy.canChooseBehavior = true;
                 else
-                { 
+                {
                     anim.SetTrigger("Attack");
                     enemy.isAttacking = false;
                 }
@@ -237,6 +238,12 @@ namespace EnemyBehaviors
                 body.velocity = Vector3.zero;
                 enemy.isBlockUp = false;
                 enemy.isAttacking = true;
+            }
+
+            public void Stop()
+            {
+                enemy.isAttacking = false;
+                enemy.canChooseBehavior = true;
             }
         }
     }
@@ -456,6 +463,8 @@ namespace EnemyBehaviors
             protected Animator anim;
             protected string animationName;
             protected float avoidDecisionTime = 5;
+            protected Vector3 startPosition;
+            protected float timeStartMove;
 
 
             public NewMoveBehaviorBase(Enemy enemy)
@@ -477,8 +486,11 @@ namespace EnemyBehaviors
                 }
             }
 
-
-            public void InitNewStats() { }
+            public virtual void PrepareBehavior()
+            {
+                startPosition = enemy.transform.position;
+                timeStartMove = Time.time;
+            }
         }
         public class NewFollowBehavior : NewMoveBehaviorBase, IEnemyBehavior
         {
@@ -502,13 +514,21 @@ namespace EnemyBehaviors
 
             public float Analyze()
             {
+                if (Time.time - timeStartMove > 2 && (enemy.transform.position - startPosition).magnitude < 1)
+                    return 0;
                 target = enemy.target;
                 return 2 * (enemy.gameObject.transform.position - target.transform.position).magnitude * Mathf.Sqrt(enemy.agressivity) * Mathf.Clamp((avoidDecisionTime + enemy.lastMoveTime - Time.time) / avoidDecisionTime, 0, 1);
             }
-            public void PrepareBehavior()
+            public override void PrepareBehavior()
             {
+                base.PrepareBehavior();
                 enemy.isBlockUp = false;
                 enemy.isAttacking = false;
+            }
+
+            public void Stop()
+            {
+                
             }
         }
         public class NewAvoidBehavior : NewMoveBehaviorBase, IEnemyBehavior
@@ -533,13 +553,21 @@ namespace EnemyBehaviors
 
             public float Analyze()
             {
+                if (Time.time - timeStartMove > 2 && (enemy.transform.position - startPosition).magnitude < 1)
+                    return 0;
                 target = enemy.target;
                 return (enemy.baseAgressivity * 20 / (enemy.agressivity * (enemy.gameObject.transform.position - target.transform.position).magnitude)) * (1 + Mathf.Exp((Time.time - enemy.lastMoveTime) / avoidDecisionTime));
             }
-            public void PrepareBehavior()
+            public override void PrepareBehavior()
             {
+                base.PrepareBehavior();
                 enemy.isBlockUp = false;
                 enemy.isAttacking = false;
+            }
+
+            public void Stop()
+            {
+                
             }
         }
         public class NewSurroundBehavior : NewMoveBehaviorBase, IEnemyBehavior
@@ -570,13 +598,21 @@ namespace EnemyBehaviors
 
             public float Analyze()
             {
+                if(Time.time - timeStartMove > 2 && (enemy.transform.position - startPosition).magnitude < 1)
+                    return 0;
                 target = enemy.target;
                 return (-10 * enemy.agressivity / (enemy.gameObject.transform.position - target.transform.position).magnitude + 2.5f * enemy.baseAgressivity) * (1 + Mathf.Exp((Time.time - enemy.lastMoveTime) / avoidDecisionTime));
             }
-            public void PrepareBehavior()
+            public override void PrepareBehavior()
             {
+                base.PrepareBehavior();
                 enemy.isBlockUp = false;
                 enemy.isAttacking = false;
+            }
+
+            public void Stop()
+            {
+                
             }
         }
     }
@@ -637,5 +673,62 @@ namespace EnemyBehaviors
             }
         }
         */
+        public abstract class NewDefendBehaviorBase
+        {
+            protected Enemy enemy;
+            protected GameObject target;
+            protected Animator anim;
+            protected Rigidbody body;
+            protected float heroAtkRange;
+            public NewDefendBehaviorBase(Enemy enemy)
+            {
+                this.enemy = enemy;
+                anim = enemy.anim;
+                body = enemy.rigid;
+            }
+
+            public void InitNewStats() { }
+        }
+
+        public class BlockBehavior : NewDefendBehaviorBase, IEnemyBehavior
+        {
+            Vector3 blockPosition;
+            public BlockBehavior(Enemy enemy) : base(enemy) { }
+            public void Update()
+            {
+                enemy.canChooseBehavior = Time.time - enemy.blockPlacedTime < 2 ? false : true;
+
+                body.velocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.15f);
+
+                enemy.transform.position = blockPosition;
+                anim.SetBool("Block", true);
+                enemy.isBlockUp = true;
+                enemy.agressivity += 10 * Time.deltaTime;
+            }
+
+            public float Analyze()
+            {
+                target = enemy.target;
+
+                int k = target.GetComponent<Player>().mode == Player.eMode.attack ? 1 : 0;
+
+                float distance = (enemy.gameObject.transform.position - target.transform.position).magnitude;
+
+                float result = -10 * enemy.agressivity / distance + 4f * enemy.baseAgressivity + Random.value * Mathf.Exp(8 * k / distance);
+                return result;
+            }
+            public void PrepareBehavior()
+            {
+                enemy.blockPlacedTime = Time.time;
+                body.velocity = Vector3.zero;
+                enemy.isAttacking = false;
+                blockPosition = enemy.transform.position;
+            }
+
+            public void Stop()
+            {
+                anim.SetBool("Block", false);
+            }
+        }
     }
 }

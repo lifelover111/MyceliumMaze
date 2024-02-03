@@ -7,5 +7,5 @@ public interface IEnemyBehavior
     void Update();
     void PrepareBehavior();
     float Analyze();
-    void InitNewStats();
+    void Stop();
 }

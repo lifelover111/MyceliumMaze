@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static Player;
 
 public abstract class Enemy : MonoBehaviour, IHavingConcentration
 {
     [Header("Set in Inspector: Enemy")]
     protected string name;
+
     public float maxHealth = 20;
     public float knockbackSpeed = 5;
     public float invincibleDuration = 0.5f;
@@ -14,6 +17,8 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     public float parryTimeWindow = 0.2f;
     public GameObject concentrationBarPrefab;
     public GameObject healthBarPrefab;
+    public float damage;
+    public float concentrationDamage;
 
     public float baseAgressivity = 20;
 
@@ -43,7 +48,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     public GameObject target { get { return _target; } }
 
 
-    public GameObject weapon;
+    public Collider weapon;
     
 
     public bool isBlockUp = false;
@@ -67,6 +72,10 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     float stepDone;
     protected bool hit = false;
 
+
+    float concentartionRestoreDelay = 4f;
+    float timeConcentrationRestorationStopped;
+
     protected virtual void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -77,6 +86,10 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
         behaviors = new List<IEnemyBehavior>();
         behaviorsDelegates = new List<BehaviorDelegate>();
+
+        var dmgEffect = weapon.GetComponent<DamageEffect>();
+        dmgEffect.damage = damage;
+        dmgEffect.concentrationDamage = concentrationDamage;
     }
 
 
@@ -104,12 +117,12 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     {
         if (invincible && Time.time > invincibleDone)
             invincible = false;
-
+        /*
         if (knockback)
         {
             rigid.velocity = knockbackVel;
             return;
-        }
+        }*/
         knockback = false;
 
         if (target != null)
@@ -121,7 +134,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
             float p = Mathf.Sin(Mathf.Deg2Rad * Vector3.SignedAngle(transform.rotation * Vector3.left, viewDirection, Vector3.up));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.left, viewDirection), 2.2f);
-
+            rigid.velocity = Vector3.zero;
             anim.SetFloat("turn", p);
         }
         else
@@ -133,23 +146,11 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
             ChooseBehavior();
             behaviorChoosedTime = Time.time;
         }
-        CurrentBehaviorDelegate.Invoke();
-
-        
-
-        
+        CurrentBehaviorDelegate?.Invoke();
 
 
-        if (concentration > 0)
-        {
-            if (isBlockUp)
-            {
-                int concDecreaseCoeff = (Time.time - blockPlacedTime > 2) ? 4 : 1;
-                concentration -= concDecreaseCoeff * Time.deltaTime;
-            }
-            else
-                concentration -= Time.deltaTime;
-        }
+
+        RestoreConcentration();
 
         if (hit)
         {
@@ -207,8 +208,11 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
                 bhvrPriorityIndexes.Add(i);
         }
         int index = bhvrPriorityIndexes[Random.Range(0, bhvrPriorityIndexes.Count)];
+        behaviors.Where(b => b.Update == CurrentBehaviorDelegate).FirstOrDefault()?.Stop();
         CurrentBehaviorDelegate = behaviorsDelegates[index];
         behaviors[index].PrepareBehavior();
+
+        weapon.enabled = false;
     }
 
 
@@ -224,16 +228,16 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
         DamageEffect dEf = coll.gameObject.GetComponent<DamageEffect>();
         if (dEf == null) return;
 
-
         if (isBlockUp)
         {
-            Vector3 blockDirection = coll.gameObject.transform.position - transform.position;
+            Vector3 blockDirection = coll.gameObject.transform.root.position - transform.position;
             if (Vector3.Angle(viewDirection, blockDirection) < 30f)
             {
                 if (Time.time - blockPlacedTime <= parryTimeWindow)
                 {
                     coll.gameObject.GetComponentInParent<IHavingConcentration>().IncreaseConcentration(weapon.GetComponent<DamageEffect>().concentrationDamage * 2);
                     agressivity *= 4;
+                    anim.SetTrigger("Parry");
                     //audioSource.clip = parryClip;
                     //audioSource.Play();
                     return; //parry
@@ -246,7 +250,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
                 //audioSource.clip = blockClip;
                 //audioSource.Play();
-
+                anim.SetTrigger("BlockHit");
                 concentration += dEf.concentrationDamage;
                 ConcentrationOverflowCheck();
                 agressivity *= 2f;
@@ -255,7 +259,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
                 return;
             }
         }
-        health -= dEf.damage * (1 + concentration / maxConcentration);
+        health -= dEf.damage;
 
         //knockback = true;
         anim.SetTrigger("Hit");
@@ -277,29 +281,24 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
         invincible = true;
         invincibleDone = Time.time + invincibleDuration;
-        if (dEf.knockback)
-        {
-            Vector3 delta = transform.position - coll.transform.position;
-
-            knockbackVel = delta * knockbackSpeed;
-            rigid.velocity = knockbackVel;
-            //knockback = true;
-        }
 
     }
 
 
     void ConcentrationOverflowCheck()
     {
+        timeConcentrationRestorationStopped = Time.time;
         if (concentration >= maxConcentration)
         {
             knockback = true;
             rigid.velocity = Vector2.zero;
             knockbackVel = Vector2.zero;
-            anim.SetTrigger("Hit");
+            anim.SetTrigger("Stun");
             agressivity *= 0.001f;
             isBlockUp = false;
             isAttacking = false;
+            concentration = 0;
+            CurrentBehaviorDelegate = null;
         }
     }
 
@@ -354,18 +353,39 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
         concentration += val;
         ConcentrationOverflowCheck();
     }
+    void RestoreConcentration()
+    {
+        if (isAttacking || knockback)
+            return;
+        if (isBlockUp && Time.time > timeConcentrationRestorationStopped + concentartionRestoreDelay / 2)
+        {
+            if (concentration > 0)
+            {
+                concentration -= 1.5f * Time.deltaTime;
+            }
+            return;
+        }
+        if (Time.time > timeConcentrationRestorationStopped + concentartionRestoreDelay)
+        {
+            if (concentration > 0)
+            {
+                concentration -= 1.5f * Time.deltaTime;
+            }
+        }
+    }
 
 
     void StartHit()
     {
         hit = true;
-
+        weapon.enabled = true;
         if (Random.value > 0.5)
             agressivity *= 0.5f;
 
     }
     void StopHit()
     {
+        weapon.enabled = false;
         canChooseBehavior = true;
         isAttacking = false;
     }

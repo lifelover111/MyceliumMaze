@@ -41,7 +41,7 @@ public class Player : MonoBehaviour, IHavingConcentration
 
     bool invincible = false;
     float invincibleDone;
-    float invincibleDuration = 1;
+    float invincibleDuration = 0.5f;
 
     public bool _IsControlledByAnimator = false;
     public Collider weapon;
@@ -58,6 +58,9 @@ public class Player : MonoBehaviour, IHavingConcentration
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        var dmgEffect = weapon.GetComponent<DamageEffect>();
+        dmgEffect.damage = damage;
+        dmgEffect.concentrationDamage = concentrationDamage;
     }
 
     private void Start()
@@ -118,6 +121,7 @@ public class Player : MonoBehaviour, IHavingConcentration
         {
             transform.rotation = Quaternion.FromToRotation(new Vector3(-1, 0, 0), viewDirection);
             anim.SetTrigger("Attack");
+            mode = eMode.attack;
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -196,8 +200,8 @@ public class Player : MonoBehaviour, IHavingConcentration
                     if (coll.gameObject.tag != "Projectile")
                         coll.gameObject.GetComponentInParent<IHavingConcentration>().IncreaseConcentration(concentrationDamage * 2);
 
-                    anim.SetTrigger("Parry");
                     anim.SetBool("Block", false);
+                    anim.SetTrigger("Parry");
                     return; //parry
                 }
 
@@ -312,8 +316,9 @@ public class Player : MonoBehaviour, IHavingConcentration
         timeConcentrationRestorationStopped = Time.time;
         if (concentration >= maxConcentration)
         {
-            anim.SetTrigger("Hit");
+            anim.SetTrigger("Stun");
             mode = eMode.knockback;
+            concentration = 0;
         }
     }
 }

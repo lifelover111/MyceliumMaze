@@ -18,6 +18,7 @@ public class GuiConcentrationBar : MonoBehaviour
 
     void Update()
     {
+        transform.rotation = Camera.main.transform.rotation;
         if (target.GetConcentration() <= 0)
         {
             sRend.color = Color.Lerp(sRend.color, new Color(0, 0, 0, 0), Time.deltaTime);

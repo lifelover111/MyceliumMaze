@@ -18,7 +18,8 @@ public class Test3DEnemy : Enemy
         behaviors.Add(new EnemyBehaviors.MoveBehaviors.NewFollowBehavior(this));
         behaviors.Add(new EnemyBehaviors.MoveBehaviors.NewAvoidBehavior(this));
         behaviors.Add(new EnemyBehaviors.MoveBehaviors.NewSurroundBehavior(this));
-        behaviors.Add(new EnemyBehaviors.AttackBehaviors.NewCommonAttackBehavior(this, weapon, 0.5f, 1, 1));
+        behaviors.Add(new EnemyBehaviors.AttackBehaviors.NewCommonAttackBehavior(this, weapon.gameObject, 0.5f, 1, 1));
+        behaviors.Add(new EnemyBehaviors.DefendBehaviors.BlockBehavior(this));
     }
 
     protected override void Update()

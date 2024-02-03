@@ -20,6 +20,7 @@ public class GuiHealthBar : MonoBehaviour
 
     void Update()
     {
+        transform.rotation = Camera.main.transform.rotation;
         if (Time.time - memorizeTime >= 5)
         {
             sRend.color = Color.Lerp(sRend.color, new Color(sRend.color.r, sRend.color.g, sRend.color.b, 0), Time.deltaTime);
@@ -35,6 +36,7 @@ public class GuiHealthBar : MonoBehaviour
             memorizedHealth = enemy.health;
             memorizeTime = Time.time;
         }
+
         healthLine.transform.localScale = Vector3.Lerp(healthLine.transform.localScale, new Vector3(enemy.health / enemy.maxHealth, 1, 1), 10 * Time.deltaTime);
         healthLine.transform.localPosition = Vector3.Lerp(healthLine.transform.localPosition, new Vector3(-((enemy.maxHealth - enemy.health) / enemy.maxHealth)/2, healthLine.transform.localPosition.y, healthLine.transform.localPosition.z), 10 * Time.deltaTime);
     }
