@@ -1,13 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerUIController : MonoBehaviour
 {
-    Player player;
+    PlayerManager player;
 
     [SerializeField] Transform HPBar;
     [SerializeField] Transform SanityBar;
@@ -29,34 +27,35 @@ public class PlayerUIController : MonoBehaviour
 
     void Awake()
     {
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerManager>();
         healthLine = HPBar.GetChild(0).gameObject;
         sanityLine = SanityBar.GetChild(0).gameObject;
         concentrationLine = ConcentrationBar.GetChild(0).gameObject;
         concentrationLineImg = concentrationLine.GetComponent<Image>();
-        sporeCounterText = SporeCounter.GetComponentInChildren<TMP_Text>();
         flaskCounterText = FlaskCounter.GetComponentInChildren<TMP_Text>();
-
+        /*
         player.OnSporeCountChanged += () => { 
             if(sporeCountCoroutine is not null)
             {
                 StopCoroutine(sporeCountCoroutine);
             }
             sporeCountCoroutine = StartCoroutine(SporeCountChangeCoroutine());
-        };
-        player.OnFlaskCountChanged += () => { flaskCounterText.text = player.numFlasks.ToString(); };
+        };*/
+        player.playerStatsManager.OnFlaskCountChanged += () => { flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString(); };
+        flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString();
+
     }
 
     void Update()
     {
-        healthLine.transform.localScale = Vector3.Lerp(healthLine.transform.localScale, new Vector3(player.health / player.maxHealth, 1, 1), 10 * Time.deltaTime);
-        sanityLine.transform.localScale = Vector3.Lerp(sanityLine.transform.localScale, new Vector3(player.sanity / player.maxSanity, 1, 1), 10 * Time.deltaTime);
+        healthLine.transform.localScale = Vector3.Lerp(healthLine.transform.localScale, new Vector3(player.playerStatsManager.Health / player.playerStatsManager.MaxHealth, 1, 1), 10 * Time.deltaTime);
+        sanityLine.transform.localScale = Vector3.Lerp(sanityLine.transform.localScale, new Vector3(player.playerStatsManager.Sanity / player.playerStatsManager.MaxSanity, 1, 1), 10 * Time.deltaTime);
 
-        concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.GetConcentration() / player.GetMaxConcentration(), 1, 1), 10 * Time.deltaTime);
-        concentrationLineImg.color = new Color(0.8f, 1 - player.GetConcentration() / player.GetMaxConcentration(), 1 - player.GetConcentration() / player.GetMaxConcentration());
+        concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1), 10 * Time.deltaTime);
+        concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
     }
 
-
+    /*
     IEnumerator SporeCountChangeCoroutine()
     {
         int spores = int.Parse(sporeCounterText.text);
@@ -77,4 +76,5 @@ public class PlayerUIController : MonoBehaviour
 
         sporeCountCoroutine = null;
     }
+    */
 }

@@ -76,6 +76,8 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     float concentartionRestoreDelay = 4f;
     float timeConcentrationRestorationStopped;
 
+
+
     protected virtual void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -187,7 +189,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
     private void ChooseTarget()
     {
-        _target = PlayerManager.instance.playerList[0].gameObject;
+        _target = PlayersInGameManager.instance.playerList[0].gameObject;
     }
 
     void ChooseBehavior()
@@ -318,11 +320,10 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
     void Die()
     {
-        foreach (var player in PlayerManager.instance.playerList)
+        foreach (var player in PlayersInGameManager.instance.playerList)
         {
             //hero.souls += soulsAfterDeath / HeroKeeper.instance.playerList.Count;
         }
-
         Destroy(gameObject);
     }
 

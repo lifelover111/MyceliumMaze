@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "CharacterEffects/InstantEffects/Take Damage")]
+public class TakeDamageEffect : InstantCharacterEffect
+{
+    [Header("Character Causing Damage")]
+    public CharacterManager characterCausingDamage;
+    [Header("Damage")]
+    public float physycalDamage;
+    public float mentalDamage;
+    [Header("Contact Point")]
+    public Vector3 contactPoint;
+    [Header("Animation")]
+    public bool playDamageAnimation = true;
+    public bool manuallySelectDamageAnimation = false;
+
+    public override void ProcessEffect(CharacterManager character)
+    {
+        base.ProcessEffect(character);
+        if (character.isDead) return;
+        if (character.isInvulnerable) return;
+
+        //character.canMove = false;
+        //character.canRotate = false;
+
+        character.statsManager.Health -= physycalDamage;
+        character.statsManager.Health = character.statsManager.Health > 0 ? character.statsManager.Health : 0;
+
+        if(character is PlayerManager player)
+        {
+            player.playerStatsManager.Sanity -= mentalDamage;
+            player.playerStatsManager.Sanity = player.playerStatsManager.Sanity > 0 ? player.playerStatsManager.Sanity : 0;
+        }
+
+        if(!character.isDead)
+        {
+            var angleHitFrom = Vector3.SignedAngle(new Vector3(contactPoint.x, 0, contactPoint.z).normalized, character.locomotionManager.GetForward(), Vector3.up);
+
+            if (character.statsManager.Concentration >= character.statsManager.MaxConcentration)
+            {
+                character.canMove = false;
+                character.canRotate = false;
+                if (angleHitFrom <= 90 && angleHitFrom >= -90)
+                {
+                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.StunForward, true);
+                }
+                else
+                {
+                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.StunBack, true);
+                }
+                character.statsManager.OverflowConcentration();
+                return;
+            }
+
+            if (playDamageAnimation)
+            {
+                character.canMove = false;
+                character.canRotate = false;
+                if (angleHitFrom <= 90 && angleHitFrom >= -90)
+                {
+                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.HitForward, true);
+                }
+                else
+                {
+                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.HitBack, true);
+                }
+            }
+        }
+    }
+}
