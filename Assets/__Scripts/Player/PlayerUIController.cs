@@ -27,6 +27,24 @@ public class PlayerUIController : MonoBehaviour
 
     Coroutine sporeCountCoroutine;
 
+
+    public GameObject menuCanvas;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bonfire") && Input.GetKeyDown(KeyCode.E))
+        {
+            ShowMenuCanvas();
+        }
+    }
+
+    // Метод для активации объекта Canvas
+    public void ShowMenuCanvas()
+    {
+        if (menuCanvas != null)
+        {
+            menuCanvas.SetActive(true);
+        }
+    }
     void Awake()
     {
         player = GetComponent<Player>();

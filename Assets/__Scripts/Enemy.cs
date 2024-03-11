@@ -76,6 +76,17 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
     float concentartionRestoreDelay = 4f;
     float timeConcentrationRestorationStopped;
 
+    Room currentRoom;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// 
+
+    public static event System.Action OnEnemyDeath;
+    //public static event Action OnAllEnemiesKilled;
+
+
+
     protected virtual void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -110,6 +121,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
         soulsAfterDeath = CalcSoulsAfterDeath();
 
         lastMoveTime = Time.time;
+
     }
 
 
@@ -215,7 +227,7 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
         weapon.enabled = false;
     }
 
-
+    
 
     void OnTriggerEnter(Collider coll)
     {
@@ -318,13 +330,18 @@ public abstract class Enemy : MonoBehaviour, IHavingConcentration
 
     void Die()
     {
+        
+
         foreach (var player in PlayerManager.instance.playerList)
         {
             //hero.souls += soulsAfterDeath / HeroKeeper.instance.playerList.Count;
         }
 
         Destroy(gameObject);
+        OnEnemyDeath?.Invoke();
     }
+
+
 
     public bool moving { get { return true; } }
 

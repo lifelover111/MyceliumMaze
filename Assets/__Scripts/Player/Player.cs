@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IHavingConcentration
     public float speedToSide;
 
     
-    public float damage = 5;
+    public float damage = 2000;
     public float concentrationDamage = 5;
     public float parryTimeWindow = 0.2f;
     private float blockPlacedTime;
