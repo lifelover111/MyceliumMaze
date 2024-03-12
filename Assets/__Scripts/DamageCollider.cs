@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
+using static UnityEngine.GraphicsBuffer;
 
 public class DamageCollider : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class DamageCollider : MonoBehaviour
     public float physicalDamage;
     public float mentalDamage;
     public float concentrationDamage;
+    public float concentrationDamageBlockMultiplier = 2;
 
     [Header("Contact Point")]
     protected Vector3 contactPoint;
@@ -29,21 +32,7 @@ public class DamageCollider : MonoBehaviour
 
     protected virtual void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
-        if (charactersDamaged.Contains(target)) return;
-        charactersDamaged.Add(target);
 
-        if (withConcentrationDamage)
-        {
-            TakeConcentrationDamageEffect concentrationDamageEffect = Instantiate(WorldCharacterEffectManager.instance.concentrationDamageEffect);
-            concentrationDamageEffect.concentrationDamage = concentrationDamage;
-            target.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
-        }
-
-        TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectManager.instance.damageEffect);
-        damageEffect.physycalDamage = physicalDamage;
-        damageEffect.mentalDamage = mentalDamage;
-        damageEffect.contactPoint = contactPoint;
-        target.effectsManager.ProcessInstantEffect(damageEffect);
     }
 
     protected virtual void Awake()

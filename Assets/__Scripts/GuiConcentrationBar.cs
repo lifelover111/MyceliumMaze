@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class GuiConcentrationBar : MonoBehaviour
 {
-    IHavingConcentration target;
+    StatsManager target;
     GameObject concentartionLine;
     SpriteRenderer sRend;
     SpriteRenderer CLsRend;
-    void Start()
+    
+    public void Init(StatsManager statsManager)
     {
-        target = transform.parent.GetComponent<IHavingConcentration>();
+        target = statsManager.GetComponent<StatsManager>();
         concentartionLine = transform.GetChild(0).gameObject;
         sRend = GetComponent<SpriteRenderer>();
         CLsRend = concentartionLine.GetComponent<SpriteRenderer>();
@@ -18,8 +19,10 @@ public class GuiConcentrationBar : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Camera.main.transform.rotation;
-        if (target.GetConcentration() <= 0)
+        if (target is null)
+            return;
+
+        if (target.Concentration <= 0)
         {
             sRend.color = Color.Lerp(sRend.color, new Color(0, 0, 0, 0), Time.deltaTime);
             concentartionLine.transform.localScale = Vector3.zero;
@@ -27,8 +30,8 @@ public class GuiConcentrationBar : MonoBehaviour
         else
         {
             sRend.color = Color.black;
-            concentartionLine.transform.localScale = Vector3.Lerp(concentartionLine.transform.localScale, new Vector3(target.GetConcentration() / target.GetMaxConcentration(), 1, 1), 10*Time.deltaTime);
-            CLsRend.color = new Color(0.8f, 1 - target.GetConcentration() / target.GetMaxConcentration(), 1 - target.GetConcentration() / target.GetMaxConcentration());
+            concentartionLine.transform.localScale = Vector3.Lerp(concentartionLine.transform.localScale, new Vector3(target.Concentration / target.MaxConcentration, 1, 1), 10*Time.deltaTime);
+            CLsRend.color = new Color(0.8f, 1 - target.Concentration / target.MaxConcentration, 1 - target.Concentration / target.MaxConcentration);
         }
     }
 }

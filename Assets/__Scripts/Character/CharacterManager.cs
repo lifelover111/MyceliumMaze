@@ -13,19 +13,29 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CombatManager combatManager;
     [HideInInspector] public LocomotionManager locomotionManager;
 
-    public bool isDead = false;
+    [Header("Model Forward")]
+    public Vector3 forward;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
     public bool canRotate = true;
     public bool canMove = true;
     public bool isInvulnerable = false;
+    public bool isDead = false;
+    public bool isBlocking = false;
 
     [Header("Animation Keys")]
     public AnimatorManager.AnimationKeys animationKeys = new();
 
     [Header("Weapon")]
     public GameObject weapon;
+
+    [Header("Block")]
+    public bool canBlockAttacks = true;
+    public float minBlockAngle = -45;
+    public float maxBlockAngle = 45;
+
+    public event System.Action OnDead = delegate { };
 
 
     protected virtual void Awake()
@@ -56,8 +66,10 @@ public class CharacterManager : MonoBehaviour
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
+        isDead = false;
         canMove = false;
         canRotate = false;
+        OnDead?.Invoke();
         if(!manuallySelectDeathAnimation)
         {
             animatorManager.PlayTargetActionAnimation(animationKeys.Dead, true);
@@ -86,5 +98,6 @@ public class CharacterManager : MonoBehaviour
             }
         }
     }
+
 }
 

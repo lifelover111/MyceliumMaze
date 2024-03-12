@@ -15,6 +15,7 @@ public class AnimatorManager : MonoBehaviour
         public string StunForward = "StunForward";
         public string StunBack = "StunBack";
         public string Block = "BlockUp";
+        public string BlockHit = "BlockHit";
         [Header("Player")]
         public string Heal = "Heal";
     }
@@ -37,6 +38,11 @@ public class AnimatorManager : MonoBehaviour
         character.animator.SetFloat("turn", turnValue, 0.1f, Time.deltaTime);
     }
 
+    public void SetAnimatorRotationParameters(float turnValue)
+    {
+        character.animator.SetFloat("turn", turnValue);
+    }
+
     public void UpdateAnimatorBlockParameters(bool block)
     {
         character.animator.SetBool("Block", block);
@@ -49,19 +55,29 @@ public class AnimatorManager : MonoBehaviour
         character.isPerformingAction = isPerformongAction;
     }
 
+    public void PlayTargetHitAnimation(string targetAnimation, bool isPerformongAction, bool applyRootMotion = true)
+    {
+        character.animator.applyRootMotion = applyRootMotion;
+        character.animator.CrossFade(targetAnimation, 0.05f);
+        character.isPerformingAction = isPerformongAction;
+    }
+
     public void PlayTargetAttackAnimation(string targetAttackAnimation, bool isPerformongAction, bool applyRootMotion = true)
     {
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAttackAnimation, 0.2f);
         character.isPerformingAction = isPerformongAction;
     }
+
     public void PlayComboAnimation(string key, bool isPerformongAction, bool applyRootMotion = true)
     {
         DisableCanDoCombo();
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.SetTrigger(key);
-        character.isPerformingAction = isPerformongAction;
     }
+
+
+
     #region Animation Events
     public virtual void EnableCanDoCombo()
     {
@@ -81,6 +97,35 @@ public class AnimatorManager : MonoBehaviour
     public virtual void DisableAttackCollider()
     {
         character.combatManager.DisableWeaponCollider();
+    }
+
+    public virtual void EnableCanRotate()
+    {
+        character.canRotate = true;
+    }
+
+    public virtual void DisableCanRotate()
+    {
+        character.canRotate = false;
+    }
+    public virtual void EnableIsBlocking()
+    {
+        character.combatManager.EnableIsBlocking();
+    }
+
+    public virtual void DisableIsBlocking()
+    {
+        character.combatManager.DisableIsBlocking();
+    }
+
+    public virtual void EnableCanParry()
+    {
+        character.combatManager.EnableCanParry();
+    }
+
+    public virtual void DisableCanParry()
+    {
+        character.combatManager.DisableCanParry();
     }
 
     #endregion

@@ -18,12 +18,15 @@ public class AICharacterManager : CharacterManager
     public IdleState idleState;
     public PursueTargetState pursueTargetState;
     public SurroundState surroundState;
+    public CombatStanceState combatStanceState;
+    public AttackState attackState;
 
     [Header("AI flags")]
     public bool isMoving = false;
 
-    [Header("Model Forward")]
-    public Vector3 forward;
+
+    [Header("GUI")]
+    public GameObject guiPrefab;
 
 
     protected override void Awake()
@@ -36,7 +39,15 @@ public class AICharacterManager : CharacterManager
         idleState = Instantiate(idleState);
         pursueTargetState = Instantiate(pursueTargetState);
         surroundState = Instantiate(surroundState);
+        attackState = Instantiate(attackState);
+        combatStanceState = Instantiate(combatStanceState);
         currentState = idleState;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        EnableGUI();
     }
 
     protected override void FixedUpdate()
@@ -55,7 +66,7 @@ public class AICharacterManager : CharacterManager
         }
 
         navMeshAgent.transform.localPosition = Vector3.zero;
-        navMeshAgent.transform.localRotation = Quaternion.FromToRotation(Vector3.forward, aiLocomotionManager.GetForward());  //Quaternion.Euler(0, -90, 0);
+        navMeshAgent.transform.localRotation = Quaternion.FromToRotation(transform.forward, aiLocomotionManager.GetForward());
 
         if (navMeshAgent.enabled)
         {
@@ -75,6 +86,12 @@ public class AICharacterManager : CharacterManager
         {
             isMoving = false;
         }
+
+    }
+
+    public void EnableGUI()
+    {
+        Instantiate(guiPrefab).GetComponent<EnemyUIManager>().Enable(statsManager);
     }
 
 }

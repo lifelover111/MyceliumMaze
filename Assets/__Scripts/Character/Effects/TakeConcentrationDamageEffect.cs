@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CharacterEffects/InstantEffects/Take Concentration Damage")]
 public class TakeConcentrationDamageEffect : InstantCharacterEffect
 {
+    public CharacterManager characterCausingDamage;
     public float concentrationDamage;
     public override void ProcessEffect(CharacterManager character)
     {

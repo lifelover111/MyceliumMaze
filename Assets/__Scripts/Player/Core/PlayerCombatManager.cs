@@ -8,9 +8,8 @@ public class PlayerCombatManager : CombatManager
     protected override void Update()
     {
         base.Update();
-        HandleBlock();
     }
-    private void HandleBlock()
+    protected override void HandleBlock()
     {
         if (character.isPerformingAction) return;
 

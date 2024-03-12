@@ -19,8 +19,6 @@ public class PlayerLocomotionManager : LocomotionManager
     [SerializeField] float speedBackward;
     [SerializeField] float speedToSide;
     [SerializeField] float rotationSpeed;
-
-    private Vector3 playerForward => Quaternion.Euler(0, -90, 0) * player.transform.forward;
     private Vector3 playerRight => player.transform.forward;
 
     protected override void Awake()
@@ -81,7 +79,7 @@ public class PlayerLocomotionManager : LocomotionManager
         if (!player.canMove)
             return;
 
-        moveDirection = playerForward;//Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
+        moveDirection = GetForward();//Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         moveDirection.y = 0;
         moveDirection.Normalize();
         player.characterController.Move(moveDirection * GetSpeed(moveDirection) * Time.deltaTime);
@@ -129,7 +127,7 @@ public class PlayerLocomotionManager : LocomotionManager
         }
         else
         {
-            dashDirection = playerForward;
+            dashDirection = GetForward();
             dashDirection.y = 0;
             dashDirection.Normalize();
         }
@@ -158,11 +156,6 @@ public class PlayerLocomotionManager : LocomotionManager
         player.canMove = false;
         player.animatorManager.UpdateAnimatorMovementParameters(intTree.x, intTree.y);
         player.animatorManager.PlayTargetActionAnimation(player.animationKeys.Dash, true, true);
-    }
-
-    public override Vector3 GetForward()
-    {
-        return playerForward;
     }
 
     private float GetSpeed(Vector3 direction)

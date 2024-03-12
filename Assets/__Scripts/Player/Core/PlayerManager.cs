@@ -38,6 +38,6 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.OnDash += playerLocomotionManager.TryDash;
         PlayerInputManager.instance.OnAttack += playerCombatManager.TryAttack;
         PlayerInputManager.instance.OnHeal += playerStatsManager.TryHeal;
-        PlayerInputManager.instance.OnBlockStateChanged += () => playerAnimatorManager.UpdateAnimatorBlockParameters(PlayerInputManager.instance.blockInput);
+        PlayerInputManager.instance.OnBlockStateChanged += playerCombatManager.TryBlock;
     }
 }

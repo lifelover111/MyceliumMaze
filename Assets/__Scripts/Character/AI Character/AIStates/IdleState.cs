@@ -7,13 +7,13 @@ public class IdleState : AIState
 {
     public override AIState Tick(AICharacterManager aiCharacter)
     {
-        if(aiCharacter.combatManager.currentTarget is not null)
+        if (aiCharacter.combatManager.currentTarget is not null)
         {
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }
         else
         {
-            aiCharacter.aiCombatManager.FindTarget();
+            aiCharacter.aiCombatManager.FindTarget(aiCharacter);
             return this;
         }
     }

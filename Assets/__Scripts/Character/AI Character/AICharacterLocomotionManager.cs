@@ -16,20 +16,24 @@ public class AICharacterLocomotionManager : LocomotionManager
     {
         if(aiCharacter.isMoving)
         {
-            aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation * Quaternion.FromToRotation(GetForward(), Vector3.forward);
+            aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation * Quaternion.FromToRotation(GetForward(), transform.forward);
         }
     }
 
     public void RotateTowardsTarget(AICharacterManager aiCharacter)
     {
-        if(aiCharacter.isMoving)
+        if (aiCharacter.isMoving)
         {
-            aiCharacter.transform.rotation = Quaternion.FromToRotation(aiCharacter.aiLocomotionManager.GetForward(), aiCharacter.aiCombatManager.currentTarget.transform.position - aiCharacter.transform.position);
+            aiCharacter.transform.rotation = Quaternion.FromToRotation(GetForward(), aiCharacter.aiCombatManager.targetsDirection);
         }
     }
 
-    public override Vector3 GetForward()
+    public void MoveToTheSide(AICharacterManager aiCharacter, Vector3 moveDirection)
     {
-        return aiCharacter.forward;
+        if(aiCharacter.isMoving)
+        {
+            aiCharacter.animatorManager.UpdateAnimatorMovementParameters(moveDirection.x, moveDirection.z);
+        }
     }
+
 }

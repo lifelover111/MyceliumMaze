@@ -13,7 +13,7 @@ public class PursueTargetState : AIState
             return this;
 
         if (aiCharacter.aiCombatManager.currentTarget is null)
-            return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
+            return SwitchState(aiCharacter, aiCharacter.idleState);
 
         if(!aiCharacter.navMeshAgent.enabled)
             aiCharacter.navMeshAgent.enabled = true;
@@ -24,6 +24,9 @@ public class PursueTargetState : AIState
 
         aiCharacter.aiLocomotionManager.RotateTowardsAgent(aiCharacter);
 
+        if (aiCharacter.aiCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
+            return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+
         if(aiCharacter.isMoving)
         {
             aiCharacter.animatorManager.UpdateAnimatorMovementParameters(0, 1);
@@ -33,8 +36,7 @@ public class PursueTargetState : AIState
             aiCharacter.animatorManager.UpdateAnimatorMovementParameters(0, 0);
         }
 
-        if (Random.value < 0.025f)
-            return aiCharacter.surroundState;
+        aiCharacter.aiCombatManager.PivotTowardsTarget(aiCharacter);
 
         return this;
     }
@@ -42,5 +44,7 @@ public class PursueTargetState : AIState
     protected override void ResetStateFlags(AICharacterManager aiCharacter)
     {
         base.ResetStateFlags(aiCharacter);
+        aiCharacter.navMeshAgent.enabled = false;
+        aiCharacter.isMoving = false;
     }
 }

@@ -22,9 +22,6 @@ public class TakeDamageEffect : InstantCharacterEffect
         if (character.isDead) return;
         if (character.isInvulnerable) return;
 
-        //character.canMove = false;
-        //character.canRotate = false;
-
         character.statsManager.Health -= physycalDamage;
         character.statsManager.Health = character.statsManager.Health > 0 ? character.statsManager.Health : 0;
 
@@ -37,18 +34,17 @@ public class TakeDamageEffect : InstantCharacterEffect
         if(!character.isDead)
         {
             var angleHitFrom = Vector3.SignedAngle(new Vector3(contactPoint.x, 0, contactPoint.z).normalized, character.locomotionManager.GetForward(), Vector3.up);
-
             if (character.statsManager.Concentration >= character.statsManager.MaxConcentration)
             {
                 character.canMove = false;
                 character.canRotate = false;
                 if (angleHitFrom <= 90 && angleHitFrom >= -90)
                 {
-                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.StunForward, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunBack, true);
                 }
                 else
                 {
-                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.StunBack, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunForward, true);
                 }
                 character.statsManager.OverflowConcentration();
                 return;
@@ -60,13 +56,14 @@ public class TakeDamageEffect : InstantCharacterEffect
                 character.canRotate = false;
                 if (angleHitFrom <= 90 && angleHitFrom >= -90)
                 {
-                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.HitForward, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitBack, true);
                 }
                 else
                 {
-                    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.HitBack, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitForward, true);
                 }
             }
         }
     }
+
 }
