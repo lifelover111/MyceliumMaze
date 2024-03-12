@@ -75,7 +75,7 @@ public class StatsManager : MonoBehaviour
         if (character.isDead) return;
         
         character.isDead = true;
-        StartCoroutine(character.ProcessDeathEvent());
+        character.StartCoroutine(character.ProcessDeathEvent());
     }
 
     protected virtual void HandleConcentrationOveflow()

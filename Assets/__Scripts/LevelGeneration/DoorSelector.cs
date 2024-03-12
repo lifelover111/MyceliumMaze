@@ -14,7 +14,7 @@ public class DoorSelector : MonoBehaviour
         
     }
 
-    public void CloseDoors()
+    public void CloseDoor()
     {
         if (fogAnimator is null)
         {
@@ -28,7 +28,7 @@ public class DoorSelector : MonoBehaviour
         fogCollider.enabled = true;
         fogAnimator.enabled = true;
     }
-    public void OpenDoors()
+    public void OpenDoor()
     {
         fogCollider.enabled = false;
         fogAnimator.SetTrigger("Open");

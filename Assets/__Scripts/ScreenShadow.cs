@@ -23,12 +23,12 @@ public class ScreenShadow : MonoBehaviour
         float time = Time.time;
         while (image.color.a < 1 - eps)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, 1, Mathf.Sin(Time.time - time)));
+            image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, 1, Door.transitionSpeed*Mathf.Sin(Time.time - time)));
             yield return null;
         }
         while (image.color.a > 0 + eps)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, 1, Mathf.Sin(Time.time - time)));
+            image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(0, 1, Door.transitionSpeed*Mathf.Sin(Time.time - time)));
             yield return null;
         }
     }

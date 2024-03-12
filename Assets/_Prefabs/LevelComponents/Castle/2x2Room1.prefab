@@ -184,6 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6537246705746809874}
   - component: {fileID: 4866817830326816807}
+  - component: {fileID: 4800096583660102354}
   m_Layer: 0
   m_Name: 2x2Room1
   m_TagString: Untagged
@@ -230,6 +231,37 @@ MonoBehaviour:
   enemySpawnPoints: []
   transitionsForward: []
   transitionsBackward: []
+--- !u!114 &4800096583660102354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682678162565023208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1f4b770b196422744825cba4214b6a08, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1271853953083261976
 GameObject:
   m_ObjectHideFlags: 0
@@ -8150,6 +8182,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3052241281528780272, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4853797300857700592, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9921,6 +9957,10 @@ PrefabInstance:
     - target: {fileID: 1369243352924110172, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052241281528780272, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4853797300857700592, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
       propertyPath: m_IsActive

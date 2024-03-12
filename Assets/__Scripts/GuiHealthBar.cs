@@ -12,7 +12,7 @@ public class GuiHealthBar : MonoBehaviour
     float memorizeTime;
     public void Init(StatsManager statsManager)
     {
-        enemy = statsManager.GetComponent<StatsManager>();
+        enemy = statsManager;
         healthLine = transform.GetChild(0).gameObject;
         sRend = GetComponent<SpriteRenderer>();
         hsRend = healthLine.GetComponent<SpriteRenderer>();

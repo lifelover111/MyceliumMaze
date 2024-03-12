@@ -361,6 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 811455415095656250}
   - component: {fileID: 1464193241163575559}
+  - component: {fileID: 5366684366312165045}
   m_Layer: 0
   m_Name: 1x0Room1
   m_TagString: Untagged
@@ -404,6 +405,37 @@ MonoBehaviour:
   enemySpawnPoints: []
   transitionsForward: []
   transitionsBackward: []
+--- !u!114 &5366684366312165045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458020015842571478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: d169908c7e3eb9c4e86461323ac0d2b9, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &7569946701820260551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3985,6 +4017,10 @@ PrefabInstance:
     - target: {fileID: 1369243352924110172, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052241281528780272, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4853797300857700592, guid: f1680868030ad0545bb0de2ec0df482c, type: 3}
       propertyPath: m_IsActive

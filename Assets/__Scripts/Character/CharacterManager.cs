@@ -66,7 +66,7 @@ public class CharacterManager : MonoBehaviour
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        isDead = false;
+        isDead = true;
         canMove = false;
         canRotate = false;
         OnDead?.Invoke();
@@ -76,6 +76,7 @@ public class CharacterManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 
     public virtual IEnumerator ProcessConcentrationOverflowEvent()

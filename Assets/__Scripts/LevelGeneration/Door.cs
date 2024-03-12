@@ -13,35 +13,17 @@ public class Door : MonoBehaviour
     Room currentRoom;
     public Room room { get { return currentRoom; } }
     [SerializeField] public DoorSelector doorSelector;
-    //
-    //public delegate void DoorAction();
-    //public event DoorAction OnDoorOpen;
-    //public event DoorAction OnDoorClose;
 
-    //public void OpenDoor()
-    //{
-    //    Debug.Log("Door is opening...");
-    //    OnDoorOpen?.Invoke();
-    //}
-
-    //public void CloseDoor()
-    //{
-    //    Debug.Log("Door is closing...");
-    //    OnDoorClose?.Invoke();
-    //}
-    //
-
-    //
-    //
+    public static float transitionSpeed = 1;
 
     public void OpenDoor()
     {
-        doorSelector.OpenDoors();
+        doorSelector.OpenDoor();
     }
 
     public void CloseDoor()
     {
-        doorSelector.CloseDoors();
+        doorSelector.CloseDoor();
     }
 
     private void Awake()
@@ -73,12 +55,14 @@ public class Door : MonoBehaviour
 
         transitionTo.room.gameObject.SetActive(true);
         float time = Time.time;
-        while (Mathf.Sin(Time.time - time) < 0.99)
+        while (transitionSpeed * Mathf.Sin(Time.time - time) < 0.99)
         {
             yield return null;
         }
+        player.gameObject.SetActive(false);
+        player.position = transitionTo.transform.position + transitionTo.enterPositionShift;
+        player.gameObject.SetActive(true);
         currentRoom.gameObject.SetActive(false);
-        player.position = transitionTo.transform.position + transitionTo.enterPositionShift + 0.5f * Vector3.up;
 
 
         transitionTo.currentRoom.WakeEnemies();
