@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
     protected virtual void Start()
     {
         DisableWeaponCollider();
+        character.OnDead += DisableWeaponCollider;
     }
 
     protected virtual void Update()

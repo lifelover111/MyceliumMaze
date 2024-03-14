@@ -32,6 +32,11 @@ public class AnimatorManager : MonoBehaviour
         character.animator.SetFloat("x", horizontalValue, 0.1f ,Time.deltaTime);
         character.animator.SetFloat("y", verticalValue, 0.1f, Time.deltaTime);
     }
+    public void SetAnimatorMovementParameters(float horizontalValue, float verticalValue)
+    {
+        character.animator.SetFloat("x", horizontalValue);
+        character.animator.SetFloat("y", verticalValue);
+    }
 
     public void UpdateAnimatorRotationParameters(float turnValue)
     {

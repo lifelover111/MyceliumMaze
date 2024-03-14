@@ -15,12 +15,21 @@ public class FadeObjectBlockingObject : MonoBehaviour
     [Header("Read Only Data")]
     [SerializeField] List<FadingObject> objectsBlockingView = new List<FadingObject>();
     Dictionary<FadingObject, Coroutine> runningCoroutines = new Dictionary<FadingObject, Coroutine>();
-    RaycastHit[] hits = new RaycastHit[12];
+    RaycastHit[] hits = new RaycastHit[20];
 
     private void Start()
     {
         cam = Camera.main;
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(CheckForObjects());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     IEnumerator CheckForObjects()

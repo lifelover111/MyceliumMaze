@@ -15,8 +15,10 @@ public class LastPixelizeFeature : ScriptableRendererFeature
     private LastPixelizePass customPass;
 
     public override void Create()
+    
     {
-        camFollow = Camera.main.GetComponent<CamFollow>();
+        if(Camera.main is not null)
+            camFollow = Camera.main.GetComponent<CamFollow>();
         customPass = new LastPixelizePass(settings, camFollow);
     }
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)

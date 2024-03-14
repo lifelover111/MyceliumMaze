@@ -17,6 +17,8 @@ public class CamFollow : MonoBehaviour
 
     private void Update()
     {
+        if (player is null)
+            return;
         // Calculate the size of a pixel in world-space
         float pixelSize = 2f * cameraComponent.orthographicSize / pixelHeight;
 

@@ -154,7 +154,7 @@ public class PlayerLocomotionManager : LocomotionManager
 
         player.canRotate = false;
         player.canMove = false;
-        player.animatorManager.UpdateAnimatorMovementParameters(intTree.x, intTree.y);
+        player.animatorManager.SetAnimatorMovementParameters(intTree.x, intTree.y);
         player.animatorManager.PlayTargetActionAnimation(player.animationKeys.Dash, true, true);
     }
 
