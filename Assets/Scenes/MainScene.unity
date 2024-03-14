@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44364372, g: 0.49296987, b: 0.5725331, a: 1}
+  m_IndirectSpecularColor: {r: 0.44364294, g: 0.4929694, b: 0.57253295, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6426,7 +6426,7 @@ MonoBehaviour:
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
   m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
+  m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
@@ -6443,7 +6443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b617e5302ecbb48bc7cfba28b11695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothingDelta: {x: 0, y: 0, z: 0}
   player: {fileID: 18443215}
+  pixelHeight: 144
 --- !u!81 &1557173912
 AudioListener:
   m_ObjectHideFlags: 0
