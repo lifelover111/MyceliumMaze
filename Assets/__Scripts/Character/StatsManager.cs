@@ -48,14 +48,18 @@ public class StatsManager : MonoBehaviour
         HandleConcentrationOveflow();
     }
 
-    public void RegenerateConcentration()
+    public virtual void RegenerateConcentration(float multiplier = 1, float delayMultiplier = 1, bool regenerateWhilePerformAction = false)
     {
-        if (character.isPerformingAction)
-            return;
+        if(!regenerateWhilePerformAction)
+        {
+            if (character.isPerformingAction)
+                return;
+        }
+
 
         concentrationRegenerationTimer += Time.deltaTime;
 
-        if (concentrationRegenerationTimer >= concentrationRegenerationDelay)
+        if (concentrationRegenerationTimer >= concentrationRegenerationDelay * delayMultiplier)
         {
             if (Concentration > 0)
             {
@@ -64,7 +68,7 @@ public class StatsManager : MonoBehaviour
                 if (concentrationTickTimer >= 0.1f)
                 {
                     concentrationTickTimer = 0;
-                    Concentration = Concentration > 0 ? Concentration - concentrationRegenAmount : 0;
+                    Concentration = Concentration > 0 ? Concentration - concentrationRegenAmount * multiplier : 0;
                 }
             }
         }

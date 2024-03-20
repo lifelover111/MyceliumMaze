@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CamFollow : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class CamFollow : MonoBehaviour
     private Camera cameraComponent;
     private void Awake()
     {
-        delta = transform.position;
+        delta = transform.position - player.transform.position;
         cameraComponent = GetComponent<Camera>();
     }
 
@@ -41,6 +42,5 @@ public class CamFollow : MonoBehaviour
             transform.forward * localDelta.z * pixelSize;
 
         smoothingDelta = cameraComponent.WorldToScreenPoint(targetPosition)-cameraComponent.WorldToScreenPoint(transform.position);
-        //Debug.Log(smoothingDelta);
     }
 }

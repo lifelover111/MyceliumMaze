@@ -45,7 +45,6 @@ public class CombatStanceState : AIState
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
-        //return SwitchState(aiCharacter, aiCharacter.surroundState);
 
         if (aiCharacter.aiCombatManager.distanceFromTarget > maximumEngagementDistance)
         {
@@ -54,7 +53,10 @@ public class CombatStanceState : AIState
 
         if (aiCharacter.aiCombatManager.actionRecoveryTimer > 0)
         {
-            return this;
+            if(WorldUtilityManager.RollForOutcomeChance(50))
+                return SwitchState(aiCharacter, aiCharacter.surroundState);
+            else
+                return SwitchState(aiCharacter, aiCharacter.blockState);
         }
 
         if (!hasAttack)

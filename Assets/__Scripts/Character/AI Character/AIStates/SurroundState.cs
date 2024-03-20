@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class SurroundState : AIState
 {
     private Vector3 moveDirection;
-    private float switchDirectionDelay = 5;
+    private float switchDirectionDelay = 0.5f;
     private float switchDirectionTimer;
 
     public override AIState Tick(AICharacterManager aiCharacter)
@@ -22,22 +22,34 @@ public class SurroundState : AIState
         if (aiCharacter.aiCombatManager.currentTarget is null)
             return SwitchState(aiCharacter, aiCharacter.idleState);
 
-        moveDirection = DecideDirection(aiCharacter);
+
         aiCharacter.aiLocomotionManager.MoveToTheSide(aiCharacter, moveDirection);
         aiCharacter.aiLocomotionManager.RotateTowardsAgent(aiCharacter);
 
+        if (!TryDecideDirection(aiCharacter, out moveDirection))
+        {
+            return this;
+        }
+
+        if (aiCharacter.aiCombatManager.actionRecoveryTimer <= 0)
+        {
+            return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+        }
 
 
         if (aiCharacter.aiCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
-            return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
 
         return this;
     }
 
-    Vector3 DecideDirection(AICharacterManager aiCharacter)
+    bool TryDecideDirection(AICharacterManager aiCharacter, out Vector3 direction)
     {
         if (switchDirectionTimer > 0)
-            return moveDirection;
+        {
+            direction = moveDirection;
+            return false;
+        }
         switchDirectionTimer = switchDirectionDelay;
         NavMeshHit hitRight;
         bool right = NavMesh.SamplePosition(aiCharacter.transform.position + Quaternion.Euler(0, -90, 0) * aiCharacter.aiLocomotionManager.GetForward() * 100, out hitRight, 100f, NavMesh.AllAreas);
@@ -48,18 +60,32 @@ public class SurroundState : AIState
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCombatManager.currentTarget.transform.position, path);
         aiCharacter.navMeshAgent.SetPath(path);
+        if (Random.value < 0.25)
+        {
+            direction = Vector3.back;
+            return true;
+        }
         if (!right || hitLeft.distance > hitRight.distance)
         {
-            return Vector3.left;
+            direction = Vector3.left;
+            return true;
         }
         else if (!left || hitRight.distance >= hitLeft.distance)
         {
-            return Vector3.right;
+            direction = Vector3.right;
+            return true;
         }
         else
         {
-            return Vector3.forward;
+            direction = Vector3.back;
+            return true;
         }
+    }
+
+    protected override void ResetStateFlags(AICharacterManager aICharacter)
+    {
+        base.ResetStateFlags(aICharacter);
+        switchDirectionTimer = 0;
     }
 
 }

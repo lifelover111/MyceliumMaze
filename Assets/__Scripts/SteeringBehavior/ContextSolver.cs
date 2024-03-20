@@ -8,7 +8,7 @@ public class ContextSolver : MonoBehaviour
     private bool showGizmos = true;
 
     float[] interestGizmo = new float[0];
-    Vector3 resultDirection = Vector3.zero;
+    [SerializeField] Vector3 resultDirection = Vector3.zero;
     private float rayLength = 2;
     [SerializeField] float getDirectionDelay = 0.1f;
     float timeDirectionGot;

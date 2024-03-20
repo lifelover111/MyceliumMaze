@@ -7,6 +7,7 @@ public class AICharacterManager : CharacterManager
 {
     [HideInInspector] public AICharacterCombatManager aiCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiLocomotionManager;
+    [HideInInspector] public AISteeringManager aiSteering;
 
     [Header("Current State")]
     [SerializeField] AIState currentState;
@@ -20,6 +21,7 @@ public class AICharacterManager : CharacterManager
     public SurroundState surroundState;
     public CombatStanceState combatStanceState;
     public AttackState attackState;
+    public BlockState blockState;
 
     [Header("AI flags")]
     public bool isMoving = false;
@@ -34,6 +36,7 @@ public class AICharacterManager : CharacterManager
         base.Awake();
         aiCombatManager = GetComponent<AICharacterCombatManager>();
         aiLocomotionManager = GetComponent<AICharacterLocomotionManager>();
+        aiSteering = GetComponent<AISteeringManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
         idleState = Instantiate(idleState);
@@ -41,6 +44,8 @@ public class AICharacterManager : CharacterManager
         surroundState = Instantiate(surroundState);
         attackState = Instantiate(attackState);
         combatStanceState = Instantiate(combatStanceState);
+        blockState = Instantiate(blockState);
+
         currentState = idleState;
     }
 

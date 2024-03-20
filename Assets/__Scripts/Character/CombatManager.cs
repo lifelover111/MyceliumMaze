@@ -24,6 +24,7 @@ public class CombatManager : MonoBehaviour
     {
         DisableWeaponCollider();
         character.OnDead += DisableWeaponCollider;
+        character.OnDead += DisableDamagableColliders;
     }
 
     protected virtual void Update()
@@ -59,16 +60,16 @@ public class CombatManager : MonoBehaviour
 
     protected virtual void HandleBlock()
     {
-        ///TODO: переопределить
-        ///
-        //if (character.isPerformingAction) return;
+        if (character.isBlocking)
+            character.statsManager.RegenerateConcentration(2, 0.5f, true);
+    }
 
-        //if (PlayerInputManager.instance.blockInput)
-        //{
-        //    character.isPerformingAction = true;
-        //    character.canMove = false;
-        //    character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Block, true);
-        //}
+    public virtual void DisableDamagableColliders()
+    {
+        foreach (var collider in GetComponentsInChildren<Collider>())
+        {
+            collider.enabled = false;
+        }
     }
 
     public virtual void EnableWeaponCollider()
@@ -99,6 +100,16 @@ public class CombatManager : MonoBehaviour
     public virtual void DisableCanParry() 
     {
         canParry = false;
+    }
+
+    public virtual void EnableInvulnerability()
+    {
+        character.isInvulnerable = true;
+    }
+
+    public virtual void DisableInvulnerability()
+    {
+        character.isInvulnerable = false;
     }
 
 }

@@ -10,7 +10,6 @@ public class Stun : StateMachineBehaviour
     {
         if (characterManager is null)
             characterManager = animator.GetComponent<CharacterManager>();
-
         characterManager.canRotate = false;
         characterManager.canMove = false;
         characterManager.isBlocking = false;

@@ -9,7 +9,10 @@ public class IdleState : AIState
     {
         if (aiCharacter.combatManager.currentTarget is not null)
         {
-            return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
+            if (WorldUtilityManager.RollForOutcomeChance(50))
+                return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
+            else
+                return SwitchState(aiCharacter, aiCharacter.surroundState);
         }
         else
         {

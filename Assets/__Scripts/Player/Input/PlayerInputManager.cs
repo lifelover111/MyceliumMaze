@@ -26,8 +26,7 @@ public class PlayerInputManager : MonoBehaviour
 
     void Awake()
     {
-        if(instance is null)
-            instance = this;
+        instance = this;
     }
 
     private void Update()

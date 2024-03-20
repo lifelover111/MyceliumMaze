@@ -13,7 +13,7 @@ public class MeleeWeaponCollider : DamageCollider
     }
     protected override void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
-        if (target == weaponOwner) return;
+        if (target == weaponOwner || target.CompareTag(weaponOwner.tag)) return;
         base.DamageTarget(target, withConcentrationDamage);
 
         if (charactersDamaged.Contains(target)) return;
@@ -55,10 +55,11 @@ public class MeleeWeaponCollider : DamageCollider
             return;
         }
 
-        character.animatorManager.PlayTargetHitAnimation(character.animationKeys.BlockHit, false);
+        character.animatorManager.PlayTargetHitAnimation(character.animationKeys.BlockHit, true);
         concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
         concentrationDamageEffect.characterCausingDamage = weaponOwner;
         character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
     }
+
 
 }

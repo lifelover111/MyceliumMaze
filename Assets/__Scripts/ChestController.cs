@@ -21,11 +21,6 @@ public class ChestController : MonoBehaviour
             if (!isOpen)
             {
                 OpenChest();
-                Debug.Log("Открыто");
-            }
-            else
-            {
-                //CloseChest();
             }
         }
     }
@@ -38,11 +33,6 @@ public class ChestController : MonoBehaviour
         isOpen = true; 
     }
 
-    //void CloseChest()
-    //{
-    //    chestAnimator.SetBool("isOpen", false);
-    //    isOpen = false; 
-    //}
 
     bool IsPlayerNearby()
     {

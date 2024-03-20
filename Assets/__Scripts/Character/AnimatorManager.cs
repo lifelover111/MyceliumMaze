@@ -27,10 +27,10 @@ public class AnimatorManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
-    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
+    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, float dampTime = 0.1f)
     {
-        character.animator.SetFloat("x", horizontalValue, 0.1f ,Time.deltaTime);
-        character.animator.SetFloat("y", verticalValue, 0.1f, Time.deltaTime);
+        character.animator.SetFloat("x", horizontalValue, dampTime ,Time.deltaTime);
+        character.animator.SetFloat("y", verticalValue, dampTime, Time.deltaTime);
     }
     public void SetAnimatorMovementParameters(float horizontalValue, float verticalValue)
     {
@@ -38,9 +38,9 @@ public class AnimatorManager : MonoBehaviour
         character.animator.SetFloat("y", verticalValue);
     }
 
-    public void UpdateAnimatorRotationParameters(float turnValue)
+    public void UpdateAnimatorRotationParameters(float turnValue, float dampTime = 0.1f)
     {
-        character.animator.SetFloat("turn", turnValue, 0.1f, Time.deltaTime);
+        character.animator.SetFloat("turn", turnValue, dampTime, Time.deltaTime);
     }
 
     public void SetAnimatorRotationParameters(float turnValue)
@@ -131,6 +131,16 @@ public class AnimatorManager : MonoBehaviour
     public virtual void DisableCanParry()
     {
         character.combatManager.DisableCanParry();
+    }
+
+    public virtual void EnableInvulnerability()
+    {
+        character.combatManager.EnableInvulnerability();
+    }
+
+    public virtual void DisableInvulnerability()
+    {
+        character.combatManager.DisableInvulnerability();
     }
 
     #endregion

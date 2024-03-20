@@ -10,4 +10,11 @@ public class AIData : MonoBehaviour
     public Transform currentTarget;
 
     public int GetTargetsCount() => targets == null ? 0 : targets.Count;
+
+    public void SetTarget(Transform target)
+    {
+        targets.Clear();
+        targets.Add(target);
+        currentTarget = target;
+    }
 }

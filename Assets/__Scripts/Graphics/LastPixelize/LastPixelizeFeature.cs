@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class LastPixelizeFeature : ScriptableRendererFeature
 {
@@ -10,16 +11,13 @@ public class LastPixelizeFeature : ScriptableRendererFeature
         public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
         public int screenHeight = 144;
     }
-    CamFollow camFollow;
+
     [SerializeField] private CustomPassSettings settings;
     private LastPixelizePass customPass;
 
     public override void Create()
-    
     {
-        if(Camera.main is not null)
-            camFollow = Camera.main.GetComponent<CamFollow>();
-        customPass = new LastPixelizePass(settings, camFollow);
+        customPass = new LastPixelizePass(settings);
     }
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
@@ -29,5 +27,6 @@ public class LastPixelizeFeature : ScriptableRendererFeature
 #endif
         renderer.EnqueuePass(customPass);
     }
+
 }
 

@@ -16,21 +16,23 @@ public class LastPixelizePass : ScriptableRenderPass
     private CamFollow camFollow;
     private Material material;
     private int pixelScreenHeight, pixelScreenWidth;
+    
 
-    public LastPixelizePass(LastPixelizeFeature.CustomPassSettings settings, CamFollow camFollow)
+    public LastPixelizePass(LastPixelizeFeature.CustomPassSettings settings)
     {
         this.settings = settings;
-        this.camFollow = camFollow;
         this.renderPassEvent = settings.renderPassEvent;
-        if (material == null) material = CoreUtils.CreateEngineMaterial("Hidden/LastPixelize");
+        if (material is null) material = CoreUtils.CreateEngineMaterial("Hidden/LastPixelize");
     }
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
         if (camFollow is null)
-            return;
+        {
+            camFollow = Camera.main.GetComponent<CamFollow>();
+        }
 
-        colorBuffer = renderingData.cameraData.renderer.cameraColorTarget;
+        colorBuffer = renderingData.cameraData.renderer.cameraColorTargetHandle;
         RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
 
         //cmd.GetTemporaryRT(pointBufferID, descriptor.width, descriptor.height, 0, FilterMode.Point);
@@ -61,7 +63,6 @@ public class LastPixelizePass : ScriptableRenderPass
             //Blit(cmd, colorBuffer, pointBuffer);
             //Blit(cmd, pointBuffer, pixelBuffer);
             //Blit(cmd, pixelBuffer, colorBuffer);
-
             Blit(cmd, colorBuffer, pixelBuffer, material);
             Blit(cmd, pixelBuffer, colorBuffer);
         }
