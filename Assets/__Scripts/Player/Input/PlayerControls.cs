@@ -154,6 +154,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""439cc214-a3d0-4db9-beaa-45f1361e3047"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -200,6 +209,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Heal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""661a8b79-92da-4ba8-a5f8-8a04d0a50f1a"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -244,6 +264,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Dash = m_PlayerActions.FindAction("Dash", throwIfNotFound: true);
         m_PlayerActions_Heal = m_PlayerActions.FindAction("Heal", throwIfNotFound: true);
+        m_PlayerActions_UseItem = m_PlayerActions.FindAction("UseItem", throwIfNotFound: true);
         // PlayerRotation
         m_PlayerRotation = asset.FindActionMap("PlayerRotation", throwIfNotFound: true);
         m_PlayerRotation_Rotation = m_PlayerRotation.FindAction("Rotation", throwIfNotFound: true);
@@ -366,6 +387,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Dash;
     private readonly InputAction m_PlayerActions_Heal;
+    private readonly InputAction m_PlayerActions_UseItem;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -374,6 +396,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Dash => m_Wrapper.m_PlayerActions_Dash;
         public InputAction @Heal => m_Wrapper.m_PlayerActions_Heal;
+        public InputAction @UseItem => m_Wrapper.m_PlayerActions_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -395,6 +418,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Heal.started += instance.OnHeal;
             @Heal.performed += instance.OnHeal;
             @Heal.canceled += instance.OnHeal;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -411,6 +437,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Heal.started -= instance.OnHeal;
             @Heal.performed -= instance.OnHeal;
             @Heal.canceled -= instance.OnHeal;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -485,6 +514,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IPlayerRotationActions
     {

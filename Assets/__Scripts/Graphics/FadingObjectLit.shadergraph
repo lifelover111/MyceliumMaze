@@ -67,10 +67,10 @@
             "m_Id": "4c5810f2398042f790f8572d336c3427"
         },
         {
-            "m_Id": "d764e0c9729c4e4aa4255c6a6457c5f3"
+            "m_Id": "5fb3cac85bd84424bbc4b31ed68fd62d"
         },
         {
-            "m_Id": "5fb3cac85bd84424bbc4b31ed68fd62d"
+            "m_Id": "a12cdb8dd0b04fba93da0dc37300bc85"
         }
     ],
     "m_GroupDatas": [],
@@ -206,7 +206,7 @@
                 "m_Id": "4c5810f2398042f790f8572d336c3427"
             },
             {
-                "m_Id": "d764e0c9729c4e4aa4255c6a6457c5f3"
+                "m_Id": "a12cdb8dd0b04fba93da0dc37300bc85"
             }
         ]
     },
@@ -458,6 +458,21 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "41d80fcdf2694d6f82c48e9e02d4ffde",
+    "m_Id": 0,
+    "m_DisplayName": "Alpha Clip Threshold",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "AlphaClipThreshold",
+    "m_StageCapability": 2,
+    "m_Value": 0.02500000037252903,
+    "m_DefaultValue": 0.5,
     "m_Labels": []
 }
 
@@ -832,10 +847,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -767.0000610351563,
-            "y": 565.9999389648438,
-            "width": 208.0,
-            "height": 350.00006103515627
+            "x": -765.0,
+            "y": 566.0,
+            "width": 207.99993896484376,
+            "height": 398.0
         }
     },
     "m_Slots": [
@@ -855,6 +870,9 @@
             "m_Id": "48c98fce24934ac7844bba34c9ce031c"
         },
         {
+            "m_Id": "8dcb7c6244e84740a000f49511e32275"
+        },
+        {
             "m_Id": "96ee78b6c46f4e159619fb5c2e440248"
         }
     ],
@@ -872,7 +890,7 @@
     "m_SourceType": 1,
     "m_FunctionName": "Distance",
     "m_FunctionSource": "407bc68d299748449bbf7f48ee690f8d",
-    "m_FunctionBody": "Player.y = Player.y + Height;\n\r\nfloat a = length(Point - Camera);\r\nfloat3 vecPlayerToCamera = Player - Camera;\r\nfloat3 vecPointToCamera = Point - Camera;\r\n\r\n// Нормализуем векторы\r\nvecPlayerToCamera = normalize(vecPlayerToCamera);\r\nvecPointToCamera = normalize(vecPointToCamera);\r\n\r\n// Вычисляем дот-произведение векторов\r\nfloat dotProduct = dot(vecPlayerToCamera, vecPointToCamera);\r\n\r\n\r\n// Вычисляем угол между векторами (в радианах)\r\nfloat angleRad = acos(dotProduct);\r\n\r\nfloat Distance = a * sin(angleRad);\r\n\r\nif (Distance < Radius)\r\n{\r\n    float depth = a * cos(angleRad);\r\n    if (depth < length(Player - Camera))\r\n    {\r\n        Mask = 0;\r\n    }\r\n    else\r\n    {\r\n        Mask = 1;\r\n    }\r\n}\r\nelse\r\n{\r\n    Mask = 1;\r\n}\n\n"
+    "m_FunctionBody": "\r\n\r\nPlayer.y = Player.y + Height;\r\n\r\nfloat a = length(Point - Camera);\r\nfloat3 vecPlayerToCamera = Player - Camera;\r\nfloat3 vecPointToCamera = Point - Camera;\r\nfloat3 vecPlayerToPoint = Point - Player;\r\n\r\nvecPlayerToCamera = normalize(vecPlayerToCamera);\r\nfloat3 vecPlayerToCamera2 = -vecPlayerToCamera;\r\nvecPlayerToCamera2.y = 0;\r\nvecPlayerToPoint.y = 0;\r\n// Нормализуем векторы\r\nvecPlayerToCamera2 = normalize(vecPlayerToCamera2);\r\nvecPointToCamera = normalize(vecPointToCamera);\r\nvecPlayerToPoint = normalize(vecPlayerToPoint);\r\n\r\n// Вычисляем дот-произведение векторов\r\nfloat dotProduct = dot(vecPlayerToCamera, vecPointToCamera);\r\nfloat dotProduct2 = dot(vecPlayerToCamera2, vecPlayerToPoint);\r\n\r\n\r\n// Вычисляем угол между векторами (в радианах)\r\nfloat angleRad = acos(dotProduct);\r\n\r\nfloat Distance = a * sin(angleRad);\r\nfloat depth = a * cos(angleRad);\r\nif (depth < length(Player - Camera))\r\n{\r\n    \r\n        Mask = 1;\r\n    \r\n}\r\n\r\n// angleRad2 > pi/4\r\nelse if (dotProduct2 < sqrt(2) / 2)\r\n{\r\n    Mask = 1;\r\n}\r\nelse if (Distance < Radius)\r\n{\r\n    Mask = 0;\r\n}\r\n\r\nelse if (Distance >= Radius && Distance < Radius + Rim)\r\n{\r\n    Mask = (Distance - Radius) / Rim;\r\n}\r\n\r\nelse\r\n{\r\n    Mask = 1;\r\n}"
 }
 
 {
@@ -934,21 +952,6 @@
     },
     "m_Space": 4,
     "m_PositionSource": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "6f0ec63e868946a2875b21bcd2b9773e",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha Clip Threshold",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "AlphaClipThreshold",
-    "m_StageCapability": 2,
-    "m_Value": 0.5,
-    "m_DefaultValue": 0.5,
-    "m_Labels": []
 }
 
 {
@@ -1068,6 +1071,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "8dcb7c6244e84740a000f49511e32275",
+    "m_Id": 6,
+    "m_DisplayName": "Rim",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Rim",
+    "m_StageCapability": 3,
+    "m_Value": 0.5,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "935ceaa351074c44a36058a98a86b7f3",
     "m_Group": {
@@ -1127,6 +1145,40 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
+    "m_ObjectId": "a12cdb8dd0b04fba93da0dc37300bc85",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "SurfaceDescription.AlphaClipThreshold",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "41d80fcdf2694d6f82c48e9e02d4ffde"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedDescriptor": "SurfaceDescription.AlphaClipThreshold"
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "a5b4d667b312444288bc51951b834c69",
     "m_Group": {
@@ -1137,10 +1189,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -953.0,
-            "y": 572.0,
-            "width": 109.99993896484375,
-            "height": 34.0
+            "x": -957.0,
+            "y": 678.0000610351563,
+            "width": 110.0,
+            "height": 33.99993896484375
         }
     },
     "m_Slots": [
@@ -1269,10 +1321,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1108.0,
-            "y": 455.9999694824219,
+            "x": -1255.0,
+            "y": 498.0000305175781,
             "width": 122.0,
-            "height": 245.00003051757813
+            "height": 244.99996948242188
         }
     },
     "m_Slots": [
@@ -1433,40 +1485,6 @@
             "m_Id": "314daa694b3148e3bbd73bfc01e03bb5"
         }
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "d764e0c9729c4e4aa4255c6a6457c5f3",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.AlphaClipThreshold",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "6f0ec63e868946a2875b21bcd2b9773e"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.AlphaClipThreshold"
 }
 
 {

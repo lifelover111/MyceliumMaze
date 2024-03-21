@@ -9,6 +9,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerInputManager inputManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
+    [HideInInspector] public ItemManager itemManager;
 
     protected override void Awake()
     {
@@ -19,6 +20,7 @@ public class PlayerManager : CharacterManager
         inputManager = GetComponent<PlayerInputManager>();
         statsManager = GetComponent<PlayerStatsManager>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
+        itemManager = GetComponent<ItemManager>();
     }
 
     protected override void Start()
@@ -39,5 +41,6 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.OnAttack += playerCombatManager.TryAttack;
         PlayerInputManager.instance.OnHeal += playerStatsManager.TryHeal;
         PlayerInputManager.instance.OnBlockStateChanged += playerCombatManager.TryBlock;
+        PlayerInputManager.instance.OnUseItem += itemManager.TryUseItem;
     }
 }

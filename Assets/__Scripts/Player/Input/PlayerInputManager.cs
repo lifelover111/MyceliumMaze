@@ -13,6 +13,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] public bool blockInput;
     [SerializeField] bool dashInput;
     [SerializeField] bool healInput;
+    [SerializeField] bool useItemInput;
 
     public Vector2 mousePosition;
     public float verticalInput;
@@ -23,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     public event System.Action OnAttack = delegate { };
     public event System.Action OnHeal = delegate { };
     public event System.Action OnBlockStateChanged = delegate { };
+    public event System.Action OnUseItem = delegate { };
 
     void Awake()
     {
@@ -47,6 +49,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Block.performed += i => { blockInput = i.ReadValue<float>() > 0.5; OnBlockStateChanged?.Invoke(); };
             playerControls.PlayerActions.Dash.performed += i => dashInput = true;
             playerControls.PlayerActions.Heal.performed += i => healInput = true;
+            playerControls.PlayerActions.UseItem.performed += i => useItemInput = true;
         }
         playerControls.Enable();
     }
@@ -61,6 +64,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDashInput();
         HandleAttackInput();
         HandleHealInput();
+        HandleUseItemInput();
     }
     
     void HandleMovementInput()
@@ -97,6 +101,16 @@ public class PlayerInputManager : MonoBehaviour
             healInput = false;
             //TODO: return do nothing if UI open
             OnHeal?.Invoke();
+        }
+    }
+
+    void HandleUseItemInput()
+    {
+        if (useItemInput)
+        {
+            useItemInput = false;
+            //TODO: return do nothing if UI open
+            OnUseItem?.Invoke();
         }
     }
 }
