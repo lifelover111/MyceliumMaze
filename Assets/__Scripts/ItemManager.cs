@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    [SerializeField] public Transform OffHand;
     PlayerManager player;
     List<Item> itemsInInventory = new List<Item>();
     public Item activeItem;
@@ -37,5 +38,20 @@ public class ItemManager : MonoBehaviour
             return;
 
         activeItem.Use(player);
+    }
+
+    public void AddToHand(GameObject item)
+    {
+        item.transform.SetParent(OffHand, false);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.rotation = Quaternion.FromToRotation(player.playerLocomotionManager.GetForward(), player.transform.forward);
+    }
+
+    public void ClearOffHand()
+    {
+        for (int i = 6; i < OffHand.childCount; i++)
+        {
+            Destroy(OffHand.GetChild(i));
+        }
     }
 }

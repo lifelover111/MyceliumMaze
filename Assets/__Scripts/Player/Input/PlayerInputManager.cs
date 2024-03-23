@@ -17,8 +17,9 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool healInput;
     [SerializeField] bool useItemInput;
     [SerializeField] bool rightStickInput;
-    [SerializeField] bool mouseInput;
     [SerializeField] bool interactInput;
+
+    private bool mouseInput = true;
 
     public Vector2 mousePosition;
     public float verticalInput;
@@ -147,6 +148,9 @@ public class PlayerInputManager : MonoBehaviour
 
     void ReadLeftStickInput(InputAction.CallbackContext context)
     {
+        if (mouseInput)
+            return;
+
         if (context.ReadValue<Vector2>().magnitude < 0.75f)
             return;
         

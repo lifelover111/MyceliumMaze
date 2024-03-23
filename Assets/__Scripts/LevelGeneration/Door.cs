@@ -62,6 +62,8 @@ public class Door : MonoBehaviour
         player.gameObject.SetActive(false);
         player.position = transitionTo.transform.position + transitionTo.enterPositionShift;
         player.gameObject.SetActive(true);
+
+        currentRoom.DestroyEnemies();
         currentRoom.gameObject.SetActive(false);
 
 

@@ -27,6 +27,11 @@ public class PlayerAnimatorManager : AnimatorManager
         player.playerCombatManager.canCancelAttack = false;
     }
 
+    public void TryCastSpell()
+    {
+        player.CastSpell();
+    }
+
     #endregion
 
 }

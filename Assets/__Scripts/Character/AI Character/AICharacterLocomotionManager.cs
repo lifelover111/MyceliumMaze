@@ -32,7 +32,7 @@ public class AICharacterLocomotionManager : LocomotionManager
     {
         if(aiCharacter.isMoving)
         {
-            aiCharacter.animatorManager.UpdateAnimatorMovementParameters(moveDirection.x, moveDirection.z, 0.05f);
+            aiCharacter.animatorManager.UpdateAnimatorMovementParameters(moveDirection.x, moveDirection.z, true, 0.05f);
         }
     }
 

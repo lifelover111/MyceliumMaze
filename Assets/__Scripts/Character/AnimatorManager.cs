@@ -8,16 +8,20 @@ public class AnimatorManager : MonoBehaviour
     public record AnimationKeys
     {
         public string Attack = "Attack";
-        public string Dash = "Dash";
         public string Dead = "Dead";
         public string HitForward = "HitFromForward";
         public string HitBack = "HitFromBack";
         public string StunForward = "StunForward";
         public string StunBack = "StunBack";
+        public string StunLeft = "StunLeft";
+        public string StunRight = "StunRight";
         public string Block = "BlockUp";
         public string BlockHit = "BlockHit";
+        public string BreakBlock = "BreakBlock";
         [Header("Player")]
         public string Heal = "Heal";
+        public string Dash = "Dash";
+        public string Cast = "CastSpell";
     }
 
     protected CharacterManager character;
@@ -27,8 +31,9 @@ public class AnimatorManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
-    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, float dampTime = 0.1f)
+    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool applyRootMotion = true, float dampTime = 0.1f)
     {
+        character.animator.applyRootMotion = applyRootMotion;
         character.animator.SetFloat("x", horizontalValue, dampTime ,Time.deltaTime);
         character.animator.SetFloat("y", verticalValue, dampTime, Time.deltaTime);
     }

@@ -25,6 +25,7 @@ public class ResetActionFlags : StateMachineBehaviour
         if(characterManager is PlayerManager player)
         {
             player.playerCombatManager.DisableCanCancelAttack();
+            player.itemManager.ClearOffHand();
         }
     }
 

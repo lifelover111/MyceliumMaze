@@ -55,7 +55,6 @@ public class MeleeWeaponCollider : DamageCollider
             return;
         }
 
-        character.animatorManager.PlayTargetHitAnimation(character.animationKeys.BlockHit, true);
         concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
         concentrationDamageEffect.characterCausingDamage = weaponOwner;
         character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);

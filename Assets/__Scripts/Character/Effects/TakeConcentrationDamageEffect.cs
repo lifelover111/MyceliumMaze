@@ -16,5 +16,19 @@ public class TakeConcentrationDamageEffect : InstantCharacterEffect
             character.statsManager.Concentration >= character.statsManager.MaxConcentration ? 
             character.statsManager.MaxConcentration 
             : character.statsManager.Concentration;
+
+        if(character.isBlocking)
+        {
+            if(character.statsManager.Concentration >= character.statsManager.MaxConcentration)
+            {
+                character.statsManager.OverflowConcentration();
+                character.animatorManager.PlayTargetHitAnimation(character.animationKeys.BreakBlock, true);
+            }
+
+            else
+            {
+                character.animatorManager.PlayTargetHitAnimation(character.animationKeys.BlockHit, true);
+            }
+        }
     }
 }

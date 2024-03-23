@@ -11,7 +11,9 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public ItemManager itemManager;
 
+
     public event System.Action OnInteract = delegate { };
+    public event System.Action<PlayerManager> OnCastSpell = delegate { };
 
     protected override void Awake()
     {
@@ -37,6 +39,16 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager.HandleAllMovement();
     }
 
+    public void CastSpell()
+    {
+        OnCastSpell?.Invoke(this);
+    }
+
+    public void UnsubscribeCastEvent()
+    {
+        OnCastSpell = delegate { };
+    }
+
     void SubscribeToInputEvents()
     {
         PlayerInputManager.instance.OnDash += playerLocomotionManager.TryDash;
@@ -47,6 +59,7 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.OnInteract += TryInteract;
     }
 
+
     void TryInteract()
     {
         if (isPerformingAction)
@@ -54,4 +67,6 @@ public class PlayerManager : CharacterManager
 
         OnInteract?.Invoke();
     }
+
+    
 }

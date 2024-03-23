@@ -20,6 +20,8 @@ public class PlayerLocomotionManager : LocomotionManager
     [SerializeField] float rotationSpeed;
     private Vector3 playerRight => player.transform.forward;
 
+    private static float maxSpeed = 12;
+
     protected override void Awake()
     {
         base.Awake();
@@ -61,7 +63,8 @@ public class PlayerLocomotionManager : LocomotionManager
         moveDirection = Camera.main.transform.forward * verticalMovement;
         moveDirection += Camera.main.transform.right * horizontalMovement;
         moveDirection.y = 0;
-        moveDirection.Normalize();
+        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+        //moveDirection.Normalize();
         player.characterController.Move(moveDirection * GetSpeed(moveDirection) * Time.deltaTime);
 
 
@@ -69,8 +72,8 @@ public class PlayerLocomotionManager : LocomotionManager
         viewDirection.y = 0;
         viewDirection.Normalize();
         float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
-        Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * moveDirection).normalized;
-        player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z);
+        Vector3 walkTree = Vector3.ClampMagnitude(Quaternion.AngleAxis(angle, Vector3.down) * moveDirection, 1)* Mathf.Sqrt(speedForward/maxSpeed);
+        player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z, false);
     }
 
     private void HandleHoldWalkButtonWalk()
@@ -80,15 +83,16 @@ public class PlayerLocomotionManager : LocomotionManager
 
         moveDirection = GetForward();//Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         moveDirection.y = 0;
-        moveDirection.Normalize();
+        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
+        //moveDirection.Normalize();
         player.characterController.Move(moveDirection * GetSpeed(moveDirection) * Time.deltaTime);
 
         Vector3 viewDirection = Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         viewDirection.y = 0;
         viewDirection.Normalize();
         float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
-        Vector3 walkTree = (Quaternion.AngleAxis(angle, Vector3.down) * moveDirection).normalized;
-        player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z);
+        Vector3 walkTree = Vector3.ClampMagnitude(Quaternion.AngleAxis(angle, Vector3.down) * moveDirection, 1) * Mathf.Sqrt(speedForward/maxSpeed);
+        player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z, false);
 
     }
 
@@ -104,12 +108,13 @@ public class PlayerLocomotionManager : LocomotionManager
         if(targetRotationDirection == Vector3.zero)
             targetRotationDirection = transform.forward;
 
-        Quaternion newRotation = Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * targetRotationDirection);
+        Quaternion newRotation = Quaternion.LookRotation(Quaternion.FromToRotation(GetForward(), transform.forward) * targetRotationDirection);
         Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
         transform.rotation = targetRotation;
 
-        float p = Mathf.Sin(Mathf.Deg2Rad * Vector3.SignedAngle(transform.rotation * Vector3.left, targetRotationDirection, Vector3.up));
+        float p = Mathf.Cos(Mathf.Deg2Rad * Vector3.SignedAngle(transform.rotation * Vector3.left, targetRotationDirection, Vector3.up));
         player.animatorManager.UpdateAnimatorRotationParameters(p);
+
     }
 
     public void TryDash()

@@ -33,18 +33,26 @@ public class TakeDamageEffect : InstantCharacterEffect
 
         if(!character.isDead)
         {
-            var angleHitFrom = Vector3.SignedAngle(new Vector3(contactPoint.x, 0, contactPoint.z).normalized, character.locomotionManager.GetForward(), Vector3.up);
+            var angleHitFrom = Vector3.SignedAngle((new Vector3(contactPoint.x, 0, contactPoint.z) - character.transform.position).normalized, character.locomotionManager.GetForward(), Vector3.up);
             if (character.statsManager.Concentration >= character.statsManager.MaxConcentration)
             {
                 character.canMove = false;
                 character.canRotate = false;
-                if (angleHitFrom <= 90 && angleHitFrom >= -90)
+                if (angleHitFrom <= 60 && angleHitFrom > -60)
                 {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunBack, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunForward, true);
+                }
+                else if(angleHitFrom > 60 && angleHitFrom <= 120)
+                {
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunLeft, true);
+                }
+                else if (angleHitFrom <= -60 && angleHitFrom > -120)
+                {
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunRight, true);
                 }
                 else
                 {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunForward, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunBack, true);
                 }
                 character.statsManager.OverflowConcentration();
                 return;
@@ -56,11 +64,11 @@ public class TakeDamageEffect : InstantCharacterEffect
                 character.canRotate = false;
                 if (angleHitFrom <= 90 && angleHitFrom >= -90)
                 {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitBack, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitForward, true);
                 }
                 else
                 {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitForward, true);
+                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitBack, true);
                 }
             }
         }

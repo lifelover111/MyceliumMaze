@@ -19,6 +19,7 @@ public class Stun : StateMachineBehaviour
         if (characterManager is PlayerManager player)
         {
             player.playerCombatManager.DisableCanCancelAttack();
+            player.UnsubscribeCastEvent();
         }
     }
 }

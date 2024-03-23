@@ -124,6 +124,12 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void DestroyEnemies()
+    {
+        for(int i = 0; i < EnemyAnchor.childCount; i++)
+            Destroy(EnemyAnchor.GetChild(i).gameObject);
+    }
+
 
     public void WakeEnemies()
     {
