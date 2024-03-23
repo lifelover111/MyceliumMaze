@@ -21,6 +21,11 @@ public class ResetActionFlags : StateMachineBehaviour
         characterManager.combatManager.canParry = false;
         characterManager.animatorManager.DisableCanDoCombo();
         characterManager.animatorManager.DisableAttackCollider();
+
+        if(characterManager is PlayerManager player)
+        {
+            player.playerCombatManager.DisableCanCancelAttack();
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -11,6 +11,8 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public ItemManager itemManager;
 
+    public event System.Action OnInteract = delegate { };
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,5 +44,14 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.OnHeal += playerStatsManager.TryHeal;
         PlayerInputManager.instance.OnBlockStateChanged += playerCombatManager.TryBlock;
         PlayerInputManager.instance.OnUseItem += itemManager.TryUseItem;
+        PlayerInputManager.instance.OnInteract += TryInteract;
+    }
+
+    void TryInteract()
+    {
+        if (isPerformingAction)
+            return;
+
+        OnInteract?.Invoke();
     }
 }

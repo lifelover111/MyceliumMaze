@@ -29,7 +29,8 @@ public class LastPixelizePass : ScriptableRenderPass
     {
         if (camFollow is null)
         {
-            camFollow = Camera.main.GetComponent<CamFollow>();
+            if (Camera.main is null || !Camera.main.TryGetComponent(out camFollow))
+                return;
         }
 
         colorBuffer = renderingData.cameraData.renderer.cameraColorTargetHandle;

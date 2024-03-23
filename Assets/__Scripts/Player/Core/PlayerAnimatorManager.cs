@@ -18,6 +18,15 @@ public class PlayerAnimatorManager : AnimatorManager
         player.playerStatsManager.Heal(player.playerStatsManager.healAmount, 1);
     }
 
+    public void EnableCanCancelAttack()
+    {
+        player.playerCombatManager.canCancelAttack = true;
+    }
+    public void DisableCanCancelAttack()
+    {
+        player.playerCombatManager.canCancelAttack = false;
+    }
+
     #endregion
 
 }

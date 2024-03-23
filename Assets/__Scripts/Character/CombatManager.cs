@@ -52,14 +52,17 @@ public class CombatManager : MonoBehaviour
 
     public void TryBlock()
     {
-        if (!character.canBlockAttacks)
-            return;
+        //if (!character.canBlockAttacks)
+        //    return;
 
-        character.animatorManager.UpdateAnimatorBlockParameters(PlayerInputManager.instance.blockInput);
+        //character.animatorManager.UpdateAnimatorBlockParameters(PlayerInputManager.instance.blockInput);
     }
 
     protected virtual void HandleBlock()
     {
+        if (!character.canBlockAttacks)
+            return;
+
         if (character.isBlocking)
             character.statsManager.RegenerateConcentration(2, 0.5f, true);
     }

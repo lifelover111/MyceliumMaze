@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Windows;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -14,17 +16,24 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dashInput;
     [SerializeField] bool healInput;
     [SerializeField] bool useItemInput;
+    [SerializeField] bool rightStickInput;
+    [SerializeField] bool mouseInput;
+    [SerializeField] bool interactInput;
 
     public Vector2 mousePosition;
     public float verticalInput;
     public float horizontalInput;
     public float moveAmount;
 
+    [Header("Parameters")]
+    [SerializeField] private float rightStickThreshold = 1000;
+
     public event System.Action OnDash = delegate { };
     public event System.Action OnAttack = delegate { };
     public event System.Action OnHeal = delegate { };
     public event System.Action OnBlockStateChanged = delegate { };
     public event System.Action OnUseItem = delegate { };
+    public event System.Action OnInteract = delegate { };
 
     void Awake()
     {
@@ -42,7 +51,17 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerControls = new PlayerControls();
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-            playerControls.PlayerRotation.Rotation.performed += i => mousePosition = i.ReadValue<Vector2>();
+            playerControls.PlayerRotation.Rotation.performed += i =>
+            {
+                if (mouseInput) 
+                    mousePosition = i.ReadValue<Vector2>();
+            };
+            playerControls.PlayerMovement.Movement.performed += i => ReadLeftStickInput(i);
+            playerControls.PlayerRotation.Rotation_Gamepad.performed += i => 
+            {
+                ReadRightStickInput(i);
+                mouseInput = false;
+            };
             playerControls.PlayerMovement.AutoMovement.canceled += i => autoMoveInput = false;
             playerControls.PlayerMovement.AutoMovement.started += i => autoMoveInput = true;
             playerControls.PlayerActions.Attack.performed += i => attackInput = true;
@@ -50,6 +69,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Dash.performed += i => dashInput = true;
             playerControls.PlayerActions.Heal.performed += i => healInput = true;
             playerControls.PlayerActions.UseItem.performed += i => useItemInput = true;
+            playerControls.PlayerActions.Interact.performed += i => interactInput = true;
         }
         playerControls.Enable();
     }
@@ -65,6 +85,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleAttackInput();
         HandleHealInput();
         HandleUseItemInput();
+        HandleInteractInput();
     }
     
     void HandleMovementInput()
@@ -112,5 +133,44 @@ public class PlayerInputManager : MonoBehaviour
             //TODO: return do nothing if UI open
             OnUseItem?.Invoke();
         }
+    }
+
+    void HandleInteractInput()
+    {
+        if(interactInput)
+        {
+            interactInput = false;
+            //TODO: return do nothing if UI open
+            OnInteract?.Invoke();
+        }
+    }
+
+    void ReadLeftStickInput(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<Vector2>().magnitude < 0.75f)
+            return;
+        
+        var cameraRelativePos = (Vector2)Camera.main.WorldToScreenPoint(transform.position);
+        if(!rightStickInput)
+        {
+            mousePosition = cameraRelativePos + rightStickThreshold * context.ReadValue<Vector2>();
+        }
+    }
+
+    void ReadRightStickInput(InputAction.CallbackContext context)
+    {
+        var input = context.ReadValue<Vector2>();
+        if (input.magnitude < 0.25f)
+        {
+            rightStickInput = false;
+            return;
+        }
+        else
+        {
+            rightStickInput = true;
+            input.Normalize();
+            mousePosition = (Vector2)Camera.main.WorldToScreenPoint(transform.position) + rightStickThreshold * input;
+        }
+
     }
 }

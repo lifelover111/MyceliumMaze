@@ -1,27 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChestController : MonoBehaviour
 {
     public Animator chestAnimator; 
     public float interactionDistance = 1f; 
-    private bool isOpen = false; 
-    private GameObject player;
+    private PlayerManager player;
 
     void Start()
     {
         chestAnimator.SetBool("isOpen", false);
-        player = GameObject.FindGameObjectWithTag("Player");
     }
-    void Update()
+
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && IsPlayerNearby())
+        var colliders = Physics.OverlapSphere(transform.position, interactionDistance);
+        if (colliders is null || colliders.Length == 0)
         {
-            if (!isOpen)
+            return;
+        }
+        var playerColliders = colliders.Where(c => c.CompareTag("Player"));
+
+        if (playerColliders is null || playerColliders.Count() == 0)
+        {
+            if (player is not null)
             {
-                OpenChest();
+                player.OnInteract -= OpenChest;
+                player = null;
             }
+            return;
+        }
+
+        if (playerColliders.Count() > 0)
+        {
+            if (player is not null && playerColliders.Select(c => c.gameObject).Contains(player.gameObject))
+                return;
+
+            player = playerColliders.First().GetComponent<PlayerManager>();
+            player.OnInteract += OpenChest;
         }
     }
 
@@ -30,20 +48,7 @@ public class ChestController : MonoBehaviour
     {
         chestAnimator.enabled = true;
         chestAnimator.SetBool("isOpen", true);
-        isOpen = true; 
     }
 
 
-    bool IsPlayerNearby()
-    {
-        return Vector3.Distance(transform.position, player.transform.position) <= interactionDistance;
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            player = other.gameObject;
-        }
-    }
 }

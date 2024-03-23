@@ -79,6 +79,7 @@ public class AnimatorManager : MonoBehaviour
         DisableCanDoCombo();
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.SetTrigger(key);
+        character.isPerformingAction = isPerformongAction;
     }
 
 
