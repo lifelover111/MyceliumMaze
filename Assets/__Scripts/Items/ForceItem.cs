@@ -25,6 +25,7 @@ public class ForceItem : Item
     {
         player.OnCastSpell -= Force;
         var effect = Instantiate(effectPrefab);
+        effect.GetComponent<RedHollowControl>().owner = player;
         effect.transform.position = player.itemManager.OffHand.position + 0.5f* player.playerLocomotionManager.GetForward();
         effect.transform.rotation = Quaternion.FromToRotation(Vector3.forward, player.playerLocomotionManager.GetForward());
     }

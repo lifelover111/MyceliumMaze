@@ -55,6 +55,10 @@ public class Door : MonoBehaviour
 
         transitionTo.room.gameObject.SetActive(true);
         float time = Time.time;
+        var playerManager = player.GetComponent<PlayerManager>();
+        playerManager.playerLocomotionManager.externallyControlled = true;
+        playerManager.playerLocomotionManager.GoTowards(Vector3.Project((transitionTo.transform.position - transform.position).normalized, Vector3.forward));
+
         while (transitionSpeed * Mathf.Sin(Time.time - time) < 0.99)
         {
             yield return null;
@@ -66,7 +70,10 @@ public class Door : MonoBehaviour
         currentRoom.DestroyEnemies();
         currentRoom.gameObject.SetActive(false);
 
-
+        playerManager.isPerformingAction = false;
+        playerManager.canMove = true;
+        playerManager.canRotate = true;
+        playerManager.playerLocomotionManager.externallyControlled = false;
         transitionTo.currentRoom.WakeEnemies();
         
     }

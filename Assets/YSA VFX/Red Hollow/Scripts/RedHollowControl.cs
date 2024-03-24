@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RedHollowControl : MonoBehaviour
 {
+    [SerializeField] new Collider collider;
+    public CharacterManager owner;
+
     [Range(0.0f, 1.0f)]
     public float hue = 0;
 
@@ -13,6 +16,7 @@ public class RedHollowControl : MonoBehaviour
     void Start()
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
+        GetComponentInChildren<ConcentrationDamageCollider>().characterCausingDamage = owner;
     }
 
     // Update is called once per frame
@@ -34,10 +38,12 @@ public class RedHollowControl : MonoBehaviour
 	if(Camera.main.transform.GetComponent<CameraShake>() != null){
 		Camera.main.transform.GetComponent<CameraShake>().Shake(0.5f, 1f);
 	}
+        collider.enabled = true;
     }
 
     public void Dead()
     {
+        collider.enabled = false;
         animator.Play("Red Hollow - Dead");
         StartCoroutine(DestroyCoroutine());
     }

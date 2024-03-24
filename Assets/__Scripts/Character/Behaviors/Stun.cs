@@ -15,6 +15,7 @@ public class Stun : StateMachineBehaviour
         characterManager.isBlocking = false;
         characterManager.animatorManager.DisableCanDoCombo();
         characterManager.animatorManager.DisableAttackCollider();
+        characterManager.animatorManager.DisableWeaponSlash();
 
         if (characterManager is PlayerManager player)
         {

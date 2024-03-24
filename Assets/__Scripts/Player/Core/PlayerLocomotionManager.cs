@@ -9,6 +9,8 @@ public class PlayerLocomotionManager : LocomotionManager
     public float verticalMovement;
     public float horizontalMovement;
     public float moveAmount;
+    public bool externallyControlled = false;
+
     
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
@@ -18,6 +20,8 @@ public class PlayerLocomotionManager : LocomotionManager
     [SerializeField] float speedBackward;
     [SerializeField] float speedToSide;
     [SerializeField] float rotationSpeed;
+    [SerializeField] float movementAcceleration = 10;
+
     private Vector3 playerRight => player.transform.forward;
 
     private static float maxSpeed = 12;
@@ -33,6 +37,12 @@ public class PlayerLocomotionManager : LocomotionManager
         //if (player.isPerformingAction)
         //    return;
 
+        if(externallyControlled)
+        {
+            HandleExternalControlMovement();
+            return;
+        }
+
         HandleRotation();
         if (!PlayerInputManager.instance.autoMoveInput)
             HandleWalk();
@@ -40,6 +50,21 @@ public class PlayerLocomotionManager : LocomotionManager
             HandleHoldWalkButtonWalk();
     }
 
+    public void GoTowards(Vector3 direction)
+    {
+        player.canMove = false;
+        player.canRotate = false;
+        moveDirection = direction.normalized;
+    }
+
+    void HandleExternalControlMovement()
+    {
+        if (player.isPerformingAction)
+            return;
+        player.transform.rotation = Quaternion.FromToRotation(GetForward(), transform.forward) * Quaternion.LookRotation(moveDirection, Vector3.up);
+        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, Mathf.Sqrt(speedForward / maxSpeed), false);
+        player.characterController.Move(moveDirection * speedForward * Time.deltaTime);
+    }
 
     void GetVerticalAndHorizontalInputs()
     {
@@ -60,11 +85,11 @@ public class PlayerLocomotionManager : LocomotionManager
             return;
 
         GetVerticalAndHorizontalInputs();
-        moveDirection = Camera.main.transform.forward * verticalMovement;
-        moveDirection += Camera.main.transform.right * horizontalMovement;
-        moveDirection.y = 0;
-        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-        //moveDirection.Normalize();
+        var direction = Camera.main.transform.forward * verticalMovement;
+        direction += Camera.main.transform.right * horizontalMovement;
+        direction.y = 0;
+        direction.Normalize();
+        moveDirection = Vector3.Slerp(moveDirection, Vector3.ClampMagnitude(direction, 1), movementAcceleration*Time.deltaTime);
         player.characterController.Move(moveDirection * GetSpeed(moveDirection) * Time.deltaTime);
 
 
@@ -81,10 +106,10 @@ public class PlayerLocomotionManager : LocomotionManager
         if (!player.canMove)
             return;
 
-        moveDirection = GetForward();//Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
-        moveDirection.y = 0;
-        moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
-        //moveDirection.Normalize();
+        var direction = GetForward();
+        direction.y = 0;
+        direction.Normalize();
+        moveDirection = Vector3.Slerp(moveDirection, Vector3.ClampMagnitude(direction, 1), movementAcceleration * Time.deltaTime);
         player.characterController.Move(moveDirection * GetSpeed(moveDirection) * Time.deltaTime);
 
         Vector3 viewDirection = Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;

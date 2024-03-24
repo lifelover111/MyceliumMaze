@@ -24,6 +24,7 @@ public class PlayerCombatManager : CombatManager
             DisableWeaponCollider();
             canCancelAttack = false;
             character.canMove = false;
+            character.canRotate = true;
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Block, true);
         }
 

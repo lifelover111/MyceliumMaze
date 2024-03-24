@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 [CreateAssetMenu(menuName = "CharacterEffects/InstantEffects/Take Damage")]
 public class TakeDamageEffect : InstantCharacterEffect
@@ -38,22 +39,8 @@ public class TakeDamageEffect : InstantCharacterEffect
             {
                 character.canMove = false;
                 character.canRotate = false;
-                if (angleHitFrom <= 60 && angleHitFrom > -60)
-                {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunForward, true);
-                }
-                else if(angleHitFrom > 60 && angleHitFrom <= 120)
-                {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunLeft, true);
-                }
-                else if (angleHitFrom <= -60 && angleHitFrom > -120)
-                {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunRight, true);
-                }
-                else
-                {
-                    character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunBack, true);
-                }
+
+                PlayStunAnimation(character, angleHitFrom);
                 character.statsManager.OverflowConcentration();
                 return;
             }
@@ -72,6 +59,42 @@ public class TakeDamageEffect : InstantCharacterEffect
                 }
             }
         }
+    }
+
+    private void PlayStunAnimation(CharacterManager character, float angleHitFrom)
+    {
+        if (character is PlayerManager player)
+        {
+            if (angleHitFrom <= 60 && angleHitFrom > -60)
+            {
+                player.playerAnimatorManager.PlayTargetHitAnimation(player.animationKeys.StunForward, true);
+            }
+            else if (angleHitFrom > 60 && angleHitFrom <= 120)
+            {
+                player.playerAnimatorManager.PlayTargetHitAnimation(player.animationKeys.StunLeft, true);
+            }
+            else if (angleHitFrom <= -60 && angleHitFrom > -120)
+            {
+                player.playerAnimatorManager.PlayTargetHitAnimation(player.animationKeys.StunRight, true);
+            }
+            else
+            {
+                player.playerAnimatorManager.PlayTargetHitAnimation(player.animationKeys.StunBack, true);
+            }
+
+            return;
+        }
+
+
+        if (angleHitFrom <= 90 && angleHitFrom > -90)
+        {
+            character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunForward, true);
+        }
+        else
+        {
+            character.animatorManager.PlayTargetHitAnimation(character.animationKeys.StunBack, true);
+        }
+
     }
 
 }

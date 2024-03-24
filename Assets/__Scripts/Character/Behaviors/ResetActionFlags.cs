@@ -21,8 +21,9 @@ public class ResetActionFlags : StateMachineBehaviour
         characterManager.combatManager.canParry = false;
         characterManager.animatorManager.DisableCanDoCombo();
         characterManager.animatorManager.DisableAttackCollider();
+        characterManager.animatorManager.DisableWeaponSlash();
 
-        if(characterManager is PlayerManager player)
+        if (characterManager is PlayerManager player)
         {
             player.playerCombatManager.DisableCanCancelAttack();
             player.itemManager.ClearOffHand();

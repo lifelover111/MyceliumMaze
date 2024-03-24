@@ -18,6 +18,8 @@ public class AnimatorManager : MonoBehaviour
         public string Block = "BlockUp";
         public string BlockHit = "BlockHit";
         public string BreakBlock = "BreakBlock";
+        public string ParriedToStun = "ParriedStun";
+
         [Header("Player")]
         public string Heal = "Heal";
         public string Dash = "Dash";
@@ -110,6 +112,16 @@ public class AnimatorManager : MonoBehaviour
         character.combatManager.DisableWeaponCollider();
     }
 
+    public virtual void EnableWeaponSlash()
+    {
+        character.weapon.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public virtual void DisableWeaponSlash()
+    {
+        character.weapon.transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     public virtual void EnableCanRotate()
     {
         character.canRotate = true;
@@ -148,6 +160,7 @@ public class AnimatorManager : MonoBehaviour
     {
         character.combatManager.DisableInvulnerability();
     }
+
 
     #endregion
 }
