@@ -1,75 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CutoutObject : MonoBehaviour
 {
-    [SerializeField]
-    private Transform targetObject;
-
-    [SerializeField]
-    private LayerMask wallMask;
-
-    [SerializeField]
-    private float cutoutSize;
-
-    [SerializeField]
-    private float falloffSize;
-
-    [SerializeField]
-    private float playerHeight;
-
-    private RaycastHit[] hitObjectsBefore;
-
+    [SerializeField] private Transform targetObject;
+    [SerializeField] private LayerMask wallMask;
+    [SerializeField] private float cutoutSize;
+    [SerializeField] private float sphereColliderRadius;
+    [SerializeField] private float falloffSize;
+    [SerializeField] private float playerHeight;
+    private List<Collider> hitColliders = new List<Collider>();
     private Camera mainCamera;
 
     private void Awake()
     {
         mainCamera = GetComponent<Camera>();
-        hitObjectsBefore = new RaycastHit[0];
     }
 
     private void Update()
     {
-        Vector3 targetObjectPos = targetObject.position;
-        targetObjectPos.y += playerHeight;
-        
-        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObjectPos);
-        cutoutPos.y /= (Screen.width / Screen.height);
+        Vector3 targetPointPos = targetObject.position;
+        targetPointPos.y += playerHeight;
 
-        Vector3 offset = targetObjectPos - transform.position;
-        RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
+        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetPointPos);
+        cutoutPos.y /= Screen.width / Screen.height;
 
-
-        if (hitObjects.Length == 0 && hitObjectsBefore.Length > 0) 
+        foreach (Collider collider in hitColliders)
         {
-            for (int i = 0; i < hitObjectsBefore.Length; ++i)
+            Renderer[] renderers = collider.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
             {
-                Material[] materials = hitObjectsBefore[i].transform.GetComponent<Renderer>().materials;
- 
-                for(int m = 0; m < materials.Length; ++m)
+                Material[] materials = renderer.materials;
+                foreach (Material material in materials)
                 {
-                    materials[m].SetFloat("_CutoutSize", 0.0f);
-                    materials[m].SetFloat("_FalloffSize", 0.0f);
+                    material.SetFloat("_CutoutSize", 0.0f);
+                    material.SetFloat("_FalloffSize", 0.0f);
                 }
             }
-            hitObjectsBefore = new RaycastHit[0];
         }
+        hitColliders.Clear();
 
-        for (int i = 0; i < hitObjects.Length; ++i)
-        {           
-            Material[] materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
-            Debug.Log(hitObjects[i].transform.position);
-            Debug.Log(hitObjects[i].transform.gameObject);
-            for(int m = 0; m < materials.Length; ++m)
+        Collider[] overlappedColliders = Physics.OverlapSphere(targetPointPos, sphereColliderRadius, wallMask);
+
+        foreach (Collider collider in overlappedColliders)
+        {
+            Renderer[] renderers = collider.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
             {
-                materials[m].SetVector("_CutoutPos", cutoutPos);
-                materials[m].SetFloat("_CutoutSize", cutoutSize);
-                materials[m].SetFloat("_FalloffSize", falloffSize);
+                Material[] materials = renderer.materials;
+                foreach (Material material in materials)
+                {
+                    material.SetVector("_CutoutPos", cutoutPos);
+                    material.SetFloat("_CutoutSize", cutoutSize);
+                    material.SetFloat("_FalloffSize", falloffSize);
+                }
             }
-            
         }
-
-        hitObjectsBefore = hitObjects;
+        hitColliders.AddRange(overlappedColliders.Where(c => !hitColliders.Contains(c)));
     }
 }

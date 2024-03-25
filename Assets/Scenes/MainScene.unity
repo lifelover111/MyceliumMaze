@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44364372, g: 0.49296987, b: 0.5725331, a: 1}
+  m_IndirectSpecularColor: {r: 0.44364294, g: 0.4929694, b: 0.57253295, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3790,6 +3790,7 @@ GameObject:
   - component: {fileID: 1557173910}
   - component: {fileID: 1557173909}
   - component: {fileID: 1557173915}
+  - component: {fileID: 1557173916}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4013,6 +4014,26 @@ MonoBehaviour:
   - {fileID: 8226720939275716280, guid: e757be706e94f294981ae1cc97d71a34, type: 3}
   - {fileID: 1562689790103526960, guid: 7851921b4cebae54781aece4b969360f, type: 3}
   - {fileID: 6165093532610500742, guid: da185a882d897e84785a86e943027a1e, type: 3}
+--- !u!114 &1557173916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557173908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde48b540e96e1f4490a11767559d8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 18443215}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  cutoutSize: 0.5
+  sphereColliderRadius: 25
+  falloffSize: 0.2
+  playerHeight: 1.5
 --- !u!1 &1559833375
 GameObject:
   m_ObjectHideFlags: 0
