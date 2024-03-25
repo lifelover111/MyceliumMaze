@@ -19,6 +19,8 @@ public class DamageCollider : MonoBehaviour
     [Header("Characters Damaged")]
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
+    public event System.Action OnHitEnemy = delegate { };
+
     public virtual void Enable()
     {
         collider.enabled = true;
@@ -32,7 +34,7 @@ public class DamageCollider : MonoBehaviour
 
     protected virtual void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
-
+        OnHitEnemy?.Invoke();
     }
 
     protected virtual void Awake()

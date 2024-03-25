@@ -6,7 +6,6 @@ public class PlayerCombatManager : CombatManager
 {
     public bool canCancelAttack = false;
 
-
     protected override void Update()
     {
         base.Update();
@@ -28,6 +27,11 @@ public class PlayerCombatManager : CombatManager
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Block, true);
         }
 
+    }
+
+    public void SubscribeToHitEnemy(System.Action handler)
+    {
+        character.weapon.GetComponent<DamageCollider>().OnHitEnemy += handler;
     }
 
 

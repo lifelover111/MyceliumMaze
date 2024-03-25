@@ -6,21 +6,38 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Items/Active/Debug")]
-public class DebugItem : Item
+public class DebugItem : ActiveItem
 {
-    public override void PickUp(PlayerManager player)
+
+    public override void Reset()
     {
-        base.PickUp(player);
+        base.Reset();
+        OnTryUse += UseDebug;
     }
 
-    public override void Remove(PlayerManager player)
+    public bool UseDebug(PlayerManager player)
     {
-        base.Remove(player);
-    }
-
-    public override void Use(PlayerManager player)
-    {
-        base.Use(player);
         Debug.Log("Item used by " + player);
+        return true;
+    }
+}
+
+
+[CreateAssetMenu(menuName = "Items/Passive/DebugPassive")]
+public class DebugPassiveItem : PassiveItem
+{
+    public override void ProcessPassiveEffect(PlayerManager player)
+    {
+        base.ProcessPassiveEffect(player);
+        
+        if (player.isPerformingAction)
+            return;
+
+        UseDebug(player);
+    }
+
+    public void UseDebug(PlayerManager player)
+    {
+        Debug.Log("Item affects " + player);
     }
 }

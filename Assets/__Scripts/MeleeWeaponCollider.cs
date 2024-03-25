@@ -14,7 +14,7 @@ public class MeleeWeaponCollider : DamageCollider
     protected override void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
         if (target == weaponOwner || target.CompareTag(weaponOwner.tag)) return;
-        //base.DamageTarget(target, withConcentrationDamage);
+        base.DamageTarget(target, withConcentrationDamage);
 
         if (charactersDamaged.Contains(target)) return;
         charactersDamaged.Add(target);

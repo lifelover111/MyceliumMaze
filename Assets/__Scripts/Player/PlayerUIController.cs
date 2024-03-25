@@ -12,6 +12,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] Transform ConcentrationBar;
     [SerializeField] Transform SporeCounter;
     [SerializeField] Transform FlaskCounter;
+    [SerializeField] Transform ActiveItemCooldownIndicator;
 
 
     GameObject healthLine;
@@ -71,6 +72,10 @@ public class PlayerUIController : MonoBehaviour
 
         concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1), 10 * Time.deltaTime);
         concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
+
+        ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown)/(float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
+        ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+        
     }
 
     /*

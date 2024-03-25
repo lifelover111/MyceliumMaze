@@ -10,7 +10,7 @@ public class ConcentrationDamageCollider : DamageCollider
     protected override void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
         if (target == characterCausingDamage) return;
-        //base.DamageTarget(target, withConcentrationDamage);
+        base.DamageTarget(target, withConcentrationDamage);
 
         if (charactersDamaged.Contains(target)) return;
         charactersDamaged.Add(target);

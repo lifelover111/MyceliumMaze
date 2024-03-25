@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Active/ForceItem")]
-public class ForceItem : Item
+public class ForceItem : ActiveItem
 {
     [Header("Effect Prefab")]
     [SerializeField] GameObject effectPrefab;
 
-    public override void Use(PlayerManager player)
+    public override void Reset()
     {
-        base.Use(player);
+        base.Reset();
+        OnTryUse += TryUseForce;
+    }
+
+    public bool TryUseForce(PlayerManager player)
+    {
         if (player.isPerformingAction)
-            return;
+            return false;
+
         player.canMove = false;
         player.canRotate = false;
 
         player.playerAnimatorManager.PlayTargetActionAnimation(player.animationKeys.Cast, true);
         player.OnCastSpell += Force;
 
+        return true;
     }
 
     private void Force(PlayerManager player)

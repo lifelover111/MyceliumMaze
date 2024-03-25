@@ -2,24 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] public Transform OffHand;
     PlayerManager player;
-    List<Item> itemsInInventory = new List<Item>();
-    public Item activeItem;
+    public List<PassiveItem> itemsInInventory = new List<PassiveItem>();
+    public ActiveItem activeItem;
     private void Awake()
     {
         player = GetComponent<PlayerManager>();
+        activeItem = Instantiate(activeItem);
+        activeItem.PickUp(player);
+    }
+
+    private void Update()
+    {
+        ProcessPassiveEffects();
     }
 
     public void AddItem(Item item)
     {
-        Item copy = Instantiate(item);
-        itemsInInventory.Add(copy);
+        if (item is PassiveItem passiveItem)
+        {
+            PassiveItem copy = Instantiate(passiveItem);
+            itemsInInventory.Add(copy);
+            copy.PickUp(player);
+        }
+        else if(item is ActiveItem activeItem)
+        {
+            ActiveItem copy = Instantiate(activeItem);
+            //TODO: дроп предыдущего предмета
 
-        copy.PickUp(player);
+            this.activeItem = copy;
+            copy.PickUp(player);
+        }
+        else
+        {
+            throw new System.Exception(item + " is not passive nor active");
+        }
     }
 
     public void RemoveItem(Item item)
@@ -52,6 +74,14 @@ public class ItemManager : MonoBehaviour
         for (int i = 6; i < OffHand.childCount; i++)
         {
             Destroy(OffHand.GetChild(i));
+        }
+    }
+
+    private void ProcessPassiveEffects()
+    {
+        foreach (PassiveItem item in itemsInInventory)
+        {
+            item.ProcessPassiveEffect(player);
         }
     }
 }
