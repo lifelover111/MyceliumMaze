@@ -233,7 +233,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7985310731195787983}
-  - component: {fileID: 1562302123739147487}
   - component: {fileID: 8021613897604492321}
   m_Layer: 8
   m_Name: WallL
@@ -258,22 +257,6 @@ Transform:
   - {fileID: 2475758380947428527}
   m_Father: {fileID: 3001471214091162360}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1562302123739147487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6301101190646941317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!65 &8021613897604492321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -440,7 +423,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8897640164418855846}
-  - component: {fileID: 82777043482229452}
   - component: {fileID: 9017220360471573557}
   m_Layer: 8
   m_Name: Wall Line (3)
@@ -469,22 +451,6 @@ Transform:
   - {fileID: 2422081642078793473}
   m_Father: {fileID: 3001471214091162360}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &82777043482229452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7251853172252268728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!65 &9017220360471573557
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -594,7 +560,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1581425595902436652}
-  - component: {fileID: 3914476936749703038}
   - component: {fileID: 5172426515718585234}
   m_Layer: 8
   m_Name: Wall Line
@@ -619,22 +584,6 @@ Transform:
   - {fileID: 5483367362124860330}
   m_Father: {fileID: 3001471214091162360}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3914476936749703038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7523143572152403000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!65 &5172426515718585234
 BoxCollider:
   m_ObjectHideFlags: 0

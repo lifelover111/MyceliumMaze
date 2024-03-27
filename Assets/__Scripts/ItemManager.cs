@@ -14,7 +14,7 @@ public class ItemManager : MonoBehaviour
     {
         player = GetComponent<PlayerManager>();
         activeItem = Instantiate(activeItem);
-        activeItem.PickUp(player);
+        AddItem(activeItem);
     }
 
     private void Update()
@@ -37,6 +37,7 @@ public class ItemManager : MonoBehaviour
 
             this.activeItem = copy;
             copy.PickUp(player);
+            player.playerUIController.activeItemIconRenderer.sprite = copy.icon;
         }
         else
         {

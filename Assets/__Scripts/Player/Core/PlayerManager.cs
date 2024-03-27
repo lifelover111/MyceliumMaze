@@ -9,6 +9,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerInputManager inputManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
+    [HideInInspector] public PlayerUIController playerUIController;
     [HideInInspector] public ItemManager itemManager;
 
 
@@ -24,6 +25,7 @@ public class PlayerManager : CharacterManager
         inputManager = GetComponent<PlayerInputManager>();
         statsManager = GetComponent<PlayerStatsManager>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
+        playerUIController = GetComponent<PlayerUIController>();
         itemManager = GetComponent<ItemManager>();
     }
 

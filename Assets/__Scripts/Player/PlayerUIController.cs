@@ -13,6 +13,10 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] Transform SporeCounter;
     [SerializeField] Transform FlaskCounter;
     [SerializeField] Transform ActiveItemCooldownIndicator;
+    [SerializeField] Transform ActiveItemCooldownIndicatorFrame;
+    [SerializeField] Transform CooldownShadow;
+
+    public Image activeItemIconRenderer;
 
 
     GameObject healthLine;
@@ -75,7 +79,9 @@ public class PlayerUIController : MonoBehaviour
 
         ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown)/(float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
         ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-        
+        ActiveItemCooldownIndicatorFrame.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+        CooldownShadow.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+
     }
 
     /*
