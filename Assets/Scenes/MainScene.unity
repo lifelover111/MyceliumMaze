@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 18443223}
   - component: {fileID: 18443224}
   - component: {fileID: 18443225}
-  - component: {fileID: 18443226}
   - component: {fileID: 18443227}
   m_Layer: 11
   m_Name: Player
@@ -463,28 +462,6 @@ MonoBehaviour:
   canCombo: 0
   canParry: 0
   canCancelAttack: 0
---- !u!114 &18443226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18443214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025c5b2b33d15ee4fa641a847bb76514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  target: {fileID: 18443215}
-  cam: {fileID: 1557173913}
-  fadedAlpha: 0.133
-  retainShadows: 1
-  targetPositionOffset: {x: 0, y: 0, z: 0}
-  fadeSpeed: 1
-  objectsBlockingView: []
 --- !u!114 &18443227
 MonoBehaviour:
   m_ObjectHideFlags: 0

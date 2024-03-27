@@ -3375,13 +3375,7 @@ PrefabInstance:
       addedObject: {fileID: 5376827363510308916}
     - targetCorrespondingSourceObject: {fileID: 1388227429433490070, guid: a88728279c9ff77439e3768970fce445, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9115344846396369914}
-    - targetCorrespondingSourceObject: {fileID: 1388227429433490070, guid: a88728279c9ff77439e3768970fce445, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3893267560958011082}
-    - targetCorrespondingSourceObject: {fileID: 993467904971545746, guid: a88728279c9ff77439e3768970fce445, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 46325039792376121}
     - targetCorrespondingSourceObject: {fileID: 993467904971545746, guid: a88728279c9ff77439e3768970fce445, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5772392545471799003}
@@ -3419,22 +3413,6 @@ MonoBehaviour:
   doModify: 1
   meshFilter: {fileID: 349187555282329712}
   meshCollider: {fileID: 0}
---- !u!114 &9115344846396369914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 901133295255480363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!65 &3893267560958011082
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3461,22 +3439,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 993467904971545746, guid: a88728279c9ff77439e3768970fce445, type: 3}
   m_PrefabInstance: {fileID: 2288548278782710461}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &46325039792376121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300149698060373551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!65 &5772392545471799003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4545,7 +4507,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Column_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5196521275537891754, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -7056,7 +7019,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Column_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5196521275537891754, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -7675,9 +7639,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6517184508489584946, guid: 9bbb5245987b43043972821dcbdd765b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9034135161723163284}
-    - targetCorrespondingSourceObject: {fileID: 6517184508489584946, guid: 9bbb5245987b43043972821dcbdd765b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2584450935111449112}
     - targetCorrespondingSourceObject: {fileID: 8535906133611229366, guid: 9bbb5245987b43043972821dcbdd765b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1568254300267613065}
@@ -7757,22 +7718,6 @@ MonoBehaviour:
     abVector: {x: 0, y: 0, z: 0}
   connectedToFront: {fileID: 0}
   connectedToRear: {fileID: 0}
---- !u!114 &2584450935111449112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106005945919393392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 364a0ba5ca983554b80c9aa2d7b53aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  position: {x: 0, y: 0, z: 0}
-  materials: []
-  initialAlpha: 0
 --- !u!33 &2643714581074670290 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 7204604502340038032, guid: 9bbb5245987b43043972821dcbdd765b, type: 3}
@@ -10210,7 +10155,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Column_01
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5196521275537891754, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
