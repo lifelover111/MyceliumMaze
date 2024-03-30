@@ -1243,7 +1243,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8938276060098306750}
   - component: {fileID: 6165093532610500742}
-  - component: {fileID: 3706820424435261331}
   m_Layer: 0
   m_Name: StartRoom
   m_TagString: Untagged
@@ -1299,37 +1298,6 @@ MonoBehaviour:
   enemySpawnPoints: []
   transitionsForward: []
   transitionsBackward: []
---- !u!114 &3706820424435261331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246067674225667423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1e7f3f132095a6843842a4db0f1907b7, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &7414378046969914221
 GameObject:
   m_ObjectHideFlags: 0
@@ -9118,9 +9086,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 129596, guid: 1ad60190470c8904c833f021be513271, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2953159080440828774}
-    - targetCorrespondingSourceObject: {fileID: 129596, guid: 1ad60190470c8904c833f021be513271, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1508108111625705501}
     - targetCorrespondingSourceObject: {fileID: 170426, guid: 1ad60190470c8904c833f021be513271, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8574336193245656381}
@@ -9160,27 +9125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestAnimator: {fileID: 6764261355045084897}
   interactionDistance: 3
---- !u!65 &1508108111625705501
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7208445948808498089}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 4, y: 0, z: 3}
 --- !u!1 &7208445948808580895 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 179850, guid: 1ad60190470c8904c833f021be513271, type: 3}
