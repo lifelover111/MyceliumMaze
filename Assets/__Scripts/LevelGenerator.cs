@@ -51,6 +51,7 @@ public static class LevelGenerator
             chest,
             requiredRoom,
             any,
+            deal,//торговец
         }
         public RoomType type = RoomType.any;
         public RoomNode[] children = new RoomNode[0];
