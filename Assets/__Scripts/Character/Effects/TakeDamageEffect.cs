@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
+
+
 [CreateAssetMenu(menuName = "CharacterEffects/InstantEffects/Take Damage")]
 public class TakeDamageEffect : InstantCharacterEffect
 {
@@ -17,16 +19,21 @@ public class TakeDamageEffect : InstantCharacterEffect
     public bool playDamageAnimation = true;
     public bool manuallySelectDamageAnimation = false;
 
+
+
     public override void ProcessEffect(CharacterManager character)
     {
         base.ProcessEffect(character);
         if (character.isDead) return;
         if (character.isInvulnerable) return;
 
+        BloodParticleSystemHandler.Instance.SpawnBlood(character.transform.position, (new Vector3(contactPoint.x, 0, contactPoint.z) - character.transform.position).normalized * -.1f);
         character.statsManager.Health -= physycalDamage;
         character.statsManager.Health = character.statsManager.Health > 0 ? character.statsManager.Health : 0;
 
-        if(character is PlayerManager player)
+        
+
+        if (character is PlayerManager player)
         {
             player.playerStatsManager.Sanity -= mentalDamage;
             player.playerStatsManager.Sanity = player.playerStatsManager.Sanity > 0 ? player.playerStatsManager.Sanity : 0;
@@ -97,4 +104,6 @@ public class TakeDamageEffect : InstantCharacterEffect
 
     }
 
+
 }
+
