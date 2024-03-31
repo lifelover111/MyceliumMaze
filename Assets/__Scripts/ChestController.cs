@@ -8,6 +8,7 @@ public class ChestController : MonoBehaviour
     public Animator chestAnimator; 
     public float interactionDistance = 1f; 
     private PlayerManager player;
+    private bool isOpen = false;
 
     void Start()
     {
@@ -16,6 +17,9 @@ public class ChestController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isOpen)
+            return;
+
         var colliders = Physics.OverlapSphere(transform.position, interactionDistance);
         if (colliders is null || colliders.Length == 0)
         {
@@ -46,8 +50,10 @@ public class ChestController : MonoBehaviour
 
     void OpenChest()
     {
+        isOpen = true;
         chestAnimator.enabled = true;
         chestAnimator.SetBool("isOpen", true);
+        player.OnInteract -= OpenChest;
     }
 
 

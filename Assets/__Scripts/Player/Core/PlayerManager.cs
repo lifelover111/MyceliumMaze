@@ -13,8 +13,10 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public ItemManager itemManager;
 
 
-    public event System.Action OnInteract = delegate { };
+    public event System.Action OnInteract;
     public event System.Action<PlayerManager> OnCastSpell = delegate { };
+
+    public bool CanInteract => OnInteract is not null;
 
     protected override void Awake()
     {
