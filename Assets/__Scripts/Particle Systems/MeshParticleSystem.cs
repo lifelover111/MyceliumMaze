@@ -92,17 +92,17 @@ public class MeshParticleSystem : MonoBehaviour
 
         if (skewed)
         {
-            vertices[vIndex0] = position + Quaternion.Euler(0, 0, rotation) * new Vector3(-quadSize.x, -quadSize.y);
-            vertices[vIndex1] = position + Quaternion.Euler(0, 0, rotation) * new Vector3(-quadSize.x, +quadSize.y);
-            vertices[vIndex2] = position + Quaternion.Euler(0, 0, rotation) * new Vector3(+quadSize.x, +quadSize.y);
-            vertices[vIndex3] = position + Quaternion.Euler(0, 0, rotation) * new Vector3(+quadSize.x, -quadSize.y);
+            vertices[vIndex0] = position + Quaternion.Euler(0, rotation, 0) * new Vector3(-quadSize.x, -quadSize.y);
+            vertices[vIndex1] = position + Quaternion.Euler(0, rotation, 0) * new Vector3(-quadSize.x, +quadSize.y);
+            vertices[vIndex2] = position + Quaternion.Euler(0, rotation, 0) * new Vector3(+quadSize.x, +quadSize.y);
+            vertices[vIndex3] = position + Quaternion.Euler(0, rotation, 0) * new Vector3(+quadSize.x, -quadSize.y);
         }
         else
         {
-            vertices[vIndex0] = position + Quaternion.Euler(0, 0, rotation - 180) * quadSize;
-            vertices[vIndex1] = position + Quaternion.Euler(0, 0, rotation - 270) * quadSize;
-            vertices[vIndex2] = position + Quaternion.Euler(0, 0, rotation - 0) * quadSize;
-            vertices[vIndex3] = position + Quaternion.Euler(0, 0, rotation - 90) * quadSize;
+            vertices[vIndex0] = position + Quaternion.Euler(0, rotation - 180, 0) * quadSize;
+            vertices[vIndex1] = position + Quaternion.Euler(0, rotation - 270, 0) * quadSize;
+            vertices[vIndex2] = position + Quaternion.Euler(0, rotation - 0, 0) * quadSize;
+            vertices[vIndex3] = position + Quaternion.Euler(0, rotation - 90, 0) * quadSize;
         }
 
         // UV

@@ -34,7 +34,7 @@ public class BloodParticleSystemHandler : MonoBehaviour
     public void SpawnBlood(Vector3 position, Vector3 direction)
     {
         //число частиц крови
-        float bloodParticleCount = 1;
+        float bloodParticleCount = Random.Range(5, 15);
         for (int i = 0; i < bloodParticleCount; i++)
         {
             singleList.Add(new Single(position, ApplyRotationToVector(direction, Random.Range(-15f, 15f)), meshParticleSystem));
@@ -57,7 +57,7 @@ public class BloodParticleSystemHandler : MonoBehaviour
 
     public static Vector3 ApplyRotationToVector(Vector3 vec, float angle)
     {
-        return Quaternion.Euler(0, 0, angle) * vec;
+        return Quaternion.Euler(0, angle, 0) * vec;
     }
 
 
@@ -74,13 +74,15 @@ public class BloodParticleSystemHandler : MonoBehaviour
         private float rotation;
         private int uvIndex;
 
+        private float particleSize = .5f;
+
         public Single(Vector3 position, Vector3 direction, MeshParticleSystem meshParticleSystem)
         {
             this.position = position;
             this.direction = direction;
             this.meshParticleSystem = meshParticleSystem;
 
-            quadSize = new Vector3(1.5f, 1.5f); //размер частицы 
+            quadSize = Random.Range(1f, 1.8f) * new Vector3(particleSize, particleSize); //размер частицы 
             rotation = Random.Range(0, 360f);
             moveSpeed = Random.Range(50f, 70f);
             uvIndex = Random.Range(0, 8);
