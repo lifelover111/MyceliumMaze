@@ -325,6 +325,7 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerUIController: {fileID: 0}
   itemManager: {fileID: 0}
+  sporeCount: 0
 --- !u!143 &18443219
 CharacterController:
   m_ObjectHideFlags: 0
@@ -432,6 +433,7 @@ MonoBehaviour:
   ActiveItemCooldownIndicator: {fileID: 1521875893}
   ActiveItemCooldownIndicatorFrame: {fileID: 727858750}
   CooldownShadow: {fileID: 1061381763}
+  purchaseWindow: {fileID: 1012759924}
   activeItemIconRenderer: {fileID: 95412382}
   menuCanvas: {fileID: 0}
 --- !u!114 &18443224
@@ -1449,6 +1451,7 @@ MonoBehaviour:
   ActiveItemCooldownIndicator: {fileID: 0}
   ActiveItemCooldownIndicatorFrame: {fileID: 0}
   CooldownShadow: {fileID: 0}
+  purchaseWindow: {fileID: 0}
   activeItemIconRenderer: {fileID: 0}
   menuCanvas: {fileID: 0}
 --- !u!1 &347012032
@@ -3142,6 +3145,54 @@ Transform:
   - {fileID: 318095331}
   m_Father: {fileID: 1905587591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1012759922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1012759923}
+  - component: {fileID: 1012759924}
+  m_Layer: 5
+  m_Name: PurchaseWindow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1012759923
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012759922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1144245255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.15, y: 0.15}
+  m_AnchorMax: {x: 0.85, y: 0.85}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -1244, y: -656}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1012759924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012759922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad6c4a3a53a99e40bbd025710936062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1020341701
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,6 +3534,7 @@ RectTransform:
   - {fileID: 1051482351}
   - {fileID: 682626516}
   - {fileID: 1699073360}
+  - {fileID: 1012759923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4196,7 +4248,7 @@ GameObject:
   - component: {fileID: 1456209908}
   - component: {fileID: 1456209907}
   - component: {fileID: 1456209910}
-  m_Layer: 5
+  m_Layer: 19
   m_Name: MeshParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4755,7 +4807,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 105431
+    m_Bits: 629719
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5140,6 +5192,7 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: ad92c0a44de6c0546ba69cfb19f9deaa, type: 2}
   - {fileID: 11400000, guid: 095467ec5ec901546b4a18a27cd4ad3d, type: 2}
+  - {fileID: 11400000, guid: a46c83437f4a2eb4ea518b607b1a6a17, type: 2}
 --- !u!114 &1674120690
 MonoBehaviour:
   m_ObjectHideFlags: 0

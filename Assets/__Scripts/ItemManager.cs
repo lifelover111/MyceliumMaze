@@ -13,8 +13,6 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<PlayerManager>();
-        activeItem = Instantiate(activeItem);
-        AddItem(activeItem);
     }
 
     private void Update()

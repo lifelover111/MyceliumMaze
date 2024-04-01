@@ -27,7 +27,7 @@ public class TakeDamageEffect : InstantCharacterEffect
         if (character.isDead) return;
         if (character.isInvulnerable) return;
 
-        BloodParticleSystemHandler.Instance.SpawnBlood(character.transform.position, (new Vector3(characterCausingDamage.transform.position.x, 0, characterCausingDamage.transform.position.z) - new Vector3(character.transform.position.x, 0, character.transform.position.z)).normalized * -.3f);
+        BloodParticleSystemHandler.Instance.SpawnBlood(new Vector3(character.transform.position.x, 0, character.transform.position.z), (new Vector3(characterCausingDamage.transform.position.x, 0, characterCausingDamage.transform.position.z) - new Vector3(character.transform.position.x, 0, character.transform.position.z)).normalized * -.3f);
         character.statsManager.Health -= physycalDamage;
         character.statsManager.Health = character.statsManager.Health > 0 ? character.statsManager.Health : 0;
 

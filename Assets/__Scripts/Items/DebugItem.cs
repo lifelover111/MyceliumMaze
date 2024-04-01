@@ -21,23 +21,3 @@ public class DebugItem : ActiveItem
         return true;
     }
 }
-
-
-[CreateAssetMenu(menuName = "Items/Passive/DebugPassive")]
-public class DebugPassiveItem : PassiveItem
-{
-    public override void ProcessPassiveEffect(PlayerManager player)
-    {
-        base.ProcessPassiveEffect(player);
-        
-        if (player.isPerformingAction)
-            return;
-
-        UseDebug(player);
-    }
-
-    public void UseDebug(PlayerManager player)
-    {
-        Debug.Log("Item affects " + player);
-    }
-}

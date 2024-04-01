@@ -12,7 +12,7 @@ public static class LevelGenerator
 
     public static Dictionary<LevelType, List<RoomNode.RoomType>> requiredLevelRoomNodesDict = new Dictionary<LevelType, List<RoomNode.RoomType>>
     {
-        { LevelType.castle, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest } },
+        { LevelType.castle, new List<RoomNode.RoomType>{ RoomNode.RoomType.chest, RoomNode.RoomType.chest, RoomNode.RoomType.deal } },
     };
 
     static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>()
@@ -59,7 +59,14 @@ public static class LevelGenerator
         public RoomNode[] additionalChildren = new RoomNode[0];
         public int depth = 0;
         public int? id = null;
-        
+
+        public RoomNode[] GetFullDepthArrayOfChildren()
+        {
+            if (children.Length == 0)
+                return new RoomNode[] { this };
+
+            return (new RoomNode[] { this }).Union(children.SelectMany(c => c.GetFullDepthArrayOfChildren())).ToArray();
+        }
 
         public void AddParent(RoomNode node)
         {
@@ -89,6 +96,7 @@ public static class LevelGenerator
         RoomNode[] startContainer = new RoomNode[1];
         startContainer[0] = startNode;
         RecursiveGraphGeneration(type, startContainer);
+        SetRoomTypes(type, startContainer.First());
         Dictionary<RoomNode, GameObject> correspondedNodes = new Dictionary<RoomNode, GameObject>();
         CorrespondNodesToRooms(startContainer, type, correspondedNodes);
         ArrangeRooms(correspondedNodes);
@@ -164,10 +172,6 @@ public static class LevelGenerator
                 else
                     nodes[n].children[i] = new RoomNode();
 
-                if (nodes[n].children[i].type == RoomNode.RoomType.any && GetRandomChance(0.25f))
-                {
-                    nodes[n].children[i].SetRequiredType(type);
-                }
                 nodes[n].children[i].AddParent(nodes[n]);
                 if (!nextDepthNodes.Contains(nodes[n].children[i]))
                     nextDepthNodes.Add(nodes[n].children[i]);
@@ -176,6 +180,34 @@ public static class LevelGenerator
             }
         }
         RecursiveGraphGeneration(type, nextDepthNodes.ToArray(), ++currentDepth, nodesTotal + nodes.Length);
+    }
+
+    public static void SetRoomTypes(LevelType levelType, RoomNode startNode)
+    {
+        List<RoomNode.RoomType> requiredTypes = new();
+        foreach(var type in requiredLevelRoomNodesDict[levelType])
+            requiredTypes.Add(type);
+
+        var nodeList = startNode.GetFullDepthArrayOfChildren().ToList();
+
+        foreach(var roomType in requiredTypes)
+        {
+            var possibleRooms = nodeList.Where(r => r.type == RoomNode.RoomType.any);
+            var room = possibleRooms.ToArray()[Random.Range(0, possibleRooms.Count())];
+
+            room.type = roomType;
+        }
+
+        foreach(var room in nodeList.Where(n => n.type == RoomNode.RoomType.any))
+        {
+            float randomValue = Random.value;
+            if (randomValue < 0.5f)
+                room.type = RoomNode.RoomType.quickFight;
+            else if (randomValue < 0.95f)
+                room.type = RoomNode.RoomType.longFight;
+            else
+                room.type = RoomNode.RoomType.chest;
+        }
     }
 
     public static Dictionary<int, RoomNode> GetIndexedRoomNodeDictionary(RoomNode[] startNodes)

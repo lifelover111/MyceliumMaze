@@ -13,6 +13,7 @@ public class Item : ScriptableObject
     [SerializeField] public string itemName;
     [SerializeField] public string description;
     [SerializeField] public Sprite icon;
+    [SerializeField] public int meanPrice;
 
     public virtual void PickUp(PlayerManager player)
     {

@@ -79,12 +79,12 @@ public class BloodParticleSystemHandler : MonoBehaviour
         public Single(Vector3 position, Vector3 direction, MeshParticleSystem meshParticleSystem)
         {
             this.position = position;
-            this.direction = direction;
+            this.direction = direction.normalized;
             this.meshParticleSystem = meshParticleSystem;
 
             quadSize = Random.Range(1f, 1.8f) * new Vector3(particleSize, particleSize); //размер частицы 
             rotation = Random.Range(0, 360f);
-            moveSpeed = Random.Range(50f, 70f);
+            moveSpeed = Random.Range(25, 40);
             uvIndex = Random.Range(0, 8);
 
             quadIndex = meshParticleSystem.AddQuad(position, rotation, quadSize, false, uvIndex);
@@ -97,13 +97,13 @@ public class BloodParticleSystemHandler : MonoBehaviour
 
             meshParticleSystem.UpdateQuad(quadIndex, position, rotation, quadSize, false, uvIndex);
 
-            float slowDownFactor = 3.5f;
+            float slowDownFactor = 5f;
             moveSpeed -= moveSpeed * slowDownFactor * Time.deltaTime;
         }
 
         public bool IsParticleComplete()
         {
-            return moveSpeed < .1f;
+            return moveSpeed < 15f;
         }
 
     }

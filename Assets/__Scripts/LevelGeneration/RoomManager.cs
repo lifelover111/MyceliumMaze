@@ -31,7 +31,7 @@ public class RoomManager : MonoBehaviour
         { 
             Debug.LogWarning("Cannot find some room: roomType " + roomType + ", enters " + entersNum + ", exits " + exitNum);
             suitableRooms = roomsPrefabDict[leveltype].Where(room =>
-                    room.GetRoomType() != LevelGenerator.RoomNode.RoomType.start && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.end && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.requiredRoom
+                    room.GetRoomType() != LevelGenerator.RoomNode.RoomType.start && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.end && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.requiredRoom && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.deal
                     && (room.GetEntersNum() >= entersNum)
                     && (room.GetExitsNum() >= exitNum)
                     ).ToArray();

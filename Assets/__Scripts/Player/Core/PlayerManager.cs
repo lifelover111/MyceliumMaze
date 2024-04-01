@@ -15,8 +15,13 @@ public class PlayerManager : CharacterManager
 
     public event System.Action OnInteract;
     public event System.Action<PlayerManager> OnCastSpell = delegate { };
+    public event System.Action OnSporeCountChanged = delegate { };
 
     public bool CanInteract => OnInteract is not null;
+
+    [Header("Player's spores")]
+    public int sporeCount = 0;
+
 
     protected override void Awake()
     {
@@ -46,6 +51,26 @@ public class PlayerManager : CharacterManager
     public void CastSpell()
     {
         OnCastSpell?.Invoke(this);
+    }
+
+    public PurchaseUI GetPurchaseUI()
+    {
+        return playerUIController.purchaseWindow;
+    }
+
+    public void GiveSpores(int sporeCount)
+    {
+        this.sporeCount += sporeCount;
+        OnSporeCountChanged?.Invoke();
+    }
+
+    public bool TryTakeSpores(int sporeCount)
+    {
+        if(sporeCount > this.sporeCount)
+            return false;
+
+        this.sporeCount -= sporeCount;
+        return true;
     }
 
     public void UnsubscribeCastEvent()

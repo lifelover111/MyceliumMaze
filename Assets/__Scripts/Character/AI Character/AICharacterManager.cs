@@ -9,6 +9,10 @@ public class AICharacterManager : CharacterManager
     [HideInInspector] public AICharacterLocomotionManager aiLocomotionManager;
     [HideInInspector] public AISteeringManager aiSteering;
 
+    [Header("Spore Count Properties")]
+    public int minSporeCount = 10;
+    public int maxSporeCount = 60;
+
     [Header("Current State")]
     [SerializeField] AIState currentState;
 
@@ -47,6 +51,7 @@ public class AICharacterManager : CharacterManager
         blockState = Instantiate(blockState);
 
         currentState = idleState;
+        OnDead += () => { PlayersInGameManager.instance.playerList.ForEach(p => p.GiveSpores(Random.Range(minSporeCount, maxSporeCount))); };
     }
 
     protected override void Start()

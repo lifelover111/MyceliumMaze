@@ -22,7 +22,6 @@ public class PlayerLocomotionManager : LocomotionManager
     [SerializeField] float rotationSpeed;
     [SerializeField] float movementAcceleration = 10;
 
-    private Vector3 playerRight => player.transform.forward;
 
     private static float maxSpeed = 12;
 

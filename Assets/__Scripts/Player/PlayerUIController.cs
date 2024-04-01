@@ -16,6 +16,9 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] Transform ActiveItemCooldownIndicatorFrame;
     [SerializeField] Transform CooldownShadow;
 
+    public PurchaseUI purchaseWindow;
+
+
     public Image activeItemIconRenderer;
 
 
@@ -40,7 +43,6 @@ public class PlayerUIController : MonoBehaviour
         }
     }
 
-    // Метод для активации объекта Canvas
     public void ShowMenuCanvas()
     {
         if (menuCanvas != null)
@@ -56,14 +58,16 @@ public class PlayerUIController : MonoBehaviour
         concentrationLine = ConcentrationBar.GetChild(0).gameObject;
         concentrationLineImg = concentrationLine.GetComponent<Image>();
         flaskCounterText = FlaskCounter.GetComponentInChildren<TMP_Text>();
-        /*
+        sporeCounterText = SporeCounter.GetComponentInChildren<TMP_Text>();
+        
         player.OnSporeCountChanged += () => { 
             if(sporeCountCoroutine is not null)
             {
                 StopCoroutine(sporeCountCoroutine);
             }
             sporeCountCoroutine = StartCoroutine(SporeCountChangeCoroutine());
-        };*/
+        };
+
         player.playerStatsManager.OnFlaskCountChanged += () => { flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString(); };
         flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString();
 
@@ -77,27 +81,29 @@ public class PlayerUIController : MonoBehaviour
         concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1), 10 * Time.deltaTime);
         concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
 
-        ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown)/(float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
-        ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-        ActiveItemCooldownIndicatorFrame.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-        CooldownShadow.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-
+        if (player.itemManager.activeItem is not null)
+        {
+            ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown) / (float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
+            ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+            ActiveItemCooldownIndicatorFrame.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+            CooldownShadow.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+        }
     }
 
-    /*
+    
     IEnumerator SporeCountChangeCoroutine()
     {
         int spores = int.Parse(sporeCounterText.text);
-        while (spores != player.spores)
+        while (spores != player.sporeCount)
         {
-            if (spores < player.spores)
+            if (spores < player.sporeCount)
             {
-                spores += player.spores * 0.99f - spores <= 100 ? 1 : Mathf.RoundToInt((player.spores - spores) * Time.deltaTime);
+                spores += player.sporeCount * 0.99f - spores <= 100 ? 1 : Mathf.RoundToInt((player.sporeCount - spores) * Time.deltaTime);
                 sporeCounterText.text = spores.ToString();
             }
-            else if (spores > player.spores)
+            else if (spores > player.sporeCount)
             {
-                spores -= spores * 0.99f - player.spores <= 100 ? 1 : Mathf.RoundToInt((spores - player.spores) * Time.deltaTime);
+                spores -= spores * 0.99f - player.sporeCount <= 100 ? 1 : Mathf.RoundToInt((spores - player.sporeCount) * Time.deltaTime);
                 sporeCounterText.text = spores.ToString();
             }
             yield return null;
@@ -105,5 +111,5 @@ public class PlayerUIController : MonoBehaviour
 
         sporeCountCoroutine = null;
     }
-    */
+    
 }
