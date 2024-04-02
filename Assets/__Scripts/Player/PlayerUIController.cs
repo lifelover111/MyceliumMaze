@@ -15,6 +15,7 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField] Transform ActiveItemCooldownIndicator;
     [SerializeField] Transform ActiveItemCooldownIndicatorFrame;
     [SerializeField] Transform CooldownShadow;
+    [SerializeField] Transform InteractButton;
 
     public PurchaseUI purchaseWindow;
 
@@ -80,6 +81,9 @@ public class PlayerUIController : MonoBehaviour
 
         concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1), 10 * Time.deltaTime);
         concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
+
+        InteractButton.gameObject.SetActive(player.CanInteract);
+
 
         if (player.itemManager.activeItem is not null)
         {

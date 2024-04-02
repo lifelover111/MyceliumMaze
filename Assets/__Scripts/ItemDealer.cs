@@ -33,7 +33,6 @@ public class ItemDealer : MonoBehaviour
     {
         var purchaseWindow = player.GetPurchaseUI();
         purchaseWindow.gameObject.SetActive(true);
-
     }
 
     private void SetPrices()
