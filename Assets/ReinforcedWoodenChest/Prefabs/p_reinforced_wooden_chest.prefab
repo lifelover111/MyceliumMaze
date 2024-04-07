@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 477684}
   - component: {fileID: 4167783191698550644}
+  - component: {fileID: 7944500262040921369}
   m_Layer: 0
   m_Name: p_reinforced_wooden_chest
   m_TagString: Untagged
@@ -55,6 +56,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7944500262040921369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd7684021caea04f8b508d2213366ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldItemPrefab: {fileID: 4112034866237868895, guid: 5a1c53389c8becb4dae0dfb8154d1a23, type: 3}
+  chestAnimator: {fileID: 4167783191698550644}
+  interactionDistance: 3
 --- !u!1 &170426
 GameObject:
   m_ObjectHideFlags: 0

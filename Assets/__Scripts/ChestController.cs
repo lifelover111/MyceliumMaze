@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ChestController : MonoBehaviour
 {
+    [SerializeField] GameObject worldItemPrefab;
     public Animator chestAnimator; 
     public float interactionDistance = 1f; 
     private PlayerManager player;
@@ -53,8 +54,26 @@ public class ChestController : MonoBehaviour
         isOpen = true;
         chestAnimator.enabled = true;
         chestAnimator.SetBool("isOpen", true);
+        DropItem();
         player.OnInteract -= OpenChest;
     }
 
+    void DropItem()
+    {
+        Item item = ItemsInGameManager.instance.GetRandomItem();
+        if (item is null)
+        {
+            GameObject healFlaskGo = Instantiate(worldItemPrefab);
+            WorldItem healFlask = healFlaskGo.GetComponent<WorldItem>();
+            healFlask.SetHealingFlask();
+            healFlaskGo.transform.position = transform.position + Vector3.up;
+            return;
+        }
+
+        GameObject go = Instantiate(worldItemPrefab);
+        WorldItem worldItem = go.GetComponent<WorldItem>();
+        worldItem.SetItem(item);
+        go.transform.position = transform.position + Vector3.up;
+    }
 
 }

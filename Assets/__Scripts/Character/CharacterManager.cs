@@ -69,6 +69,9 @@ public class CharacterManager : MonoBehaviour
         isDead = true;
         canMove = false;
         canRotate = false;
+        animatorManager.DisableAttackCollider();
+        animatorManager.DisableWeaponSlash();
+        animatorManager.CancelAttack();
         OnDead?.Invoke();
         if(!manuallySelectDeathAnimation)
         {

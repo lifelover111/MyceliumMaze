@@ -98,7 +98,8 @@ public class Room : MonoBehaviour
         if (enemySpawnPoints.Length == 0)
             return;
         if (enemySpawnPoints == null)
-            Debug.Log(gameObject.name);
+            Debug.LogError("Tried to spawn enemies in " + gameObject.name);
+
         foreach (var p in enemySpawnPoints)
         {
             if (EnemyPrefabManager.instance.enemyPrefabs.Length == 0)

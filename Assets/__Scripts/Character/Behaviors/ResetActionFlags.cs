@@ -22,6 +22,7 @@ public class ResetActionFlags : StateMachineBehaviour
         characterManager.animatorManager.DisableCanDoCombo();
         characterManager.animatorManager.DisableAttackCollider();
         characterManager.animatorManager.DisableWeaponSlash();
+        characterManager.animatorManager.ResetAnimationFlags();
 
         if (characterManager is PlayerManager player)
         {

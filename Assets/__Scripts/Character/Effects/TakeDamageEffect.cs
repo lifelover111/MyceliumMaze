@@ -56,6 +56,7 @@ public class TakeDamageEffect : InstantCharacterEffect
             {
                 character.canMove = false;
                 character.canRotate = false;
+                character.animatorManager.CancelAttack();
                 if (angleHitFrom <= 90 && angleHitFrom >= -90)
                 {
                     character.animatorManager.PlayTargetHitAnimation(character.animationKeys.HitForward, true);
@@ -70,6 +71,7 @@ public class TakeDamageEffect : InstantCharacterEffect
 
     private void PlayStunAnimation(CharacterManager character, float angleHitFrom)
     {
+        character.animatorManager.CancelAttack();
         if (character is PlayerManager player)
         {
             if (angleHitFrom <= 60 && angleHitFrom > -60)

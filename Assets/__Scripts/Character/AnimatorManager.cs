@@ -19,6 +19,7 @@ public class AnimatorManager : MonoBehaviour
         public string BlockHit = "BlockHit";
         public string BreakBlock = "BreakBlock";
         public string ParriedToStun = "ParriedStun";
+        public string Parry = "Parry";
 
         [Header("Player")]
         public string Heal = "Heal";
@@ -28,9 +29,33 @@ public class AnimatorManager : MonoBehaviour
 
     protected CharacterManager character;
 
+    [Header("Attack cancelation flags")]
+    protected bool _enableColliderCanceled = false;
+    protected bool _disableCanRotateCanceled = false;
+    protected bool _enableWeaponSlashCanceled = false;
+
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
+    }
+
+    public void ResetAnimationFlags()
+    {
+        _enableColliderCanceled = false;
+        _disableCanRotateCanceled = false;
+        _enableWeaponSlashCanceled = false;
+    }
+
+    public void CancelAttack()
+    {
+        CancelAttackEvents();
+    }
+
+    private void CancelAttackEvents()
+    {
+        _enableColliderCanceled = true;
+        _disableCanRotateCanceled = true;
+        _enableWeaponSlashCanceled = true;
     }
 
     public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool applyRootMotion = true, float dampTime = 0.1f)
@@ -104,6 +129,12 @@ public class AnimatorManager : MonoBehaviour
 
     public virtual void EnableAttackCollider()
     {
+        if(_enableColliderCanceled)
+        {
+            _enableColliderCanceled = false;
+            return;
+        }
+
         character.combatManager.EnableWeaponCollider();
     }
 
@@ -114,6 +145,11 @@ public class AnimatorManager : MonoBehaviour
 
     public virtual void EnableWeaponSlash()
     {
+        if(_enableWeaponSlashCanceled)
+        {
+            _enableWeaponSlashCanceled = false;
+            return;
+        }
         character.weapon.transform.GetChild(0).gameObject.SetActive(true);
     }
 
@@ -129,6 +165,12 @@ public class AnimatorManager : MonoBehaviour
 
     public virtual void DisableCanRotate()
     {
+        if (_disableCanRotateCanceled)
+        {
+            _disableCanRotateCanceled = false;
+            return;
+        }
+        
         character.canRotate = false;
     }
     public virtual void EnableIsBlocking()

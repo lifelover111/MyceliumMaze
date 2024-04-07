@@ -87,10 +87,19 @@ public class PlayerUIController : MonoBehaviour
 
         if (player.itemManager.activeItem is not null)
         {
-            ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown) / (float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
-            ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-            ActiveItemCooldownIndicatorFrame.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
-            CooldownShadow.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+            if (player.itemManager.activeItem.cooldownUnits > 0)
+            {
+                ActiveItemCooldownIndicator.transform.localScale = new Vector3(ActiveItemCooldownIndicator.transform.localScale.x, (float)((float)player.itemManager.activeItem.currentCooldown) / (float)player.itemManager.activeItem.cooldownUnits, ActiveItemCooldownIndicator.transform.localScale.z);
+                ActiveItemCooldownIndicator.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+                ActiveItemCooldownIndicatorFrame.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+                CooldownShadow.gameObject.SetActive(player.itemManager.activeItem.currentCooldown / player.itemManager.activeItem.cooldownUnits != 1);
+            }
+            else
+            {
+                ActiveItemCooldownIndicator.gameObject.SetActive(false);
+                ActiveItemCooldownIndicatorFrame.gameObject.SetActive(false);
+                CooldownShadow.gameObject.SetActive(false);
+            }
         }
     }
 

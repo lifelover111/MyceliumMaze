@@ -8,9 +8,12 @@ public class WorldItem : MonoBehaviour
     [Header("Properties")]
     public float interactionDistance = 3f;
 
+    [SerializeField] private Sprite healFlaskIcon;
     [SerializeField] private Item item;
     [SerializeField] private Sprite icon;
     private PlayerManager player;
+
+    private bool _isHealingFlask = false;
 
     private void Start()
     {
@@ -48,6 +51,12 @@ public class WorldItem : MonoBehaviour
 
     }
 
+    public void SetHealingFlask()
+    {
+        icon = healFlaskIcon;
+        _isHealingFlask = true;
+    }
+
     public void SetItem(Item item)
     {
         this.item = item;
@@ -56,6 +65,14 @@ public class WorldItem : MonoBehaviour
 
     void GiveItem()
     {
+        if(_isHealingFlask)
+        {
+            player.playerStatsManager.IncreaseFlaskCount();
+            player.OnInteract -= GiveItem;
+            Destroy(gameObject);
+            return;
+        }
+
         player.itemManager.AddItem(item);
         player.OnInteract -= GiveItem;
         Destroy(gameObject);

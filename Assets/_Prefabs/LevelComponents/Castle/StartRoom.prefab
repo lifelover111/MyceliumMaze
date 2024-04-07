@@ -9079,13 +9079,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7944500262040921369, guid: 1ad60190470c8904c833f021be513271, type: 3}
+      propertyPath: interactionDistance
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 129596, guid: 1ad60190470c8904c833f021be513271, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2953159080440828774}
     - targetCorrespondingSourceObject: {fileID: 170426, guid: 1ad60190470c8904c833f021be513271, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8574336193245656381}
@@ -9096,35 +9097,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7184200656279232080}
   m_SourcePrefab: {fileID: 100100000, guid: 1ad60190470c8904c833f021be513271, type: 3}
---- !u!95 &6764261355045084897 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4167783191698550644, guid: 1ad60190470c8904c833f021be513271, type: 3}
-  m_PrefabInstance: {fileID: 7208445948808425877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7208445948808345697 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 477684, guid: 1ad60190470c8904c833f021be513271, type: 3}
   m_PrefabInstance: {fileID: 7208445948808425877}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7208445948808498089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 129596, guid: 1ad60190470c8904c833f021be513271, type: 3}
-  m_PrefabInstance: {fileID: 7208445948808425877}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2953159080440828774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7208445948808498089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cd7684021caea04f8b508d2213366ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chestAnimator: {fileID: 6764261355045084897}
-  interactionDistance: 3
 --- !u!1 &7208445948808580895 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 179850, guid: 1ad60190470c8904c833f021be513271, type: 3}

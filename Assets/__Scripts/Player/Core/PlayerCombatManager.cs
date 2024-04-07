@@ -21,9 +21,11 @@ public class PlayerCombatManager : CombatManager
         if (PlayerInputManager.instance.blockInput)
         {
             DisableWeaponCollider();
+            character.animatorManager.DisableWeaponSlash();
             canCancelAttack = false;
             character.canMove = false;
             character.canRotate = true;
+            character.animatorManager.CancelAttack();
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Block, true);
         }
 

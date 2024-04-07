@@ -52,10 +52,12 @@ public class MeleeWeaponCollider : DamageCollider
             concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
             concentrationDamageEffect.characterCausingDamage = character;
             weaponOwner.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
+            character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Parry, true, true);
 
             if (weaponOwner.statsManager.Concentration >= weaponOwner.statsManager.MaxConcentration)
             {
                 weaponOwner.statsManager.OverflowConcentration();
+                weaponOwner.animatorManager.CancelAttack();
                 weaponOwner.animatorManager.PlayTargetHitAnimation(character.animationKeys.ParriedToStun, true);
             }
 

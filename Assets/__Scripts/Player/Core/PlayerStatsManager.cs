@@ -40,4 +40,11 @@ public class PlayerStatsManager : StatsManager
         OnFlaskCountChanged?.Invoke();
     }
 
+    public void IncreaseFlaskCount()
+    {
+        _maxHealingFlasksCount++;
+        healingFlasksCount++;
+        OnFlaskCountChanged?.Invoke();
+    }
+
 }
