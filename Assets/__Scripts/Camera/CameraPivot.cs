@@ -9,8 +9,17 @@ public class CameraPivot : MonoBehaviour
 
     void Update()
     {
-        if ((transform.position - target.position).magnitude < .3f)
+        var distance = (transform.position - target.position).magnitude;
+        if (distance < .3f)
+        {
             return;
+        }
+
+        else if (distance > 6)
+        {
+            transform.position = target.position;
+            return;
+        }    
 
         transform.position = Vector3.Lerp(transform.position, target.position, smoothing*Time.deltaTime);   
     }
