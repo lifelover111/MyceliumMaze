@@ -18,6 +18,10 @@ public class Room : MonoBehaviour
     int enemyCount = 0;
     int depth;
 
+    [Header("Long Fight Parameters")]
+    private int waveCount = 0;
+    private int currentWave = 0;
+
     private void Awake()
     {
         transitionsForward = new Door[doorsForward.Length];
@@ -33,6 +37,22 @@ public class Room : MonoBehaviour
         
         EnemyAnchor = new GameObject(nameof(EnemyAnchor)).transform;
         EnemyAnchor.SetParent(transform);
+
+        //Временный костыль, срочно сделать нормально
+        if (type == LevelGenerator.RoomNode.RoomType.any && enemySpawnPoints.Count() > 0)
+        {
+            type = Random.value > 0.5f ? LevelGenerator.RoomNode.RoomType.quickFight : LevelGenerator.RoomNode.RoomType.longFight;
+        }
+        //
+        switch (type)
+        {
+            case LevelGenerator.RoomNode.RoomType.quickFight:
+                waveCount = 1; 
+                break;
+            case LevelGenerator.RoomNode.RoomType.longFight: 
+                waveCount = Random.Range(2, 5); 
+                break;
+        }
     }
     //
     public void OpenAllDoors()
@@ -100,6 +120,9 @@ public class Room : MonoBehaviour
         if (enemySpawnPoints == null)
             Debug.LogError("Tried to spawn enemies in " + gameObject.name);
 
+        currentWave++;
+        Debug.Log(currentWave + " / " + waveCount);
+
         foreach (var p in enemySpawnPoints)
         {
             if (EnemyPrefabManager.instance.enemyPrefabs.Length == 0)
@@ -117,11 +140,16 @@ public class Room : MonoBehaviour
 
     public void EnemyDied()
     {
-        //1 из-за проблем с задержкой
         enemyCount--;
         if (enemyCount == 0)
         {
-            OpenAllDoors();
+            if (currentWave == waveCount)
+                OpenAllDoors();
+            else
+            {
+                SpawnEnemies();
+                WakeEnemies();
+            }
         }
     }
 
