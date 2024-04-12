@@ -115,7 +115,7 @@ public class Player : MonoBehaviour, IHavingConcentration
             else
                 mode = eMode.move;
         }
-        
+
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
