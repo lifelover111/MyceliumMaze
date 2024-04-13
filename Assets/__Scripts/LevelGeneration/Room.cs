@@ -18,6 +18,9 @@ public class Room : MonoBehaviour
     int enemyCount = 0;
     int depth;
 
+    [Header("Fight Parameters")]
+    [SerializeField] private int maxWaveCost = 0;
+
     [Header("Long Fight Parameters")]
     private int waveCount = 0;
     private int currentWave = 0;
@@ -38,12 +41,6 @@ public class Room : MonoBehaviour
         EnemyAnchor = new GameObject(nameof(EnemyAnchor)).transform;
         EnemyAnchor.SetParent(transform);
 
-        //¬ременный костыль, срочно сделать нормально
-        if (type == LevelGenerator.RoomNode.RoomType.any && enemySpawnPoints.Count() > 0)
-        {
-            type = Random.value > 0.5f ? LevelGenerator.RoomNode.RoomType.quickFight : LevelGenerator.RoomNode.RoomType.longFight;
-        }
-        //
         switch (type)
         {
             case LevelGenerator.RoomNode.RoomType.quickFight:
@@ -123,12 +120,23 @@ public class Room : MonoBehaviour
         currentWave++;
         Debug.Log(currentWave + " / " + waveCount);
 
-        foreach (var p in enemySpawnPoints)
+        if (EnemyPrefabManager.instance.weightedEnemyPrefabs.Count == 0)
+            return;
+
+        var potentialSpawnPoints = enemySpawnPoints.ToList();
+        int currentSpawnCost = 0;
+
+        while(potentialSpawnPoints.Count > 0 && currentSpawnCost < maxWaveCost && EnemyPrefabManager.instance.weightedEnemyPrefabs.Where(p => p.Key <= maxWaveCost - currentSpawnCost).Count() > 0)
         {
-            if (EnemyPrefabManager.instance.enemyPrefabs.Length == 0)
-                return;
-            GameObject enemy = Instantiate(EnemyPrefabManager.instance.enemyPrefabs[Random.Range(0, EnemyPrefabManager.instance.enemyPrefabs.Length)]);
-            enemy.transform.position = p.position;
+            var possibleEnemies = EnemyPrefabManager.instance.weightedEnemyPrefabs.Where(p => p.Key <= maxWaveCost - currentSpawnCost).ToArray();
+            var chosenEnemy = possibleEnemies[Random.Range(0, possibleEnemies.Length)];
+            currentSpawnCost += chosenEnemy.Key;
+            GameObject enemy = Instantiate(chosenEnemy.Value);
+
+            var currentSpawnPoint = potentialSpawnPoints[Random.Range(0, potentialSpawnPoints.Count)];
+            potentialSpawnPoints.Remove(currentSpawnPoint);
+            enemy.transform.position = currentSpawnPoint.position;
+
             enemies.Add(enemy);
             var characterManager = enemy.GetComponent<CharacterManager>();
             characterManager.OnDead += EnemyDied;
@@ -136,6 +144,7 @@ public class Room : MonoBehaviour
             enemy.transform.SetParent(EnemyAnchor, true);
             enemyCount++;
         }
+
     }
 
     public void EnemyDied()
@@ -167,7 +176,10 @@ public class Room : MonoBehaviour
         
         foreach (GameObject e in enemies)
         {
-            e.SetActive(true);
+            if (currentWave == 1)
+                e.SetActive(true);
+            else
+                StartCoroutine(WakeEnemyCoroutine(e));
         }
         enemies.Clear();
         CloseAllDoors();
@@ -180,5 +192,35 @@ public class Room : MonoBehaviour
     public void SetDepth(int d)
     {
         depth = d;
+    }
+
+    private IEnumerator WakeEnemyCoroutine(GameObject enemyGameObject)
+    {
+        var enemy = enemyGameObject.GetComponent<AICharacterManager>();
+        enemy.isSleeping = true;
+        var normalPosition = enemyGameObject.transform.position;
+        enemy.transform.position += Vector3.down * enemy.characterController.height*enemyGameObject.transform.localScale.y;
+        var startPosition = enemy.transform.position;
+        enemyGameObject.SetActive(true);
+
+        var invokation = Instantiate(WorldEffectsManager.instance.invokationEffectPrefab);
+        invokation.transform.position = new Vector3(enemyGameObject.transform.position.x, invokation.transform.position.y, enemyGameObject.transform.position.z);
+
+        float risingDuration = 3f;
+
+        float timeRisingStarts = Time.time;
+        while (Time.time - timeRisingStarts < 4 - risingDuration)
+            yield return null;
+
+        timeRisingStarts = Time.time;
+
+        while (enemy.transform.position.y < normalPosition.y)
+        {
+            enemy.transform.position = Vector3.Lerp(startPosition, normalPosition, (Time.time - timeRisingStarts)/risingDuration);
+            yield return null;
+        }
+
+        Destroy(invokation);
+        enemy.isSleeping = false;
     }
 }

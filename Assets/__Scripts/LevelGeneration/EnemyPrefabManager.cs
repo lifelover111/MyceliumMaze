@@ -5,9 +5,21 @@ using UnityEngine;
 public class EnemyPrefabManager : MonoBehaviour
 {
     public static EnemyPrefabManager instance;
-    [SerializeField] public GameObject[] enemyPrefabs;
+    [SerializeField] GameObject[] enemyPrefabs;
+    public List<KeyValuePair<int, GameObject>> weightedEnemyPrefabs = new List<KeyValuePair<int, GameObject>>();
     private void Awake()
     {
         instance = this;
+
+        GetEnemiesWeight();
+    }
+
+    private void GetEnemiesWeight()
+    {
+        foreach(var go in enemyPrefabs)
+        {
+            var aiCharacter = go.GetComponent<AICharacterManager>();
+            weightedEnemyPrefabs.Add(new KeyValuePair<int, GameObject>(aiCharacter.SpawnCost, go));
+        }
     }
 }

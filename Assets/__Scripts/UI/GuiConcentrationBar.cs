@@ -22,6 +22,9 @@ public class GuiConcentrationBar : MonoBehaviour
         if (target is null)
             return;
 
+        if (target.IsDead)
+            return;
+
         if (target.Concentration <= 0)
         {
             sRend.color = Color.Lerp(sRend.color, new Color(0, 0, 0, 0), Time.deltaTime);

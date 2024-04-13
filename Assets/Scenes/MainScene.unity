@@ -5415,6 +5415,7 @@ GameObject:
   - component: {fileID: 1674120688}
   - component: {fileID: 1674120689}
   - component: {fileID: 1674120690}
+  - component: {fileID: 1674120691}
   m_Layer: 0
   m_Name: Singletones
   m_TagString: Untagged
@@ -5510,6 +5511,19 @@ MonoBehaviour:
   instantEffects:
   - {fileID: 11400000, guid: 6278b5de8b75521409d412c6cb397e93, type: 2}
   - {fileID: 11400000, guid: 290a0ed617d68224c837c52bb879311b, type: 2}
+--- !u!114 &1674120691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674120684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d479c798599d0ca428a4e403d8135b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invokationEffectPrefab: {fileID: 5438833218913786464, guid: 5a188a82e5861c54c889cf06223206b6, type: 3}
 --- !u!1 &1699073359
 GameObject:
   m_ObjectHideFlags: 0

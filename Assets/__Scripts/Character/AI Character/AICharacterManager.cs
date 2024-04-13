@@ -29,11 +29,16 @@ public class AICharacterManager : CharacterManager
 
     [Header("AI flags")]
     public bool isMoving = false;
+    public bool isSleeping = false;
 
 
     [Header("GUI")]
     public GameObject guiPrefab;
+    private EnemyUIManager gui;
 
+    [Header("Level generation")]
+    [SerializeField] private int spawnCost = 0;
+    public int SpawnCost => spawnCost;
 
     protected override void Awake()
     {
@@ -64,6 +69,12 @@ public class AICharacterManager : CharacterManager
     {
         base.FixedUpdate();
         ProcessStateMachine();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        HandleSleep();
     }
 
     private void ProcessStateMachine()
@@ -99,9 +110,22 @@ public class AICharacterManager : CharacterManager
 
     }
 
+    private void HandleSleep()
+    {
+        if (isDead)
+            return;
+
+        characterController.enabled = !isSleeping;
+        isInvulnerable = isSleeping;
+        
+        if(gui is not null)
+            gui.gameObject.SetActive(!isSleeping);
+    }
+
     public void EnableGUI()
     {
-        Instantiate(guiPrefab).GetComponent<EnemyUIManager>().Enable(statsManager);
+        gui = Instantiate(guiPrefab).GetComponent<EnemyUIManager>();
+        gui.Enable(statsManager);
     }
 
 }

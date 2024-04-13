@@ -7652,7 +7652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6235699349075953214}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.8870109, z: 0, w: 0.46174863}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
@@ -7661,7 +7661,7 @@ Transform:
   - {fileID: 4620735314980863190}
   - {fileID: 6102924500941822118}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -125, z: 0}
 --- !u!95 &8199969607202943896
 Animator:
   serializedVersion: 5
@@ -7748,6 +7748,7 @@ MonoBehaviour:
     BlockHit: BlockHit
     BreakBlock: BreakBlock
     ParriedToStun: ParriedStun
+    Parry: Parry
     Heal: Heal
     Dash: Dash
     Cast: CastSpell
@@ -7769,7 +7770,9 @@ MonoBehaviour:
   attackState: {fileID: 11400000, guid: ec17c9e7c57c5e14b804257870864ddb, type: 2}
   blockState: {fileID: 11400000, guid: 474dec19c2b1609489dcab994370c4b9, type: 2}
   isMoving: 0
+  isSleeping: 0
   guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
+  spawnCost: 10
 --- !u!114 &5538556854098537758
 MonoBehaviour:
   m_ObjectHideFlags: 0

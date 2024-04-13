@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyUIManager : MonoBehaviour
@@ -31,7 +32,29 @@ public class EnemyUIManager : MonoBehaviour
         concentrationBar.gameObject.SetActive(true);
         concentrationBar.Init(statsManager);
         character = statsManager.gameObject.GetComponent<CharacterManager>();
-        character.OnDead += () => { Destroy(gameObject); };
+        character.OnDead += () => StartCoroutine(DestroyCoroutine());
+    }
+
+    private IEnumerator DestroyCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        var renderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+        bool isFullyTransparent = renderers.Select(r => r.color.a > 0).Count() == 0;
+
+        while (!isFullyTransparent)
+        {
+            isFullyTransparent = true;
+            foreach (var renderer in renderers)
+            {
+                renderer.color = Color.Lerp(renderer.color, new Color(0, 0, 0, 0), Time.deltaTime);
+                if(renderer.color.a > 0.1f)
+                    isFullyTransparent = false;
+            }
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
 }

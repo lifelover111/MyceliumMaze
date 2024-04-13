@@ -294,7 +294,7 @@ public static class LevelGenerator
                     nextNodes.Add(child);
             }
             GameObject room = RoomManager.instance.GetRoom(type, node.type, node.parents.Length, node.children.Length);
-            if (room == null) {
+            if (room is null) {
                 room = RoomManager.instance.GetRoom(type, RoomNode.RoomType.any, node.parents.Length, node.children.Length);
             }
             room = Object.Instantiate(room);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class GuiHealthBar : MonoBehaviour
 {
@@ -22,6 +23,13 @@ public class GuiHealthBar : MonoBehaviour
     {
         if (enemy is null)
             return;
+
+        if (enemy.IsDead)
+        {
+            healthLine.transform.localScale = Vector3.Lerp(healthLine.transform.localScale, new Vector3(enemy.Health / enemy.MaxHealth, 1, 1), 10 * Time.deltaTime);
+            healthLine.transform.localPosition = Vector3.Lerp(healthLine.transform.localPosition, new Vector3(-((enemy.MaxHealth - enemy.Health) / enemy.MaxHealth) / 2, healthLine.transform.localPosition.y, healthLine.transform.localPosition.z), 10 * Time.deltaTime);
+            return;
+        }
 
         if (Time.time - memorizeTime >= 5)
         {

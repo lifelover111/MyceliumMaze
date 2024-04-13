@@ -7,6 +7,9 @@ public class IdleState : AIState
 {
     public override AIState Tick(AICharacterManager aiCharacter)
     {
+        if (aiCharacter.isSleeping)
+            return this;
+
         if (aiCharacter.combatManager.currentTarget is not null)
         {
             if (WorldUtilityManager.RollForOutcomeChance(50))
