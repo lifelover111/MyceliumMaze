@@ -15,7 +15,7 @@ public class ItemDealer : MonoBehaviour
     private PlayerInputManager playerInputManager;
 
     public Item[] itemsToPurchase = new Item[3];
-    private Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
+    public Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
     
     private PlayerManager player;
    // public PurchaseUI purchaseUI;
@@ -39,46 +39,48 @@ public class ItemDealer : MonoBehaviour
     {
         var purchaseWindow = player.GetPurchaseUI();
         purchaseWindow.gameObject.SetActive(true);
-
+        purchaseWindow.SetItemDealer(this);
+        purchaseWindow.UpdateItems();
         //if (playerInputManager != null)
         //{
         //    UnityEngine.Debug.Log("911");
         //    playerInputManager.enabled = false;
-            
+
         //}
         //Time.timeScale = 0f;
-        for (int i = 0; i < itemsToPurchase.Length; i++)
-        {
-            purchaseWindow.SetItemPrice(i, itemPrices[itemsToPurchase[i]]);
-            UnityEngine.Debug.Log(itemPrices[itemsToPurchase[i]]);
-            purchaseWindow.SetItemImage(i, itemsToPurchase[i].icon);
-            UnityEngine.Debug.Log(itemsToPurchase[i]);
-        }
 
     }
     public void PurchaseItem(int itemIndex)
     {
-        var purchaseWindow = player.GetPurchaseUI();
         if (player == null)
             return;
-        UnityEngine.Debug.Log("GBPLF");
-        Item itemToPurchase = itemsToPurchase[itemIndex];
-        int price = itemPrices[itemToPurchase];
-        if (player.sporeCount >= price)
-        {
-            player.sporeCount -= price;
 
+        Item itemToPurchase = itemsToPurchase[itemIndex];
+
+        if (itemToPurchase is null)
+            return;
+
+        var purchaseWindow = player.GetPurchaseUI();
+        int price = itemPrices[itemToPurchase];
+        if (player.TryTakeSpores(price))
+        {
             player.itemManager.AddItem(itemToPurchase);
+            itemsToPurchase[System.Array.IndexOf(itemsToPurchase, itemToPurchase)] = null;
             purchaseWindow.gameObject.SetActive(false);
-            //if (playerInputManager != null)
-            //{
-            //    playerInputManager.enabled = true;
-            //}
         }
         else
         {
             UnityEngine.Debug.Log("Not enough spores to purchase item.");
         }
+        purchaseWindow.UpdateItems();
+    }
+
+    public bool PLayerHasEnoughSporesForItem(int i)
+    {
+        if (itemsToPurchase[i] is null)
+            return false;
+
+        return player.sporeCount >= itemPrices[itemsToPurchase[i]];
     }
 
     private void SetPrices()

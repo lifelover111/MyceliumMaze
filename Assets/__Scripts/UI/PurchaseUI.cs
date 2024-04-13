@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-
 using System.Reflection;
 
 public class PurchaseUI : MonoBehaviour
@@ -53,20 +52,14 @@ public class PurchaseUI : MonoBehaviour
                 break;
         }
     }
-    public Button buyButton1;
-    public Button buyButton2;
-    public Button buyButton3;
+    public Button[] buyButtons;
     private ItemDealer itemDealer;
 
-    private void Start()
+    public void SetItemDealer(ItemDealer itemDealer)
     {
-        itemDealer = FindObjectOfType<ItemDealer>(); // Поиск экземпляра ItemDealer в сцене
-
-        // Добавляем обработчики событий для кнопок покупки
-        buyButton1.onClick.AddListener(() => PurchaseItem(0));
-        buyButton2.onClick.AddListener(() => PurchaseItem(1));
-        buyButton3.onClick.AddListener(() => PurchaseItem(2));
+        this.itemDealer = itemDealer;
     }
+
     //private void Update()
     //{
     //    // Проверяем нажатие клавиш клавиатуры 1, 2 и 3
@@ -105,5 +98,32 @@ public class PurchaseUI : MonoBehaviour
     //    imageToHighlight.color = highlightColor;
     //}
 
+    public void UpdateItems()
+    {
+        for (int i = 0; i < itemDealer.itemsToPurchase.Length; i++)
+        {
+            buyButtons[i].interactable = itemDealer.itemsToPurchase[i] is not null && itemDealer.PLayerHasEnoughSporesForItem(i);
+            if (itemDealer.itemsToPurchase[i] is null)
+            {
+                //Уже проданный предмет (или не инициализированный)
+                SetItemPrice(i, 0);
+                SetItemImage(i, null);
+                continue;
+            }
+
+            SetItemPrice(i, itemDealer.itemPrices[itemDealer.itemsToPurchase[i]]);
+            SetItemImage(i, itemDealer.itemsToPurchase[i].icon);
+        }
+    }
+
+    private void OnEnable()
+    {
+        PlayerInputManager.instance.uiIsOpen = true;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputManager.instance.uiIsOpen = false;
+    }
 
 }
