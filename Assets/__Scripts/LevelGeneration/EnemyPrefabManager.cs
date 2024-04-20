@@ -7,9 +7,13 @@ public class EnemyPrefabManager : MonoBehaviour
     public static EnemyPrefabManager instance;
     [SerializeField] GameObject[] enemyPrefabs;
     public List<KeyValuePair<int, GameObject>> weightedEnemyPrefabs = new List<KeyValuePair<int, GameObject>>();
+    
+    public GameObject[] bossPrefabs;
+
     private void Awake()
     {
-        instance = this;
+        if(instance is null)
+            instance = this;
 
         GetEnemiesWeight();
     }

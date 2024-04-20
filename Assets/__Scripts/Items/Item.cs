@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
 
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
     [HideInInspector] public int id;
 
@@ -28,7 +28,7 @@ public class Item : ScriptableObject
     }
 }
 
-public class ActiveItem : Item
+public abstract class ActiveItem : Item
 {
     [Header("Active Item Properties")]
     public int cooldownUnits = 100;
@@ -71,11 +71,12 @@ public class ActiveItem : Item
     public override void Reset()
     {
         base.Reset();
+        OnTryUse = null;
         currentCooldown = cooldownUnits;
     }
 }
 
-public class PassiveItem : Item
+public abstract class PassiveItem : Item
 {
     public virtual void ProcessPassiveEffect(PlayerManager player)
     {

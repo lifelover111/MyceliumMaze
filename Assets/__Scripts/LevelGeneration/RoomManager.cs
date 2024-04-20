@@ -11,29 +11,33 @@ public class RoomManager : MonoBehaviour
     public Dictionary<LevelGenerator.RoomNode, GameObject> nodesRoomsDictionary { get; private set; }
     private void Awake()
     {
-        instance = this;
+        if(instance is null)
+            instance = this;
         roomsPrefabDict.Add(LevelGenerator.LevelType.castle, roomsCastle);
     }
     private void Start()
     {
         nodesRoomsDictionary = LevelGenerator.GenerateLevel(LevelGenerator.LevelType.castle);
     }
-    public GameObject GetRoom(LevelGenerator.LevelType leveltype, LevelGenerator.RoomNode.RoomType roomType, int entersNum, int exitNum)
+    public GameObject GetRoom(LevelGenerator.LevelType leveltype, LevelGenerator.RoomNode.RoomType roomType, int entersNum, int exitsNum)
     {
         Room[] suitableRooms = roomsPrefabDict[leveltype].Where(
         room => (roomType == LevelGenerator.RoomNode.RoomType.any ?
         (room.GetRoomType() != LevelGenerator.RoomNode.RoomType.start && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.end && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.requiredRoom) : 
             room.GetRoomType() == roomType)
             && (room.GetEntersNum() >= entersNum)
-            && (room.GetExitsNum() >= exitNum)
+            && (room.GetExitsNum() >= exitsNum)
+            && (room.minEntersNum <= entersNum)
+            && (room.minExitsNum <= exitsNum)
             ).ToArray();
+
         if (suitableRooms.Length == 0)
         { 
-            Debug.LogWarning("Cannot find some room: roomType " + roomType + ", enters " + entersNum + ", exits " + exitNum);
+            Debug.LogWarning("Cannot find some room: roomType " + roomType + ", enters " + entersNum + ", exits " + exitsNum);
             suitableRooms = roomsPrefabDict[leveltype].Where(room =>
                     room.GetRoomType() != LevelGenerator.RoomNode.RoomType.start && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.end && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.requiredRoom && room.GetRoomType() != LevelGenerator.RoomNode.RoomType.deal
                     && (room.GetEntersNum() >= entersNum)
-                    && (room.GetExitsNum() >= exitNum)
+                    && (room.GetExitsNum() >= exitsNum)
                     ).ToArray();
             return suitableRooms.Where(room => room.GetEntersNum() == suitableRooms.Min(x => x.GetEntersNum()) || room.GetExitsNum() == suitableRooms.Min(x => x.GetExitsNum())).OrderBy(o => Random.value > 0.5f).FirstOrDefault().gameObject;
         }

@@ -18,6 +18,10 @@ public class Room : MonoBehaviour
     int enemyCount = 0;
     int depth;
 
+    [Header("Room Parameters")]
+    public int minEntersNum = 0;
+    public int minExitsNum = 0;
+
     [Header("Fight Parameters")]
     [SerializeField] private int maxWaveCost = 0;
 
@@ -25,7 +29,7 @@ public class Room : MonoBehaviour
     private int waveCount = 0;
     private int currentWave = 0;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         transitionsForward = new Door[doorsForward.Length];
         transitionsBackward = new Door[doorsBackward.Length];
@@ -118,7 +122,6 @@ public class Room : MonoBehaviour
             Debug.LogError("Tried to spawn enemies in " + gameObject.name);
 
         currentWave++;
-        Debug.Log(currentWave + " / " + waveCount);
 
         if (EnemyPrefabManager.instance.weightedEnemyPrefabs.Count == 0)
             return;

@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CameraPivot : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    public static CameraPivot instance;
+
+    public Transform target;
     [SerializeField] float smoothing;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Update()
     {
@@ -15,7 +22,7 @@ public class CameraPivot : MonoBehaviour
             return;
         }
 
-        else if (distance > 6)
+        else if (distance > 50)
         {
             transform.position = target.position;
             return;

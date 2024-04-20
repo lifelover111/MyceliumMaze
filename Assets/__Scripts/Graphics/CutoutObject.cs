@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CutoutObject : MonoBehaviour
 {
-    [SerializeField] private Transform targetObject;
+    private Transform targetObject;
     [SerializeField] private LayerMask wallMask;
     [SerializeField] private float cutoutSize;
     [SerializeField] private float sphereColliderRadius;
@@ -17,6 +17,11 @@ public class CutoutObject : MonoBehaviour
     private void Awake()
     {
         mainCamera = GetComponent<Camera>();
+    }
+
+    private void Start()
+    {
+        targetObject = PlayersInGameManager.instance.playerList[0].transform;
     }
 
     private void Update()

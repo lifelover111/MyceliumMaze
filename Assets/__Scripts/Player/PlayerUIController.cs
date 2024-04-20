@@ -1,21 +1,22 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
     PlayerManager player;
 
-    [SerializeField] Transform HPBar;
-    [SerializeField] Transform SanityBar;
-    [SerializeField] Transform ConcentrationBar;
-    [SerializeField] Transform SporeCounter;
-    [SerializeField] Transform FlaskCounter;
-    [SerializeField] Transform ActiveItemCooldownIndicator;
-    [SerializeField] Transform ActiveItemCooldownIndicatorFrame;
-    [SerializeField] Transform CooldownShadow;
-    [SerializeField] Transform InteractButton;
+    private Transform HPBar;
+    private Transform SanityBar;
+    private Transform ConcentrationBar;
+    private Transform SporeCounter;
+    private Transform FlaskCounter;
+    private Transform ActiveItemCooldownIndicator;
+    private Transform ActiveItemCooldownIndicatorFrame;
+    private Transform CooldownShadow;
+    private Transform InteractButton;
 
     public PurchaseUI purchaseWindow;
 
@@ -53,6 +54,23 @@ public class PlayerUIController : MonoBehaviour
     }
     void Awake()
     {
+        OnStart();
+        SceneManager.sceneLoaded += (Scene arg0, LoadSceneMode arg1) => OnStart();
+
+        player.OnSporeCountChanged += () => {
+            if (sporeCountCoroutine is not null)
+            {
+                StopCoroutine(sporeCountCoroutine);
+            }
+            sporeCountCoroutine = StartCoroutine(SporeCountChangeCoroutine());
+        };
+        player.playerStatsManager.OnFlaskCountChanged += () => { flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString(); };
+    }
+
+    void OnStart()
+    {
+        GetCanvas();
+
         player = GetComponent<PlayerManager>();
         healthLine = HPBar.GetChild(0).gameObject;
         sanityLine = SanityBar.GetChild(0).gameObject;
@@ -60,18 +78,18 @@ public class PlayerUIController : MonoBehaviour
         concentrationLineImg = concentrationLine.GetComponent<Image>();
         flaskCounterText = FlaskCounter.GetComponentInChildren<TMP_Text>();
         sporeCounterText = SporeCounter.GetComponentInChildren<TMP_Text>();
-        
-        player.OnSporeCountChanged += () => { 
-            if(sporeCountCoroutine is not null)
-            {
-                StopCoroutine(sporeCountCoroutine);
-            }
-            sporeCountCoroutine = StartCoroutine(SporeCountChangeCoroutine());
-        };
 
-        player.playerStatsManager.OnFlaskCountChanged += () => { flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString(); };
         flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString();
+        sporeCounterText.text = player.sporeCount.ToString();
+        healthLine.transform.localScale = new Vector3(player.playerStatsManager.Health / player.playerStatsManager.MaxHealth, 1, 1);
+        sanityLine.transform.localScale = new Vector3(player.playerStatsManager.Sanity / player.playerStatsManager.MaxSanity, 1, 1);
+        concentrationLine.transform.localScale = new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1);
+        concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
 
+
+
+        if (player.itemManager.activeItem is not null)
+            activeItemIconRenderer.sprite = player.itemManager.activeItem.icon;
     }
 
     void Update()
@@ -124,5 +142,21 @@ public class PlayerUIController : MonoBehaviour
 
         sporeCountCoroutine = null;
     }
-    
+
+    private void GetCanvas()
+    {
+        HPBar = PlayerCanvas.instance.HPBar;
+        SanityBar = PlayerCanvas.instance.SanityBar;
+        ConcentrationBar = PlayerCanvas.instance.ConcentrationBar;
+        SporeCounter = PlayerCanvas.instance.SporeCounter;
+        FlaskCounter = PlayerCanvas.instance.FlaskCounter;
+        ActiveItemCooldownIndicator = PlayerCanvas.instance.ActiveItemCooldownIndicator;
+        ActiveItemCooldownIndicatorFrame = PlayerCanvas.instance.ActiveItemCooldownIndicatorFrame;
+        CooldownShadow = PlayerCanvas.instance.CooldownShadow;
+        InteractButton = PlayerCanvas.instance.InteractButton;
+        purchaseWindow = PlayerCanvas.instance.purchaseWindow;
+        activeItemIconRenderer = PlayerCanvas.instance.activeItemIconRenderer;
+        menuCanvas = PlayerCanvas.instance.menuCanvas;
+    }
+
 }

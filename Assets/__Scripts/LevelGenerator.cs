@@ -17,19 +17,19 @@ public static class LevelGenerator
 
     static Dictionary<LevelType, int> levelDepthDict = new Dictionary<LevelType, int>()
     {
-        { LevelType.castle, 3},
+        { LevelType.castle, 4},
         { LevelType.prison, 4},
     };
 
     static Dictionary<LevelType, int> levelWidthDict = new Dictionary<LevelType, int>()
     {
-        { LevelType.castle, 3},
+        { LevelType.castle, 4},
         { LevelType.prison, 3},
     };
 
     static Dictionary<LevelType, int> levelMeanNumRooms = new Dictionary<LevelType, int>()
     {
-        { LevelType.castle, 10},
+        { LevelType.castle, 12},
         { LevelType.prison, 15},
     };
 
@@ -168,7 +168,7 @@ public static class LevelGenerator
             for (int i = 0; i < connectionsNumber; i++)
             {
                 if (i == 0)
-                    nodes[n].children[i] = GetRandomChance(0.75f * (1 - (lastConnectedNode.parents.Length >= maxDoorsForwardNum ? 1 : 0))) ? lastConnectedNode : new RoomNode();
+                    nodes[n].children[i] = GetRandomChance(0.85f * (lastConnectedNode.parents.Length >= maxDoorsForwardNum ? 0 : 1)) ? lastConnectedNode : new RoomNode();
                 else
                     nodes[n].children[i] = new RoomNode();
 
@@ -319,7 +319,7 @@ public static class LevelGenerator
                 x = 0;
                 y++;
             }
-            pair.Value.transform.position = new Vector3(x * 100, 0, y * 100);
+            pair.Value.transform.position = new Vector3(x * 200, 0, y * 200);
             Room[] roomsToConnectWith = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(x => x.Value.GetComponent<Room>()).ToArray();
             int[] connectionsBackward = nodeRoomDict.Where(x => pair.Key.children.Contains(x.Key)).Select(p => p.Key.parents.Length).ToArray();
 

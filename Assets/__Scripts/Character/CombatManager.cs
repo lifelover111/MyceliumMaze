@@ -82,7 +82,7 @@ public class CombatManager : MonoBehaviour
 
     public virtual void DisableWeaponCollider()
     {
-        weaponDamageCollider.Disable();
+        weaponDamageCollider?.Disable();
     }
 
     public virtual void EnableIsBlocking()

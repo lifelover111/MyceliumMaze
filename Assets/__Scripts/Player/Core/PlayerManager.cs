@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : CharacterManager
 {
@@ -26,6 +27,10 @@ public class PlayerManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(this);
+
+        SceneManager.sceneLoaded += (Scene arg0, LoadSceneMode arg1) => OnStart();
+
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
@@ -34,18 +39,29 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
         playerUIController = GetComponent<PlayerUIController>();
         itemManager = GetComponent<ItemManager>();
+
     }
 
     protected override void Start()
     {
         base.Start();
         SubscribeToInputEvents();
+        OnStart();
     }
 
     protected override void Update()
     {
         base.Update();
         playerLocomotionManager.HandleAllMovement();
+    }
+
+    private void OnStart()
+    {
+        characterController.enabled = false;
+        transform.position = Vector3.zero;
+        characterController.enabled = true;
+        CameraPivot.instance.target = transform;
+        playerStatsManager.Concentration = 0;
     }
 
     public void CastSpell()

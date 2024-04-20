@@ -16,6 +16,7 @@ public class LastPixelizePass : ScriptableRenderPass
     private CamFollow camFollow;
     private Material material;
     private int pixelScreenHeight, pixelScreenWidth;
+    private Camera camera;
     
 
     public LastPixelizePass(LastPixelizeFeature.CustomPassSettings settings)
@@ -27,10 +28,13 @@ public class LastPixelizePass : ScriptableRenderPass
 
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
-        if (camFollow is null)
+        if (camFollow is null || (camera is not null && Camera.main is not null && camera != Camera.main))
         {
             if (Camera.main is null || !Camera.main.TryGetComponent(out camFollow))
                 return;
+            else
+                camera = Camera.main;
+
         }
 
         colorBuffer = renderingData.cameraData.renderer.cameraColorTargetHandle;

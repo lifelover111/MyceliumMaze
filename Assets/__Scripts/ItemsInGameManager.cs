@@ -13,6 +13,9 @@ public class ItemsInGameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance is not null)
+            return;
+
         instance = this;
 
         _itemsGiven = new List<Item>();

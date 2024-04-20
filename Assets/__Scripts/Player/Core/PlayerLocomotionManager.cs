@@ -16,9 +16,9 @@ public class PlayerLocomotionManager : LocomotionManager
     private Vector3 targetRotationDirection;
     private Vector3 dashDirection;
 
-    [SerializeField] float speedForward;
-    [SerializeField] float speedBackward;
-    [SerializeField] float speedToSide;
+    public float speedForward;
+    public float speedBackward;
+    public float speedToSide;
     [SerializeField] float rotationSpeed;
     [SerializeField] float movementAcceleration = 10;
 

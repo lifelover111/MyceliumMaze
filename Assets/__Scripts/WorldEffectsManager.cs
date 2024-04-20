@@ -10,6 +10,7 @@ public class WorldEffectsManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance is null)
+            instance = this;
     }
 }

@@ -155,6 +155,8 @@ public class AnimatorManager : MonoBehaviour
 
     public virtual void DisableWeaponSlash()
     {
+        if (character.weapon.transform.childCount == 0)
+            return;
         character.weapon.transform.GetChild(0).gameObject.SetActive(false);
     }
 

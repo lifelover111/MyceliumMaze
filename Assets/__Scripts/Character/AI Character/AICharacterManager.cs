@@ -7,7 +7,6 @@ public class AICharacterManager : CharacterManager
 {
     [HideInInspector] public AICharacterCombatManager aiCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiLocomotionManager;
-    [HideInInspector] public AISteeringManager aiSteering;
 
     [Header("Spore Count Properties")]
     public int minSporeCount = 10;
@@ -45,7 +44,6 @@ public class AICharacterManager : CharacterManager
         base.Awake();
         aiCombatManager = GetComponent<AICharacterCombatManager>();
         aiLocomotionManager = GetComponent<AICharacterLocomotionManager>();
-        aiSteering = GetComponent<AISteeringManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
         idleState = Instantiate(idleState);
