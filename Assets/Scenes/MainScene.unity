@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.1727681, g: 0.21589184, b: 0.29782557, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5319,26 +5319,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 524979508333718667, guid: da185a882d897e84785a86e943027a1e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 950987855420458140, guid: da185a882d897e84785a86e943027a1e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1508108111625705501, guid: da185a882d897e84785a86e943027a1e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1932104499219014569, guid: da185a882d897e84785a86e943027a1e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7208445948808498089, guid: da185a882d897e84785a86e943027a1e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7246067674225667423, guid: da185a882d897e84785a86e943027a1e, type: 3}
       propertyPath: m_Name
       value: StartRoom
@@ -5388,16 +5368,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 4583103379352763231, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 2412313278653302637, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 3985555626230972888, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 1838576934070571052, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 2285171846676175522, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 6658120141349268582, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 5716794229515255199, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 2516517972319368478, guid: da185a882d897e84785a86e943027a1e, type: 3}
-    - {fileID: 7414378046969914221, guid: da185a882d897e84785a86e943027a1e, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da185a882d897e84785a86e943027a1e, type: 3}
