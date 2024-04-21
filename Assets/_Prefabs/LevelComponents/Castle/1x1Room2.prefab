@@ -464,6 +464,8 @@ MonoBehaviour:
   - {fileID: 7165074152307148044}
   transitionsForward: []
   transitionsBackward: []
+  minEntersNum: 0
+  minExitsNum: 0
   maxWaveCost: 10
 --- !u!114 &3678806555256277346
 MonoBehaviour:
@@ -2665,11 +2667,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3726740952248020482, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.75
+      value: -3.68
       objectReference: {fileID: 0}
     - target: {fileID: 3726740952248020482, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 5.01
       objectReference: {fileID: 0}
     - target: {fileID: 3726740952248020482, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_LocalPosition.z

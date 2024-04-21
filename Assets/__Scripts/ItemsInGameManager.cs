@@ -18,6 +18,8 @@ public class ItemsInGameManager : MonoBehaviour
 
         instance = this;
 
+        PlayersInGameManager.instance.playerList.First().OnDead += () => instance = null;
+
         _itemsGiven = new List<Item>();
 
         SetIdToAllItems();

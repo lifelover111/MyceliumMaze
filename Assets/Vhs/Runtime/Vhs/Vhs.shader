@@ -79,10 +79,10 @@
 				
 				if (bleed > 0.1)
 				{
-					vhs += fixed4(bleed * _xScanline, 0, 0, 0);
+					//vhs += fixed4(bleed * _xScanline, 0, 0, 0);
 				}
 								
-				vhs += c - rand(float3(i.uv.x, i.uv.y, _xScanline)) * _xScanline / 5;
+				vhs += c; - rand(float3(i.uv.x, i.uv.y, _xScanline)) * _xScanline / 30;
 				return lerp(main, vhs, _Intensity);
 			}
 			ENDCG

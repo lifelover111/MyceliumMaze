@@ -24,7 +24,7 @@ public class UseSpeedItem : ActiveItem
     private IEnumerator SpeedUpCoroutine(PlayerManager player)
     {
         yield return new WaitUntil(() => player.itemManager.activeItem.currentCooldown == 0);
-        player.itemManager.activeItem.currentCooldown = player.itemManager.activeItem.cooldownUnits;
+        player.itemManager.activeItem.currentCooldown = player.itemManager.activeItem.cooldownUnits - 1;
         player.playerLocomotionManager.speedForward += speed;
 
         float cooldownCounter = 0;

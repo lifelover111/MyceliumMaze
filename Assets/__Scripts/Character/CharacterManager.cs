@@ -79,7 +79,9 @@ public class CharacterManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(5);
-        Destroy(gameObject);
+    
+        if(this is not PlayerManager)
+            Destroy(gameObject);
     }
 
     public virtual IEnumerator ProcessConcentrationOverflowEvent()

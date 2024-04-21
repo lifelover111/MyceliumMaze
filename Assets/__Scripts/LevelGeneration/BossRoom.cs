@@ -18,6 +18,7 @@ public class BossRoom : Room
     protected override void Awake()
     {
         base.Awake();
+        OnLoadNextLevel = null;
         bossDoor.OnPlayerTriggerEnter += PlayerEnters;
         nextLevelDoor.OnPlayerTriggerEnter += GoToNextLevel;
     }

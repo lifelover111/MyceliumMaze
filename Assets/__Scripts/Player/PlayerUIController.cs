@@ -55,7 +55,6 @@ public class PlayerUIController : MonoBehaviour
     void Awake()
     {
         OnStart();
-        SceneManager.sceneLoaded += (Scene arg0, LoadSceneMode arg1) => OnStart();
 
         player.OnSporeCountChanged += () => {
             if (sporeCountCoroutine is not null)
@@ -67,7 +66,7 @@ public class PlayerUIController : MonoBehaviour
         player.playerStatsManager.OnFlaskCountChanged += () => { flaskCounterText.text = player.playerStatsManager.healingFlasksCount.ToString(); };
     }
 
-    void OnStart()
+    public void OnStart()
     {
         GetCanvas();
 

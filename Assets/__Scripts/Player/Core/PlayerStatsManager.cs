@@ -40,6 +40,14 @@ public class PlayerStatsManager : StatsManager
         OnFlaskCountChanged?.Invoke();
     }
 
+    protected override void HandleDeath()
+    {
+        if (player.isDead) return;
+
+        player.isDead = true;
+        player.StartCoroutine(player.ProcessDeathEvent());
+    }
+
     public void IncreaseFlaskCount()
     {
         _maxHealingFlasksCount++;

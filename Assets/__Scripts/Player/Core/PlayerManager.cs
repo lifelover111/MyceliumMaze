@@ -29,7 +29,7 @@ public class PlayerManager : CharacterManager
         base.Awake();
         DontDestroyOnLoad(this);
 
-        SceneManager.sceneLoaded += (Scene arg0, LoadSceneMode arg1) => OnStart();
+        SceneManager.sceneLoaded += InitOnLoad;
 
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
@@ -94,7 +94,7 @@ public class PlayerManager : CharacterManager
         OnCastSpell = delegate { };
     }
 
-    void SubscribeToInputEvents()
+    private void SubscribeToInputEvents()
     {
         PlayerInputManager.instance.OnDash += playerLocomotionManager.TryDash;
         PlayerInputManager.instance.OnAttack += playerCombatManager.TryAttack;
@@ -105,7 +105,7 @@ public class PlayerManager : CharacterManager
     }
 
 
-    void TryInteract()
+    private void TryInteract()
     {
         if (isPerformingAction)
             return;
@@ -113,5 +113,18 @@ public class PlayerManager : CharacterManager
         OnInteract?.Invoke();
     }
 
-    
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+        Destroy(gameObject);
+        SceneManager.sceneLoaded -= InitOnLoad;
+        SceneManager.LoadScene(0);
+    }
+
+    private void InitOnLoad(Scene arg0, LoadSceneMode arg1)
+    {
+        OnStart();
+        playerUIController.OnStart();
+    }
+
 }

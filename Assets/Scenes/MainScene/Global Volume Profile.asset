@@ -291,16 +291,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb2952b95454955ba507c3d96778a76, type: 3}
   m_Name: VhsVol
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   _weight:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0.15
   _bleed:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 5
   _rocking:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.02
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.35
 --- !u!114 &8320842604991800802
 MonoBehaviour:
   m_ObjectHideFlags: 3

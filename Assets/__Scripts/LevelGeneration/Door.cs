@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
     Room currentRoom;
     public Room room { get { return currentRoom; } }
     [SerializeField] public DoorSelector doorSelector;
+    [SerializeField] Light[] lights;
 
     public static float transitionSpeed = 1;
 
@@ -48,12 +49,29 @@ public class Door : MonoBehaviour
         StartCoroutine(TranslatePlayer());
     }
 
+    public void EnableLights()
+    {
+        foreach (var light in lights)
+        {
+            StartCoroutine(EnableLightCoroutine(light));
+        }
+    }
 
+    IEnumerator EnableLightCoroutine(Light light)
+    {
+        while (light.intensity < 15) 
+        {
+            light.intensity += 5*Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
 
     IEnumerator TranslatePlayer()
     {
-
         transitionTo.room.gameObject.SetActive(true);
+        EnableLights();
+        transitionTo.EnableLights();
+
         float time = Time.time;
         var playerManager = player.GetComponent<PlayerManager>();
         playerManager.playerLocomotionManager.externallyControlled = true;

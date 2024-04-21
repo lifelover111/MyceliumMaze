@@ -5,6 +5,8 @@ public class TakeConcentrationDamageEffect : InstantCharacterEffect
 {
     public CharacterManager characterCausingDamage;
     public float concentrationDamage;
+    public bool playAnimation = true;
+
     public override void ProcessEffect(CharacterManager character)
     {
         base.ProcessEffect(character);
@@ -16,6 +18,9 @@ public class TakeConcentrationDamageEffect : InstantCharacterEffect
             character.statsManager.Concentration >= character.statsManager.MaxConcentration ? 
             character.statsManager.MaxConcentration 
             : character.statsManager.Concentration;
+
+        if (!playAnimation)
+            return;
 
         if(character.isBlocking)
         {

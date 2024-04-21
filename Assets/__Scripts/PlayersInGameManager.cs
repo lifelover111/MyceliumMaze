@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayersInGameManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayersInGameManager : MonoBehaviour
             var player = Instantiate(playerPrefab);
             player.transform.position = Vector3.zero;
             playerList.Add(player.GetComponent<PlayerManager>());
+            playerList.First().OnDead += () => instance = null;
         } 
     }
 }
