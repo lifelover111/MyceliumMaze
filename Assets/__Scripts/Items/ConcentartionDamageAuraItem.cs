@@ -27,6 +27,7 @@ public class ConcentartionDamageAuraItem : PassiveItem
         if(effect is null)
         {
             effect = Instantiate(WorldCharacterEffectManager.instance.concentrationDamageEffect);
+            effect.characterCausingDamage = player;
             effect.concentrationDamage = concentrationDamage*Time.fixedDeltaTime;
             effect.playAnimation = false;
         }

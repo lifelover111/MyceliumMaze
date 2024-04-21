@@ -13,7 +13,10 @@ public class TakeConcentrationDamageEffect : InstantCharacterEffect
         if (character.isDead) return;
         if (character.isInvulnerable) return;
 
-        character.statsManager.Concentration += concentrationDamage;
+
+        var concentrationDamageModifier = characterCausingDamage.statsManager.concentrationDamageModifier;
+
+        character.statsManager.Concentration += concentrationDamage * concentrationDamageModifier;
         character.statsManager.Concentration = 
             character.statsManager.Concentration >= character.statsManager.MaxConcentration ? 
             character.statsManager.MaxConcentration 

@@ -26,7 +26,6 @@ public class MeleeWeaponCollider : DamageCollider
             BlockDamage(target);
             return;
         }
-
         if (withConcentrationDamage)
         {
             TakeConcentrationDamageEffect concentrationDamageEffect = Instantiate(WorldCharacterEffectManager.instance.concentrationDamageEffect);

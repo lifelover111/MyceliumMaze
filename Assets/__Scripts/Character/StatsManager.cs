@@ -23,6 +23,10 @@ public class StatsManager : MonoBehaviour
     private float concentrationTickTimer;
     [SerializeField] float concentrationRegenerationDelay;
     [SerializeField] float concentrationRegenAmount;
+
+    [Header("Modifiers")]
+    public float concentrationDamageModifier = 1;
+    public float damageModifier = 1;
     
     protected virtual void Awake()
     {
