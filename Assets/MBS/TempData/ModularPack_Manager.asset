@@ -131,6 +131,222 @@ MonoBehaviour:
     _decoratorCategories:
     - guid: c04ffa89f3c74b12b4eb1170dec69946
       _name: All
+  - guid: 1ad55a765816463ab8689b322b5255b6
+    _name: Mushrooms
+    _wallGroups: []
+    _floorGroups: []
+    _decoratorGroups:
+    - guid: c401cbefbb6e4d94a9fae4e0df6e03f9
+      name: Mushroom
+      _modules:
+      - guid: d6f05e90202d43a0b50a4f5031db143f
+        name: New Decor Module
+        prefabs:
+        - {fileID: 8991549660808664152, guid: a5219d02e179e301ba0871b3f39ff426, type: 3}
+      - guid: ecf9223f6eef4212ab10e822efba1a21
+        name: New Decor Module (1)
+        prefabs:
+        - {fileID: 6328222721825797394, guid: b0e882cab3f3f22bcb025e8ce9d3125b, type: 3}
+      - guid: 1dd441b4c94645fba8ed12e4d7a92b86
+        name: New Decor Module (2)
+        prefabs:
+        - {fileID: 5271661439754111986, guid: 6a84b57d18d422e7b82f0a1b5f37010f, type: 3}
+      - guid: 26df692c5e484ac0b4311cbb672e6a28
+        name: New Decor Module (3)
+        prefabs:
+        - {fileID: 2120836166336760690, guid: a8f44bcedcafebdf3b455578782292b5, type: 3}
+      - guid: 91d0d1e1a9134abf9a5d88687a996fda
+        name: New Decor Module (4)
+        prefabs:
+        - {fileID: 0}
+      _assetCategoryGuid: 6ac25482f1a449bb89100f591d383bbf
+    - guid: db9bdd75ad4a458ea20f1675fe9706ba
+      name: Nature
+      _modules:
+      - guid: bd8a15a47ead4ff280eb007c758b11ed
+        name: New Decor Module
+        prefabs:
+        - {fileID: 6129020904281692538, guid: 213924b0e07b8734d886f7689e814be5, type: 3}
+      - guid: 7703310859bf482a8cedae3d9bbe2b35
+        name: New Decor Module (1)
+        prefabs:
+        - {fileID: 852563010454724066, guid: e12411b8837c172f0a97007dde56cc56, type: 3}
+      - guid: dc32437b034f4184ad333a83aea6cd7e
+        name: New Decor Module (2)
+        prefabs:
+        - {fileID: 4240955935332809255, guid: 687cb18c2b585f41c9ac5a1e372d28d3, type: 3}
+      - guid: 252662e60be147a2b8e79fdd944ae6df
+        name: New Decor Module (3)
+        prefabs:
+        - {fileID: 8524800750552317189, guid: 8e150d5f091281dfb915ab64f224d1b5, type: 3}
+      - guid: e6e669b4b4cd49e384b797b148140ecb
+        name: New Decor Module (4)
+        prefabs:
+        - {fileID: 603986047288959772, guid: 3fc8a93bf63a5b0d68d23e0b38fd2480, type: 3}
+      - guid: c01e9f15d3444bf5966462528b30e259
+        name: New Decor Module (5)
+        prefabs:
+        - {fileID: 1546530512530310747, guid: 6d15af4cff42f49c58983bdf4bde9003, type: 3}
+      - guid: ea1e2faf648a483e8251fd87d447ad64
+        name: New Decor Module (6)
+        prefabs:
+        - {fileID: 6686694141078147603, guid: beb8881bf7f90dc42add340095921041, type: 3}
+      _assetCategoryGuid: 6ac25482f1a449bb89100f591d383bbf
+    - guid: 22f8920c8fbb4964849702e5f85f6421
+      name: InRooms
+      _modules:
+      - guid: fd7e6e1094284ad08bc58af842666e1d
+        name: New Decor Module
+        prefabs:
+        - {fileID: 3915978765659000432, guid: e74ba5fd37c59842a9b607c0995e0e08, type: 3}
+      - guid: d742e43b47e84deb85810660a43a2693
+        name: New Decor Module (2)
+        prefabs:
+        - {fileID: 8903639698750371288, guid: b3f6dbcf14a7b47a1bd20df4c66bebf7, type: 3}
+      - guid: 80d39e47cf1b402e80fe193eaaf442f7
+        name: New Decor Module (3)
+        prefabs:
+        - {fileID: 6026391975714192492, guid: c029fff7fddd704c9a2a8b7566bb7aa1, type: 3}
+      - guid: 58ecbf0399b44e349627356128fcdba6
+        name: New Decor Module (4)
+        prefabs:
+        - {fileID: 7806559027308142344, guid: 0e34477ecd9cf26a4b4bc85da05181cd, type: 3}
+      - guid: d4cb8186bea34a67a8960bb54878d270
+        name: New Decor Module (5)
+        prefabs:
+        - {fileID: 2109570532511310852, guid: 371a5c6d6e6b97301bc24b0921cddc7b, type: 3}
+      - guid: 0ee6a00c54ba4eb1b25c582a65022b5d
+        name: New Decor Module (6)
+        prefabs:
+        - {fileID: 137268336417740033, guid: 8b26996167ae5b2be9b179e72d7085a4, type: 3}
+      - guid: 466ed2ff7013461ea869308e31d5301d
+        name: New Decor Module (7)
+        prefabs:
+        - {fileID: 2333737183461713182, guid: 1149017ef5bf0404d944589761a0fb65, type: 3}
+      - guid: ea67b432adf9419ca496f3b451d0f8dc
+        name: New Decor Module (9)
+        prefabs:
+        - {fileID: 1251557976702045202, guid: eefc595c0120fcff98049dcbc9e73448, type: 3}
+      - guid: 7d5a2bc4da2447988c7222b266a5006c
+        name: New Decor Module (1)
+        prefabs:
+        - {fileID: 4190074124746204144, guid: 4a403bb9789793ebd873b1ea33fe4cf6, type: 3}
+      - guid: c4b29f50b27e4e3f963298511ef5fcfb
+        name: New Decor Module (8)
+        prefabs:
+        - {fileID: 1306518327546371987, guid: c731748a2bacc25538d36f5eaff75ad9, type: 3}
+      - guid: aee0c71b5c3a4210819119089df7e672
+        name: New Decor Module (10)
+        prefabs:
+        - {fileID: 3317142674850295510, guid: 6fa01c0c83a5ec654acae30358871e0b, type: 3}
+      - guid: 56be79d9a1a640b58de8a78c0a183d67
+        name: New Decor Module (11)
+        prefabs:
+        - {fileID: 4725355840941576409, guid: eb98d14fabc655ab7ac5aa5db3a4c541, type: 3}
+      - guid: 7be7b7aeffc247d0a8bd6807cd88c104
+        name: New Decor Module (12)
+        prefabs:
+        - {fileID: 4391158200849521463, guid: f7fe5ef10c596741f90e521dccdeef77, type: 3}
+      - guid: bcc4881f48f142e7a8042c06025cd7bd
+        name: New Decor Module (13)
+        prefabs:
+        - {fileID: 5026567689765838487, guid: 18339a0ac38241ad4bd61e3a22855f29, type: 3}
+      - guid: f26c904d4cad4cef9c25bbc6c8c1537d
+        name: New Decor Module (14)
+        prefabs:
+        - {fileID: 4685498254933446882, guid: 7f79111ace85a9f969634bb2e101684c, type: 3}
+      - guid: 2d733d4e4da148789d28c82ec6c52c0f
+        name: New Decor Module (15)
+        prefabs:
+        - {fileID: 6108297506963624551, guid: 292982c6539e4966383dd3b6964f58eb, type: 3}
+      - guid: e7cefe331ac74be7b8be719a7b101362
+        name: New Decor Module (16)
+        prefabs:
+        - {fileID: 8551136001152330708, guid: c12c62c1afdddde7d87eba5bf4d46d74, type: 3}
+      - guid: fc12f10ffe4540dcb7954778df323148
+        name: New Decor Module (17)
+        prefabs:
+        - {fileID: 2428979971453378086, guid: e8580b3cf7bb05171be2df5302316eb5, type: 3}
+      - guid: 936effccd02b4d3fa84ebdf088d18234
+        name: New Decor Module (18)
+        prefabs:
+        - {fileID: 5955831837093220117, guid: 4cb56af4f184ab8f393bd4d9fece37a9, type: 3}
+      - guid: 8f4af52b8f3748e69f450a29bc138da4
+        name: New Decor Module (19)
+        prefabs:
+        - {fileID: 3571372209099216211, guid: 920dc7f527164d66b98ebf9c707ca4b4, type: 3}
+      - guid: 909145d340d7485bb5c087dab7479bd9
+        name: New Decor Module (20)
+        prefabs:
+        - {fileID: 5734888833273159697, guid: c65b32d5326e2dbf7a270da4a95f13bf, type: 3}
+      - guid: caf63d296ca74d38baeb65f85fef6c84
+        name: New Decor Module (21)
+        prefabs:
+        - {fileID: 5700849992699370805, guid: 8d152586fdafe509496e497823808f91, type: 3}
+      - guid: fe18c9521e3b41e4959307585b094ff3
+        name: New Decor Module (22)
+        prefabs:
+        - {fileID: 756144942341975527, guid: d49930bb3413c5828af9ab1d14efc194, type: 3}
+      _assetCategoryGuid: 6ac25482f1a449bb89100f591d383bbf
+    - guid: 72b19cb38fb34653aa202f92e28df98f
+      name: Rocks
+      _modules:
+      - guid: 3717c705ef374240942090495cd85dd8
+        name: New Decor Module
+        prefabs:
+        - {fileID: 4387724679437675401, guid: b13d193cc844732ff8824a5d3c48f510, type: 3}
+      - guid: ba5098f7f3a246c085ce3dfb088ef6fc
+        name: New Decor Module (1)
+        prefabs:
+        - {fileID: 4411839859219707209, guid: 7a76850bc1b2daa77a3ecf050baf0e6d, type: 3}
+      - guid: 52486946ed74415ca4f22870ff765ca1
+        name: New Decor Module (2)
+        prefabs:
+        - {fileID: 334128912016204129, guid: 34cc81a8c55e0789690f2732417a3e50, type: 3}
+      - guid: 7a05c83b3cf443d5ade8e696921e57e7
+        name: New Decor Module (3)
+        prefabs:
+        - {fileID: 4099457851145162334, guid: 6fdb519993b1339999cdf194d5504717, type: 3}
+      - guid: cab21a11e7cb4c08af8ffdaafc61d7c3
+        name: New Decor Module (4)
+        prefabs:
+        - {fileID: 3917520401417412390, guid: 55c986d9b092fec9eb62face50a2b664, type: 3}
+      - guid: 8da6f7711d1f43bfa764382369a9765f
+        name: New Decor Module (5)
+        prefabs:
+        - {fileID: 5779926215437771735, guid: d915c6b131782dfc2957f6ab560c519c, type: 3}
+      _assetCategoryGuid: 6ac25482f1a449bb89100f591d383bbf
+    - guid: 5a72fb4b89094b798c55ff7e1137dbe3
+      name: Lamps
+      _modules:
+      - guid: 9eaa81c46dcf4d9ea74cb5dca8b60d16
+        name: New Decor Module
+        prefabs:
+        - {fileID: 90316075649278727, guid: 3fc495392c2c7e7b18704a769f833ee8, type: 3}
+      - guid: 4424773c3ed34e63b10738097ef24ba7
+        name: New Decor Module (1)
+        prefabs:
+        - {fileID: 6989828068923401893, guid: d1be9ff7ae52b66cea1ff74ea34986fc, type: 3}
+      - guid: 6bbdbb8d59824b509aec46373ba21daf
+        name: New Decor Module (2)
+        prefabs:
+        - {fileID: 8404698418918246561, guid: 28cae944c993c563599bd6d7119e2175, type: 3}
+      - guid: ca48791b24f74a26a7fa2b8ab3d983e3
+        name: New Decor Module (3)
+        prefabs:
+        - {fileID: 1426475788522114320, guid: 0e6ecb2d3eb007fca8cc8a07d11b6791, type: 3}
+      - guid: 57afc95335c74c41b2f41712bbb514fe
+        name: New Decor Module (4)
+        prefabs:
+        - {fileID: 7488250452933096741, guid: 78fd96ac162b33c05ad40f75b4ec24d1, type: 3}
+      - guid: 4c870c312e714228a8978fee3794a64d
+        name: New Decor Module (5)
+        prefabs:
+        - {fileID: 792829259815849030, guid: 1bd9d257daec2c2b9943e69743ae7162, type: 3}
+      _assetCategoryGuid: 6ac25482f1a449bb89100f591d383bbf
+    _decoratorCategories:
+    - guid: 6ac25482f1a449bb89100f591d383bbf
+      _name: All
   - guid: 29336bae2cdc4ab99b811e2bb89aea6d
     _name: Second example pack
     _wallGroups:
