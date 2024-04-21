@@ -31,6 +31,13 @@ public class StatsManager : MonoBehaviour
         Health = _maxHealth;
     }
 
+    private void FixedUpdate()
+    {
+        if(transform.position.y < -20)
+            HandleDeath();
+    }
+
+
     public virtual void TryHeal()
     {
         if (character.isPerformingAction) return;
@@ -70,6 +77,7 @@ public class StatsManager : MonoBehaviour
                 {
                     concentrationTickTimer = 0;
                     Concentration = Concentration > 0 ? Concentration - concentrationRegenAmount * multiplier : 0;
+                    Concentration = Concentration < 0 ? 0 : Concentration;
                 }
             }
         }

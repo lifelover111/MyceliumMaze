@@ -13,6 +13,7 @@ public class BossRoom : Room
     private BossCharacterManager boss;
 
     public event System.Action OnStartFight;
+    public static event System.Action OnLoadNextLevel;
 
     protected override void Awake()
     {
@@ -31,7 +32,7 @@ public class BossRoom : Room
 
     private void GoToNextLevel()
     {
-        SceneManager.LoadScene(0);
+        StartCoroutine(GoNextLevelCoroutine());
     }
 
     private void SpawnBoss()
@@ -59,5 +60,26 @@ public class BossRoom : Room
         player.canMove = true;
         boss.isSleeping = false;
         OnStartFight?.Invoke();
+    }
+
+    private IEnumerator GoNextLevelCoroutine()
+    {
+        OnLoadNextLevel?.Invoke();
+        float time = Time.time;
+        var player = PlayersInGameManager.instance.playerList.First();
+        player.playerLocomotionManager.externallyControlled = true;
+        player.playerLocomotionManager.GoTowards(Vector3.forward);
+
+        while (Door.transitionSpeed * Mathf.Sin(Time.time - time) < 0.99)
+        {
+            yield return null;
+        }
+
+        player.isPerformingAction = false;
+        player.canMove = true;
+        player.canRotate = true;
+        player.playerLocomotionManager.externallyControlled = false;
+
+        SceneManager.LoadScene(0);
     }
 }

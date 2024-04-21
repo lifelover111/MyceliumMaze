@@ -16,6 +16,9 @@ public class ScreenShadow : MonoBehaviour
         Door.OnTransition += () => {
             StartCoroutine(ShowThenHideCoroutine()); 
         };
+        BossRoom.OnLoadNextLevel += () => {
+            StartCoroutine(ShowThenHideCoroutine());
+        };
     }
 
     IEnumerator ShowThenHideCoroutine()
