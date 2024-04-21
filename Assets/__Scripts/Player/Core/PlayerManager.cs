@@ -86,6 +86,7 @@ public class PlayerManager : CharacterManager
             return false;
 
         this.sporeCount -= sporeCount;
+        OnSporeCountChanged?.Invoke();
         return true;
     }
 

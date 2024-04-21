@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+//using System.Media;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -10,17 +12,19 @@ public class ItemDealer : MonoBehaviour
     public float minPriceFactor = 0.85f;
     public float maxPriceFactor = 1.15f;
     public float interactionDistance = 3f;
-    
-    
-    private Item[] itemsToPurchase = new Item[3];
-    private Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
+    private PlayerInputManager playerInputManager;
+
+    public Item[] itemsToPurchase = new Item[3];
+    public Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
     
     private PlayerManager player;
+   // public PurchaseUI purchaseUI;
 
     private void Start()
     {
         GetItems();
         SetPrices();
+        playerInputManager = FindObjectOfType<PlayerInputManager>();
     }
 
     private void FixedUpdate()
@@ -29,20 +33,66 @@ public class ItemDealer : MonoBehaviour
     }
 
 
+
+
     private void StartPurchase()
     {
         var purchaseWindow = player.GetPurchaseUI();
         purchaseWindow.gameObject.SetActive(true);
+        purchaseWindow.SetItemDealer(this);
+        purchaseWindow.UpdateItems();
+        //if (playerInputManager != null)
+        //{
+        //    UnityEngine.Debug.Log("911");
+        //    playerInputManager.enabled = false;
+
+        //}
+        //Time.timeScale = 0f;
+
+    }
+    public void PurchaseItem(int itemIndex)
+    {
+        if (player == null)
+            return;
+
+        Item itemToPurchase = itemsToPurchase[itemIndex];
+
+        if (itemToPurchase is null)
+            return;
+
+        var purchaseWindow = player.GetPurchaseUI();
+        int price = itemPrices[itemToPurchase];
+        if (player.TryTakeSpores(price))
+        {
+            player.itemManager.AddItem(itemToPurchase);
+            itemsToPurchase[System.Array.IndexOf(itemsToPurchase, itemToPurchase)] = null;
+            purchaseWindow.gameObject.SetActive(false);
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Not enough spores to purchase item.");
+        }
+        purchaseWindow.UpdateItems();
+    }
+
+    public bool PLayerHasEnoughSporesForItem(int i)
+    {
+        if (itemsToPurchase[i] is null)
+            return false;
+
+        return player.sporeCount >= itemPrices[itemsToPurchase[i]];
     }
 
     private void SetPrices()
     {
-        foreach(var item in itemsToPurchase)
+        foreach (var item in itemsToPurchase)
         {
             int price = Random.Range(Mathf.RoundToInt(minPriceFactor * item.meanPrice), Mathf.RoundToInt(maxPriceFactor * item.meanPrice));
             itemPrices.Add(item, price);
         }
+
     }
+
 
     private void GetItems()
     {
@@ -52,6 +102,7 @@ public class ItemDealer : MonoBehaviour
             //TODO: выдавать хилки с каким-то шансом
         }
     }
+
 
     private void FindPlayers()
     {

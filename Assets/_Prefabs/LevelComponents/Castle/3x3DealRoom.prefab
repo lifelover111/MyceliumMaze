@@ -1779,6 +1779,11 @@ MonoBehaviour:
   minPriceFactor: 0.85
   maxPriceFactor: 1.15
   interactionDistance: 5
+  itemsToPurchase:
+  - {fileID: 11400000, guid: ad92c0a44de6c0546ba69cfb19f9deaa, type: 2}
+  - {fileID: 11400000, guid: 095467ec5ec901546b4a18a27cd4ad3d, type: 2}
+  - {fileID: 11400000, guid: a46c83437f4a2eb4ea518b607b1a6a17, type: 2}
+  purchaseUI: {fileID: 0}
 --- !u!1001 &21348392767442365
 PrefabInstance:
   m_ObjectHideFlags: 0

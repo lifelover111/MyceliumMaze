@@ -8,6 +8,9 @@ using UnityEngine.Windows;
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
+
+    public bool uiIsOpen = false;
+
     PlayerControls playerControls;
     [SerializeField] Vector2 movementInput;
     [SerializeField] public bool autoMoveInput;
@@ -54,6 +57,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerRotation.Rotation.performed += i =>
             {
+                if (uiIsOpen)
+                    return;
                 if (mouseInput) 
                     mousePosition = i.ReadValue<Vector2>();
             };
@@ -91,6 +96,13 @@ public class PlayerInputManager : MonoBehaviour
     
     void HandleMovementInput()
     {
+        if (uiIsOpen)
+        {
+            verticalInput = 0;
+            horizontalInput = 0;
+            moveAmount = 0;
+            return;
+        }
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
         moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
@@ -101,7 +113,8 @@ public class PlayerInputManager : MonoBehaviour
         if(dashInput)
         {
             dashInput = false;
-            //TODO: return do nothing if UI open
+            if (uiIsOpen)
+                return;
             OnDash?.Invoke();
         }
     }
@@ -111,7 +124,8 @@ public class PlayerInputManager : MonoBehaviour
         if (attackInput)
         {
             attackInput = false;
-            //TODO: return do nothing if UI open
+            if (uiIsOpen)
+                return;
             OnAttack?.Invoke();
         }
     }
@@ -121,7 +135,8 @@ public class PlayerInputManager : MonoBehaviour
         if (healInput)
         {
             healInput = false;
-            //TODO: return do nothing if UI open
+            if (uiIsOpen)
+                return;
             OnHeal?.Invoke();
         }
     }
@@ -131,7 +146,8 @@ public class PlayerInputManager : MonoBehaviour
         if (useItemInput)
         {
             useItemInput = false;
-            //TODO: return do nothing if UI open
+            if (uiIsOpen)
+                return;
             OnUseItem?.Invoke();
         }
     }
@@ -141,13 +157,17 @@ public class PlayerInputManager : MonoBehaviour
         if(interactInput)
         {
             interactInput = false;
-            //TODO: return do nothing if UI open
+            if (uiIsOpen)
+                return;
             OnInteract?.Invoke();
         }
     }
 
     void ReadLeftStickInput(InputAction.CallbackContext context)
     {
+        if (uiIsOpen)
+            return;
+     
         if (mouseInput)
             return;
 
@@ -163,6 +183,9 @@ public class PlayerInputManager : MonoBehaviour
 
     void ReadRightStickInput(InputAction.CallbackContext context)
     {
+        if (uiIsOpen)
+            return;
+
         var input = context.ReadValue<Vector2>();
         if (input.magnitude < 0.25f)
         {

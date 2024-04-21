@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class WorldUtilityManager : MonoBehaviour
 {
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
-    }
     public static float GetAngleOfTarget(Vector3 characterForward, Vector3 targetsDirection)
     {
         targetsDirection.y = 0;
