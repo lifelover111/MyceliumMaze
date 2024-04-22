@@ -14,18 +14,23 @@ public class ItemDealer : MonoBehaviour
     public float interactionDistance = 3f;
     private PlayerInputManager playerInputManager;
 
-    public Item[] itemsToPurchase = new Item[3];
+    public Item[] itemsToPurchase = new Item[6];
+
     public Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
-    
+
     private PlayerManager player;
-   // public PurchaseUI purchaseUI;
+    // public PurchaseUI purchaseUI;
+
 
     private void Start()
     {
         GetItems();
         SetPrices();
         playerInputManager = FindObjectOfType<PlayerInputManager>();
+
     }
+
+
 
     private void FixedUpdate()
     {
@@ -50,6 +55,7 @@ public class ItemDealer : MonoBehaviour
         //Time.timeScale = 0f;
 
     }
+
     public void PurchaseItem(int itemIndex)
     {
         if (player == null)
@@ -66,7 +72,6 @@ public class ItemDealer : MonoBehaviour
         {
             player.itemManager.AddItem(itemToPurchase);
             itemsToPurchase[System.Array.IndexOf(itemsToPurchase, itemToPurchase)] = null;
-            purchaseWindow.gameObject.SetActive(false);
         }
         else
         {
@@ -96,7 +101,7 @@ public class ItemDealer : MonoBehaviour
 
     private void GetItems()
     {
-        for(int i = 0; i < itemsToPurchase.Length; i++)
+        for (int i = 0; i < itemsToPurchase.Length; i++)
         {
             itemsToPurchase[i] = ItemsInGameManager.instance.GetRandomItem();
             //TODO: выдавать хилки с каким-то шансом

@@ -5,14 +5,59 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Reflection;
-
 public class PurchaseUI : MonoBehaviour
 {
 
+    public GameObject canvas;
 
     public TextMeshProUGUI priceText1;
     public TextMeshProUGUI priceText2;
     public TextMeshProUGUI priceText3;
+    public TextMeshProUGUI priceText4;
+    public TextMeshProUGUI priceText5;
+    public TextMeshProUGUI priceText6;
+    private PlayerManager player;
+    public GameObject descriptionPanel;
+    public TextMeshProUGUI itemNameText;
+    public TextMeshProUGUI itemDescriptionText;
+    public Button[] descriptionButtons;
+
+    public Image imageItem1;
+    public Image imageItem2;
+    public Image imageItem3;
+    public Image imageItem4;
+    public Image imageItem5;
+    public Image imageItem6;
+
+    string[] itemNames = new string[6];
+    string[] itemDescriptions = new string[6];
+
+
+    //В методе Start заполняем массив данными о предметах
+    //private void Start()
+    //{
+    //    itemDataArray = new ItemData[]
+    //    {
+    //        new ItemData("Обет имени короля", "Клянусь всемогущим королем Фалиодеусом и Его Матерью, что отныне, каких бы мучений и боли это не стоило, пока не одержу победы над чертями иноземными."),
+    //        new ItemData("Амулет Ловца Снов", "Амулет, способный улавливать сны и проникать в мир сновидений. Носитель получает защиту от кошмаров и видит предзнаменования."),
+    //        new ItemData("Книга Забытых Знаний", "Древняя книга, хранящая забытые знания миров. Ее страницы олицетворяют прошлое, настоящее и будущее, даруя мудрость и прозрение.")
+    //    };
+    //}
+
+    public void CloseCanvas()
+    {
+        canvas.SetActive(false);
+    }
+
+    public void ShowDescriptionPanel(int index)
+    {
+        itemNameText.text = itemNames[index];
+        itemDescriptionText.text = itemDescriptions[index];
+
+        descriptionPanel.SetActive(true);
+    }
+
+
     public void SetItemPrice(int index, int price)
     {
         switch (index)
@@ -26,14 +71,21 @@ public class PurchaseUI : MonoBehaviour
             case 2:
                 priceText3.text = price.ToString();
                 break;
+            case 3:
+                priceText4.text = price.ToString();
+                break;
+            case 4:
+                priceText5.text = price.ToString();
+                break;
+            case 5:
+                priceText6.text = price.ToString();
+                break;
             default:
                 Debug.LogWarning("Invalid index for setting item price!");
                 break;
         }
     }
-    public Image imageItem1;
-    public Image imageItem2;
-    public Image imageItem3;
+
     public void SetItemImage(int index, Sprite sprite)
     {
         switch (index)
@@ -46,6 +98,15 @@ public class PurchaseUI : MonoBehaviour
                 break;
             case 2:
                 imageItem3.sprite = sprite;
+                break;
+            case 3:
+                imageItem4.sprite = sprite;
+                break;
+            case 4:
+                imageItem5.sprite = sprite;
+                break;
+            case 5:
+                imageItem6.sprite = sprite;
                 break;
             default:
                 Debug.LogWarning("Invalid index for setting item image!");
@@ -84,7 +145,7 @@ public class PurchaseUI : MonoBehaviour
             // Вызываем метод покупки предмета у экземпляра ItemDealer
             Debug.LogWarning("ItemDound!");
             itemDealer.PurchaseItem(index);
-            
+
         }
         else
         {
@@ -100,6 +161,8 @@ public class PurchaseUI : MonoBehaviour
 
     public void UpdateItems()
     {
+        //var itemNames = itemDealer.GetItemNames();
+        //var itemDescriptions = itemDealer.GetItemDescriptions();
         for (int i = 0; i < itemDealer.itemsToPurchase.Length; i++)
         {
             buyButtons[i].interactable = itemDealer.itemsToPurchase[i] is not null && itemDealer.PLayerHasEnoughSporesForItem(i);
@@ -113,6 +176,9 @@ public class PurchaseUI : MonoBehaviour
 
             SetItemPrice(i, itemDealer.itemPrices[itemDealer.itemsToPurchase[i]]);
             SetItemImage(i, itemDealer.itemsToPurchase[i].icon);
+            Debug.Log(itemDealer.itemsToPurchase[i].itemName);
+            itemNames[i] = itemDealer.itemsToPurchase[i].itemName;
+            itemDescriptions[i] = itemDealer.itemsToPurchase[i].description;
         }
     }
 
