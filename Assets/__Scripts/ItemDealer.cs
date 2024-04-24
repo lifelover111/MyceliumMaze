@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-//using System.Media;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class ItemDealer : MonoBehaviour
 {
     [Header("Properties")]
+    public const int shopItemSize = 3;
     public float minPriceFactor = 0.85f;
     public float maxPriceFactor = 1.15f;
     public float interactionDistance = 3f;
     private PlayerInputManager playerInputManager;
-
-    public Item[] itemsToPurchase = new Item[3];
+    private Item[] _itemsToPurchase = new Item[shopItemSize];
     public Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
     
     private PlayerManager player;
-   // public PurchaseUI purchaseUI;
+
+    public Item[] itemsToPurchase => _itemsToPurchase;
 
     private void Start()
     {
@@ -41,21 +40,21 @@ public class ItemDealer : MonoBehaviour
         purchaseWindow.gameObject.SetActive(true);
         purchaseWindow.SetItemDealer(this);
         purchaseWindow.UpdateItems();
-        //if (playerInputManager != null)
-        //{
-        //    UnityEngine.Debug.Log("911");
-        //    playerInputManager.enabled = false;
-
-        //}
-        //Time.timeScale = 0f;
 
     }
+
+    public void EndPurchase()
+    {
+        var purchaseWindow = player.GetPurchaseUI();
+        purchaseWindow.gameObject.SetActive(false);
+    }
+
     public void PurchaseItem(int itemIndex)
     {
         if (player == null)
             return;
 
-        Item itemToPurchase = itemsToPurchase[itemIndex];
+        Item itemToPurchase = _itemsToPurchase[itemIndex];
 
         if (itemToPurchase is null)
             return;
@@ -65,8 +64,7 @@ public class ItemDealer : MonoBehaviour
         if (player.TryTakeSpores(price))
         {
             player.itemManager.AddItem(itemToPurchase);
-            itemsToPurchase[System.Array.IndexOf(itemsToPurchase, itemToPurchase)] = null;
-            purchaseWindow.gameObject.SetActive(false);
+            _itemsToPurchase[System.Array.IndexOf(_itemsToPurchase, itemToPurchase)] = null;
         }
         else
         {
@@ -85,7 +83,7 @@ public class ItemDealer : MonoBehaviour
 
     private void SetPrices()
     {
-        foreach (var item in itemsToPurchase)
+        foreach (var item in _itemsToPurchase)
         {
             int price = Random.Range(Mathf.RoundToInt(minPriceFactor * item.meanPrice), Mathf.RoundToInt(maxPriceFactor * item.meanPrice));
             itemPrices.Add(item, price);
@@ -96,9 +94,9 @@ public class ItemDealer : MonoBehaviour
 
     private void GetItems()
     {
-        for(int i = 0; i < itemsToPurchase.Length; i++)
+        for(int i = 0; i < shopItemSize; i++)
         {
-            itemsToPurchase[i] = ItemsInGameManager.instance.GetRandomItem();
+            _itemsToPurchase[i] = ItemsInGameManager.instance.GetRandomItem();
             //TODO: выдавать хилки с каким-то шансом
         }
     }

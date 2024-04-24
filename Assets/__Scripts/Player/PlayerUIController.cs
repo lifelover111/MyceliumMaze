@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,7 @@ public class PlayerUIController : MonoBehaviour
     private Transform ActiveItemCooldownIndicatorFrame;
     private Transform CooldownShadow;
     private Transform InteractButton;
+    private ItemNotification itemNotification;
 
     public PurchaseUI purchaseWindow;
 
@@ -155,7 +157,36 @@ public class PlayerUIController : MonoBehaviour
         InteractButton = PlayerCanvas.instance.InteractButton;
         purchaseWindow = PlayerCanvas.instance.purchaseWindow;
         activeItemIconRenderer = PlayerCanvas.instance.activeItemIconRenderer;
+        itemNotification = PlayerCanvas.instance.itemNotification;
         menuCanvas = PlayerCanvas.instance.menuCanvas;
     }
 
+    public void NotifyPlayerItemAdded(Item item)
+    {
+        StartCoroutine(NotifyPlayerCoroutine(item));
+    }
+
+    private IEnumerator NotifyPlayerCoroutine(Item item)
+    {
+        itemNotification.gameObject.SetActive(true);
+        itemNotification.SetItem(item);
+        yield return new WaitForSecondsRealtime(5);
+
+        var images = itemNotification.GetComponentsInChildren<Image>();
+        var fadeSpeed = 7;
+        bool allTransparent = false;
+        while (!allTransparent)
+        {
+            allTransparent = true;
+            foreach (Image image in images)
+            {
+                image.color = Color.Lerp(image.color, new Color(image.color.r, image.color.g, image.color.b, 0), fadeSpeed * Time.deltaTime);
+                if(image.color.a > 0.025f)
+                    allTransparent = false;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+        itemNotification.gameObject.SetActive(false);
+    }
 }

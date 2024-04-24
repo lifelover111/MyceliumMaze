@@ -8,49 +8,19 @@ using System.Reflection;
 
 public class PurchaseUI : MonoBehaviour
 {
+    [SerializeField] TMP_Text itemName;
+    [SerializeField] TMP_Text itemDescription;
 
+    [SerializeField] TMP_Text[] prices;
 
-    public TextMeshProUGUI priceText1;
-    public TextMeshProUGUI priceText2;
-    public TextMeshProUGUI priceText3;
     public void SetItemPrice(int index, int price)
     {
-        switch (index)
-        {
-            case 0:
-                priceText1.text = price.ToString();
-                break;
-            case 1:
-                priceText2.text = price.ToString();
-                break;
-            case 2:
-                priceText3.text = price.ToString();
-                break;
-            default:
-                Debug.LogWarning("Invalid index for setting item price!");
-                break;
-        }
+        prices[index].text = price.ToString();
     }
-    public Image imageItem1;
-    public Image imageItem2;
-    public Image imageItem3;
+    public Image[] itemImages;
     public void SetItemImage(int index, Sprite sprite)
     {
-        switch (index)
-        {
-            case 0:
-                imageItem1.sprite = sprite;
-                break;
-            case 1:
-                imageItem2.sprite = sprite;
-                break;
-            case 2:
-                imageItem3.sprite = sprite;
-                break;
-            default:
-                Debug.LogWarning("Invalid index for setting item image!");
-                break;
-        }
+        itemImages[index].sprite = sprite;
     }
     public Button[] buyButtons;
     private ItemDealer itemDealer;
@@ -77,26 +47,38 @@ public class PurchaseUI : MonoBehaviour
     //    }
     //}
     // Метод для покупки предмета по индексу
-    public void PurchaseItem(int index)
+
+    public void SelectItem(int index)
     {
-        if (itemDealer != null)
-        {
-            // Вызываем метод покупки предмета у экземпляра ItemDealer
-            Debug.LogWarning("ItemDound!");
-            itemDealer.PurchaseItem(index);
-            
-        }
-        else
-        {
-            Debug.LogWarning("ItemDealer not found!");
-        }
+        var selectedItem = itemDealer.itemsToPurchase[index];
+        
+        if (selectedItem is null)
+            return;
+
+        itemName.text = selectedItem.itemName;
+        itemDescription.text = selectedItem.description;
+
     }
 
-    //public Color highlightColor = Color.yellow;
-    //public void OnButtonClick(Image imageToHighlight)
-    //{
-    //    imageToHighlight.color = highlightColor;
-    //}
+    public void PurchaseItem(int index)
+    {
+        if (itemDealer is null)
+            return;
+
+        itemDealer.PurchaseItem(index);
+
+        prices[index].transform.parent.gameObject.SetActive(false);
+        buyButtons[index].gameObject.SetActive(false);
+        itemImages[index].color = Color.black;
+        itemName.text = "Выберите предмет";
+        itemDescription.text = string.Empty;
+
+    }
+
+    public void CloseWindow()
+    {
+        itemDealer.EndPurchase();
+    }
 
     public void UpdateItems()
     {

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class ItemManager : MonoBehaviour
 {
@@ -22,6 +21,8 @@ public class ItemManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        player.playerUIController.NotifyPlayerItemAdded(item);
+
         if (item is PassiveItem passiveItem)
         {
             PassiveItem copy = Instantiate(passiveItem);
@@ -83,4 +84,5 @@ public class ItemManager : MonoBehaviour
             item.ProcessPassiveEffect(player);
         }
     }
+
 }
