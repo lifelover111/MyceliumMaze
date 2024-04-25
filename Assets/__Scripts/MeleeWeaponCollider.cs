@@ -1,6 +1,8 @@
+using CartoonFX;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class MeleeWeaponCollider : DamageCollider
 {
@@ -34,6 +36,14 @@ public class MeleeWeaponCollider : DamageCollider
             target.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
         }
 
+        var takeDamageVFX = Instantiate(WorldEffectsManager.instance.takeDamageEffectPrefab);
+        takeDamageVFX.transform.position = contactPoint;
+        if(target is PlayerManager)
+        {
+            takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
+        }
+
+
         TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectManager.instance.damageEffect);
         damageEffect.physycalDamage = physicalDamage;
         damageEffect.mentalDamage = mentalDamage;
@@ -50,6 +60,9 @@ public class MeleeWeaponCollider : DamageCollider
         {
             concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
             concentrationDamageEffect.characterCausingDamage = character;
+            var parryEffect = Instantiate(WorldEffectsManager.instance.parryEffectPrefab);
+            parryEffect.transform.position = character.weapon.transform.position;
+            parryEffect.transform.localPosition += 0.35f * Vector3.left;
             weaponOwner.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Parry, true, true);
 
@@ -62,7 +75,9 @@ public class MeleeWeaponCollider : DamageCollider
 
             return;
         }
-
+        var blockEffect = Instantiate(WorldEffectsManager.instance.blockEffectPrefab);
+        blockEffect.transform.position = character.weapon.transform.position;
+        blockEffect.transform.localPosition += 0.35f*Vector3.left;
         concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
         concentrationDamageEffect.characterCausingDamage = weaponOwner;
         character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);

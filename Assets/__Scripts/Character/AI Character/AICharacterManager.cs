@@ -51,7 +51,7 @@ public class AICharacterManager : CharacterManager
         surroundState = Instantiate(surroundState);
         attackState = Instantiate(attackState);
         combatStanceState = Instantiate(combatStanceState);
-        if(blockState is not null)
+        if(blockState != null)
             blockState = Instantiate(blockState);
 
         currentState = idleState;

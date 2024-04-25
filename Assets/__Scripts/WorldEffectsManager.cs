@@ -7,6 +7,9 @@ public class WorldEffectsManager : MonoBehaviour
     public static WorldEffectsManager instance;
 
     public GameObject invokationEffectPrefab;
+    public GameObject blockEffectPrefab;
+    public GameObject parryEffectPrefab;
+    public GameObject takeDamageEffectPrefab;
 
     private void Awake()
     {
