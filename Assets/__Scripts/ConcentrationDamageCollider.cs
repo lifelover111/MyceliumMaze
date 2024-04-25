@@ -16,6 +16,7 @@ public class ConcentrationDamageCollider : DamageCollider
         charactersDamaged.Add(target);
 
         TakeConcentrationDamageEffect concentrationDamageEffect = Instantiate(WorldCharacterEffectManager.instance.concentrationDamageEffect);
+        concentrationDamageEffect.characterCausingDamage = characterCausingDamage;
         concentrationDamageEffect.concentrationDamage = concentrationDamage;
         target.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
         if (target.statsManager.Concentration >= target.statsManager.MaxConcentration)

@@ -20,7 +20,7 @@ public class ItemNotification : MonoBehaviour
     {
         icon.sprite = item.icon;
         caption.text = item.itemName;
-        description.text = item.description;
+        description.text = item.descriptionShort;
     }
 
     private void OnEnable()

@@ -11,6 +11,7 @@ public abstract class Item : ScriptableObject
 
     [Header("Item properties")]
     [SerializeField] public string itemName;
+    [SerializeField] public string descriptionShort;
     [SerializeField] public string description;
     [SerializeField] public Sprite icon;
     [SerializeField] public int meanPrice;
