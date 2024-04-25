@@ -17,7 +17,8 @@ public class CombatManager : MonoBehaviour
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
-        weaponDamageCollider = character.weapon.GetComponent<DamageCollider>();
+        if (character.weapon.TryGetComponent(out DamageCollider damageCollider))
+            weaponDamageCollider = damageCollider;
     }
 
     protected virtual void Start()

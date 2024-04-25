@@ -51,7 +51,8 @@ public class AICharacterManager : CharacterManager
         surroundState = Instantiate(surroundState);
         attackState = Instantiate(attackState);
         combatStanceState = Instantiate(combatStanceState);
-        blockState = Instantiate(blockState);
+        if(blockState is not null)
+            blockState = Instantiate(blockState);
 
         currentState = idleState;
         OnDead += () => { PlayersInGameManager.instance.playerList.ForEach(p => p.GiveSpores(Random.Range(minSporeCount, maxSporeCount))); };
