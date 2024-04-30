@@ -239,6 +239,28 @@ MonoBehaviour:
   balance:
     m_OverrideState: 1
     m_Value: 7
+--- !u!114 &-5007820821951856959
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb2952b95454955ba507c3d96778a76, type: 3}
+  m_Name: VhsVol
+  m_EditorClassIdentifier: 
+  active: 1
+  _weight:
+    m_OverrideState: 1
+    m_Value: 0.15
+  _bleed:
+    m_OverrideState: 1
+    m_Value: 5
+  _rocking:
+    m_OverrideState: 1
+    m_Value: 0.02
 --- !u!114 &-4624509624475771422
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -279,28 +301,6 @@ MonoBehaviour:
   maxNits:
     m_OverrideState: 0
     m_Value: 1000
---- !u!114 &-2950139110084612120
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb2952b95454955ba507c3d96778a76, type: 3}
-  m_Name: VhsVol
-  m_EditorClassIdentifier: 
-  active: 1
-  _weight:
-    m_OverrideState: 1
-    m_Value: 0.15
-  _bleed:
-    m_OverrideState: 1
-    m_Value: 5
-  _rocking:
-    m_OverrideState: 1
-    m_Value: 0.02
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   - {fileID: 7142463646706899652}
   - {fileID: 1832647390612174648}
   - {fileID: -7388283831681818573}
-  - {fileID: -2950139110084612120}
+  - {fileID: -5007820821951856959}
 --- !u!114 &1832647390612174648
 MonoBehaviour:
   m_ObjectHideFlags: 3

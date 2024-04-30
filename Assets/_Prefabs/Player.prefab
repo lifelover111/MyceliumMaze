@@ -1995,6 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bcab24808a0714faa175bda16acbee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiIsOpen: 0
   movementInput: {x: 0, y: 0}
   autoMoveInput: 0
   attackInput: 0
@@ -2039,6 +2040,8 @@ MonoBehaviour:
   _health: 0
   concentrationRegenerationDelay: 3
   concentrationRegenAmount: 1.5
+  concentrationDamageModifier: 1
+  damageModifier: 1
   healAmount: 50
   _maxSanity: 50
   _maxHealingFlasksCount: 3
@@ -2056,15 +2059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f98a036dda51a418f8e9c01f4c0405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPBar: {fileID: 0}
-  SanityBar: {fileID: 0}
-  ConcentrationBar: {fileID: 0}
-  SporeCounter: {fileID: 0}
-  FlaskCounter: {fileID: 0}
-  ActiveItemCooldownIndicator: {fileID: 0}
-  ActiveItemCooldownIndicatorFrame: {fileID: 0}
-  CooldownShadow: {fileID: 0}
-  InteractButton: {fileID: 0}
   purchaseWindow: {fileID: 0}
   activeItemIconRenderer: {fileID: 0}
   menuCanvas: {fileID: 0}
@@ -2108,6 +2102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab643c5e1b677cb4690262bdb0292236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldItemPrefab: {fileID: 4112034866237868895, guid: 5a1c53389c8becb4dae0dfb8154d1a23, type: 3}
   OffHand: {fileID: 6904422911755391754}
   itemsInInventory: []
   activeItem: {fileID: 0}
@@ -2614,8 +2609,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalDamage: 18
   mentalDamage: 0
+  withConcentrationDamage: 1
   concentrationDamage: 8
   concentrationDamageBlockMultiplier: 2
+  withVFX: 1
+  withBlood: 1
 --- !u!54 &7932420929863585999
 Rigidbody:
   m_ObjectHideFlags: 0

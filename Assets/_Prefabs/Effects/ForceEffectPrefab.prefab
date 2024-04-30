@@ -54428,6 +54428,7 @@ GameObject:
   - component: {fileID: 3486502682645951186}
   - component: {fileID: 3366307308408120964}
   - component: {fileID: 1963242434663080348}
+  - component: {fileID: 4297937265746744183}
   m_Layer: 15
   m_Name: Collider
   m_TagString: Untagged
@@ -54485,8 +54486,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalDamage: 0
   mentalDamage: 0
+  withConcentrationDamage: 1
   concentrationDamage: 100
   concentrationDamageBlockMultiplier: 1
+  withVFX: 1
+  withBlood: 1
   characterCausingDamage: {fileID: 0}
 --- !u!54 &1963242434663080348
 Rigidbody:
@@ -54515,6 +54519,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4297937265746744183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093546497016689627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b210401c28c985d43b6a08936007fa4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalDamage: 30
+  mentalDamage: 0
+  withConcentrationDamage: 0
+  concentrationDamage: 0
+  concentrationDamageBlockMultiplier: 2
+  withVFX: 0
+  withBlood: 0
+  weaponOwner: {fileID: 0}
+  playDamageAnimation: 0
 --- !u!1 &8527316407944702326
 GameObject:
   m_ObjectHideFlags: 0

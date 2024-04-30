@@ -17,6 +17,8 @@ public class RedHollowControl : MonoBehaviour
     {
         animator = transform.GetChild(0).GetComponent<Animator>();
         GetComponentInChildren<ConcentrationDamageCollider>().characterCausingDamage = owner;
+        GetComponentInChildren<ProjectileDamageCollider>().weaponOwner = owner;
+
     }
 
     // Update is called once per frame

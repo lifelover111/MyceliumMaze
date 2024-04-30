@@ -205,6 +205,8 @@ public class Room : MonoBehaviour
         enemy.transform.position += Vector3.down * enemy.characterController.height*enemyGameObject.transform.localScale.y;
         var startPosition = enemy.transform.position;
         enemyGameObject.SetActive(true);
+        yield return new WaitForEndOfFrame();
+        enemy.DisableColliders();
 
         var invokation = Instantiate(WorldEffectsManager.instance.invokationEffectPrefab);
         invokation.transform.position = new Vector3(enemyGameObject.transform.position.x, invokation.transform.position.y, enemyGameObject.transform.position.z);
@@ -224,6 +226,7 @@ public class Room : MonoBehaviour
         }
 
         Destroy(invokation);
+        enemy.EnableColliders();
         enemy.isSleeping = false;
     }
 }

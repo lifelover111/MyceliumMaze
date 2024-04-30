@@ -36,13 +36,15 @@ public class MeleeWeaponCollider : DamageCollider
             target.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
         }
 
-        var takeDamageVFX = Instantiate(WorldEffectsManager.instance.takeDamageEffectPrefab);
-        takeDamageVFX.transform.position = contactPoint;
-        if(target is PlayerManager)
+        if (withVFX)
         {
-            takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
+            var takeDamageVFX = Instantiate(WorldEffectsManager.instance.takeDamageEffectPrefab);
+            takeDamageVFX.transform.position = contactPoint;
+            if (target is PlayerManager)
+            {
+                takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
+            }
         }
-
 
         TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectManager.instance.damageEffect);
         damageEffect.physycalDamage = physicalDamage;

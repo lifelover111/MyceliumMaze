@@ -37,6 +37,9 @@ public class CharacterManager : MonoBehaviour
 
     public event System.Action OnDead = delegate { };
 
+    [Header("Colliders")]
+    private Collider[] ownColliders;
+
 
     protected virtual void Awake()
     {
@@ -75,6 +78,7 @@ public class CharacterManager : MonoBehaviour
         OnDead?.Invoke();
         if(!manuallySelectDeathAnimation)
         {
+            yield return new WaitForEndOfFrame();
             animatorManager.PlayTargetActionAnimation(animationKeys.Dead, true);
         }
 
@@ -90,15 +94,28 @@ public class CharacterManager : MonoBehaviour
         statsManager.Concentration = 0;
     }
 
+    public void DisableColliders()
+    {
+        foreach(var collider in ownColliders)
+            collider.enabled = false;
+    }
+
+    public void EnableColliders()
+    {
+        foreach (var collider in ownColliders)
+            collider.enabled = true;
+    }
+
     protected virtual void IgnoreMyOwnColliders()
     {
         var colliderControllerCollider = GetComponent<Collider>();
         var damagableCharacterColliders = GetComponentsInChildren<Collider>().Where(c => c.gameObject.tag != "Weapon");
-        var ignoreColliders = damagableCharacterColliders.Union(new List<Collider>() { colliderControllerCollider });
+        var colliders = damagableCharacterColliders.Union(new List<Collider>() { colliderControllerCollider }).ToArray();
+        ownColliders = damagableCharacterColliders.ToArray();
 
-        foreach (var collider in ignoreColliders)
+        foreach (var collider in colliders)
         {
-            foreach (var otherCollider in ignoreColliders)
+            foreach (var otherCollider in colliders)
             {
                 Physics.IgnoreCollision(collider, otherCollider, true);
             }

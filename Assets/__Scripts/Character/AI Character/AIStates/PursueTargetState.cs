@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 
 [CreateAssetMenu(menuName = "AI/States/Pursue Target")]
@@ -13,6 +14,9 @@ public class PursueTargetState : AIState
     [SerializeField] private float switchSurroundFrequency = 0.1f;
     [SerializeField] private float checkAlliesRadius = 10;
     [SerializeField] private int minAlliesCount = 1;
+
+    [Header("State Settings")]
+    [SerializeField] private float noRootMotionSpeed = 3;
 
     private float trySwitchTimer;
 
@@ -42,8 +46,13 @@ public class PursueTargetState : AIState
 
         if(aiCharacter.isMoving)
         {
-            //var steeringDirection = aiCharacter.aiSteering.GetDirection(aiCharacter.aiCombatManager.currentTarget.transform);
-            //steeringDirection = (Quaternion.FromToRotation(aiCharacter.aiLocomotionManager.GetForward(), Vector3.forward) * steeringDirection).normalized;
+            if (aiCharacter.noRootMotion)
+            {
+                var direction = aiCharacter.aiLocomotionManager.GetForward();
+                direction.y = 0;
+                direction.Normalize();
+                aiCharacter.characterController.Move(direction * noRootMotionSpeed * Time.deltaTime);
+            }
             aiCharacter.animatorManager.UpdateAnimatorMovementParameters(0, 1);
         }
         else

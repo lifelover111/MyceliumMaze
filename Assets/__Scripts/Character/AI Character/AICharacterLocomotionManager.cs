@@ -33,6 +33,13 @@ public class AICharacterLocomotionManager : LocomotionManager
         if(aiCharacter.isMoving)
         {
             aiCharacter.animatorManager.UpdateAnimatorMovementParameters(moveDirection.x, moveDirection.z, true, 0.05f);
+            if(aiCharacter.noRootMotion)
+            {
+                var direction = aiCharacter.aiLocomotionManager.GetForward();
+                direction.y = 0;
+                direction.Normalize();
+                aiCharacter.characterController.Move(direction * Time.deltaTime);
+            }
         }
     }
 

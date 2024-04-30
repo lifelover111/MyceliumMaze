@@ -9,6 +9,7 @@ public class CombatManager : MonoBehaviour
     public CharacterManager currentTarget;
 
     private DamageCollider weaponDamageCollider;
+    private RangeWeapon rangeWeapon;
 
     public bool canCombo = false;
     public bool canParry = false;
@@ -19,6 +20,8 @@ public class CombatManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
         if (character.weapon.TryGetComponent(out DamageCollider damageCollider))
             weaponDamageCollider = damageCollider;
+        if (character.weapon.TryGetComponent(out RangeWeapon rangeWeapon))
+            this.rangeWeapon = rangeWeapon;
     }
 
     protected virtual void Start()
@@ -114,6 +117,11 @@ public class CombatManager : MonoBehaviour
     public virtual void DisableInvulnerability()
     {
         character.isInvulnerable = false;
+    }
+
+    public virtual void DoRangeAttack()
+    {
+        rangeWeapon.Attack();
     }
 
 }

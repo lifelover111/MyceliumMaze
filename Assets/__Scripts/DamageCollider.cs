@@ -9,7 +9,10 @@ public class DamageCollider : MonoBehaviour
     private new Collider collider;
     [Header("Damage")]
     public float physicalDamage;
-    public float mentalDamage;
+    public float mentalDamage; 
+
+    [Header("Concentration Damage")]
+    public bool withConcentrationDamage = true;
     public float concentrationDamage;
     public float concentrationDamageBlockMultiplier = 2;
 
@@ -18,6 +21,12 @@ public class DamageCollider : MonoBehaviour
 
     [Header("Characters Damaged")]
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
+
+    [Header("VFX")]
+    public bool withVFX = true;
+
+    [Header("Blood")]
+    public bool withBlood = true;
 
     public event System.Action OnHitEnemy = delegate { };
 
@@ -49,7 +58,7 @@ public class DamageCollider : MonoBehaviour
         if(damageTarget is not null)
         {
             contactPoint = other.ClosestPointOnBounds(transform.position);
-            DamageTarget(damageTarget);
+            DamageTarget(damageTarget, withConcentrationDamage);
         }
     }
 

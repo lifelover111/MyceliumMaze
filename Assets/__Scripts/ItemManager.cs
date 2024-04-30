@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    [SerializeField] GameObject worldItemPrefab;
     [SerializeField] public Transform OffHand;
     PlayerManager player;
     public List<PassiveItem> itemsInInventory = new List<PassiveItem>();
@@ -31,9 +33,15 @@ public class ItemManager : MonoBehaviour
         }
         else if(item is ActiveItem activeItem)
         {
-            ActiveItem copy = Instantiate(activeItem);
-            //TODO: дроп предыдущего предмета
+            if (this.activeItem != null)
+            {
+                GameObject go = Instantiate(worldItemPrefab);
+                WorldItem worldItem = go.GetComponent<WorldItem>();
+                worldItem.SetItem(this.activeItem);
+                go.transform.position = transform.position + Vector3.up;
+            }
 
+            ActiveItem copy = Instantiate(activeItem);
             this.activeItem = copy;
             copy.PickUp(player);
             player.playerUIController.activeItemIconRenderer.sprite = copy.icon;

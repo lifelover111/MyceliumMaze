@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -160,10 +161,19 @@ public class PlayerLocomotionManager : LocomotionManager
             dashDirection.Normalize();
         }
 
-
         Vector3 viewDirection = Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         viewDirection.y = 0;
         viewDirection.Normalize();
+
+
+        var dashDirections = new Vector3[]
+        {
+            viewDirection, Quaternion.Euler(0, 90, 0) * viewDirection, Quaternion.Euler(0, 180, 0) * viewDirection, Quaternion.Euler(0, 270, 0) * viewDirection
+        };
+        var closestDirection = dashDirections.Where(d => Mathf.Abs(Vector3.SignedAngle(dashDirection, d, Vector3.up)) == dashDirections.Min(v => Mathf.Abs(Vector3.Angle(dashDirection, v)))).First();
+           
+        transform.rotation = Quaternion.Euler(0, Vector3.SignedAngle(closestDirection, dashDirection, Vector3.up), 0) * transform.rotation;
+
         float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
         Vector3 inputTree = (Quaternion.AngleAxis(angle, Vector3.down) * dashDirection).normalized;
 
@@ -171,7 +181,7 @@ public class PlayerLocomotionManager : LocomotionManager
         intTree.x = Mathf.RoundToInt(inputTree.x);
         intTree.y = Mathf.RoundToInt(inputTree.z);
 
-        if(Mathf.Abs(inputTree.x) > Mathf.Abs(inputTree.z))
+        if(Mathf.Abs(inputTree.x) >= Mathf.Abs(inputTree.z))
         {
             intTree.y = 0;
         }

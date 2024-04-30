@@ -205,6 +205,10 @@ public class AnimatorManager : MonoBehaviour
         character.combatManager.DisableInvulnerability();
     }
 
+    public virtual void DoRangeAttack()
+    {
+        character.combatManager.DoRangeAttack();
+    }
 
     #endregion
 }

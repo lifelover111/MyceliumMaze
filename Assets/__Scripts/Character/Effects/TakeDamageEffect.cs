@@ -19,6 +19,9 @@ public class TakeDamageEffect : InstantCharacterEffect
     public bool playDamageAnimation = true;
     public bool manuallySelectDamageAnimation = false;
 
+    [Header("Blood")]
+    public bool withBlood = true;
+
 
 
     public override void ProcessEffect(CharacterManager character)
@@ -27,7 +30,8 @@ public class TakeDamageEffect : InstantCharacterEffect
         if (character.isDead) return;
         if (character.isInvulnerable) return;
 
-        BloodParticleSystemHandler.Instance.SpawnBlood(new Vector3(character.transform.position.x, 0, character.transform.position.z), (new Vector3(characterCausingDamage.transform.position.x, 0, characterCausingDamage.transform.position.z) - new Vector3(character.transform.position.x, 0, character.transform.position.z)).normalized * -.3f);
+        if(withBlood)
+            BloodParticleSystemHandler.Instance.SpawnBlood(new Vector3(character.transform.position.x, 0, character.transform.position.z), (new Vector3(characterCausingDamage.transform.position.x, 0, characterCausingDamage.transform.position.z) - new Vector3(character.transform.position.x, 0, character.transform.position.z)).normalized * -.3f);
 
         var damageModifier = characterCausingDamage.statsManager.damageModifier;
         character.statsManager.Health -= physycalDamage * damageModifier;

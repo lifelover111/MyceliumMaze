@@ -25,6 +25,7 @@ public class AICharacterManager : CharacterManager
     public CombatStanceState combatStanceState;
     public AttackState attackState;
     public BlockState blockState;
+    public KeepDistanceState keepDistanceState;
 
     [Header("AI flags")]
     public bool isMoving = false;
@@ -34,6 +35,9 @@ public class AICharacterManager : CharacterManager
     [Header("GUI")]
     public GameObject guiPrefab;
     private EnemyUIManager gui;
+
+    [Header("Animator options")]
+    public bool noRootMotion = false;
 
     [Header("Level generation")]
     [SerializeField] private int spawnCost = 0;
@@ -125,6 +129,12 @@ public class AICharacterManager : CharacterManager
     {
         gui = Instantiate(guiPrefab).GetComponent<EnemyUIManager>();
         gui.Enable(statsManager);
+    }
+
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        navMeshAgent.enabled = false;
+        yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
 }

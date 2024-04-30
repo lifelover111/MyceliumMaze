@@ -7550,8 +7550,8 @@ MonoBehaviour:
   maxBlockAngle: 45
   aiCombatManager: {fileID: 0}
   aiLocomotionManager: {fileID: 0}
-  minSporeCount: 15
-  maxSporeCount: 70
+  minSporeCount: 0
+  maxSporeCount: 20
   currentState: {fileID: 0}
   navMeshAgent: {fileID: 0}
   idleState: {fileID: 11400000, guid: 5d48405d61fe66a4591c8d54b28421cb, type: 2}
@@ -7560,9 +7560,11 @@ MonoBehaviour:
   combatStanceState: {fileID: 11400000, guid: e27565ebc7a082c41b7641d3647403d3, type: 2}
   attackState: {fileID: 11400000, guid: ec17c9e7c57c5e14b804257870864ddb, type: 2}
   blockState: {fileID: 11400000, guid: 474dec19c2b1609489dcab994370c4b9, type: 2}
+  keepDistanceState: {fileID: 11400000, guid: 270531004ec896a418ea8a7dbe5a56cb, type: 2}
   isMoving: 0
   isSleeping: 0
   guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
+  noRootMotion: 0
   spawnCost: 10
 --- !u!114 &5538556854098537758
 MonoBehaviour:
@@ -7606,6 +7608,8 @@ MonoBehaviour:
   _health: 0
   concentrationRegenerationDelay: 2
   concentrationRegenAmount: 0.5
+  concentrationDamageModifier: 1
+  damageModifier: 1
 --- !u!114 &1936112804724291464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7806,6 +7810,8 @@ MonoBehaviour:
   mentalDamage: 0
   concentrationDamage: 10
   concentrationDamageBlockMultiplier: 2
+  withVFX: 1
+  withBlood: 0
 --- !u!65 &4513406751506119403
 BoxCollider:
   m_ObjectHideFlags: 0

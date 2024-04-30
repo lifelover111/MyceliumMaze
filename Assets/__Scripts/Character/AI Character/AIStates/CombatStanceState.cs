@@ -21,6 +21,7 @@ public class CombatStanceState : AIState
 
     [Header("Engagement Distance")]
     [SerializeField] public float maximumEngagementDistance = 8;
+    [SerializeField] public float minimumEngagementDistance = 0;
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
@@ -63,11 +64,17 @@ public class CombatStanceState : AIState
         {
             GetNewAttack(aiCharacter);
         }
+
         else
         {
             aiCharacter.attackState.currentAttack = choosenAttack;
 
             return SwitchState(aiCharacter, aiCharacter.attackState);
+        }
+
+        if (aiCharacter.aiCombatManager.distanceFromTarget <= minimumEngagementDistance)
+        {
+            return SwitchState(aiCharacter, aiCharacter.keepDistanceState);
         }
 
         NavMeshPath path = new NavMeshPath();
