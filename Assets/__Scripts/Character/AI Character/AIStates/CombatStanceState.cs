@@ -46,6 +46,10 @@ public class CombatStanceState : AIState
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
+        if (aiCharacter.aiCombatManager.distanceFromTarget <= minimumEngagementDistance)
+        {
+            return SwitchState(aiCharacter, aiCharacter.keepDistanceState);
+        }
 
         if (aiCharacter.aiCombatManager.distanceFromTarget > maximumEngagementDistance)
         {
@@ -72,10 +76,6 @@ public class CombatStanceState : AIState
             return SwitchState(aiCharacter, aiCharacter.attackState);
         }
 
-        if (aiCharacter.aiCombatManager.distanceFromTarget <= minimumEngagementDistance)
-        {
-            return SwitchState(aiCharacter, aiCharacter.keepDistanceState);
-        }
 
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCombatManager.currentTarget.transform.position, path);
