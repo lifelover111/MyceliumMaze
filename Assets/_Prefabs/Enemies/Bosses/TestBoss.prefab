@@ -605,8 +605,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalDamage: 10
   mentalDamage: 0
+  withConcentrationDamage: 1
   concentrationDamage: 10
   concentrationDamageBlockMultiplier: 2
+  withVFX: 1
+  withBlood: 1
 --- !u!1 &1885071212507179250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1077,8 @@ GameObject:
   - component: {fileID: 7063345614339611609}
   - component: {fileID: 7027537474258778631}
   - component: {fileID: 4395418625502062054}
+  - component: {fileID: 7060674653382900052}
+  - component: {fileID: 4819405870479045291}
   m_Layer: 11
   m_Name: TestBoss
   m_TagString: Untagged
@@ -1164,6 +1169,7 @@ MonoBehaviour:
   animatorManager: {fileID: 0}
   combatManager: {fileID: 0}
   locomotionManager: {fileID: 0}
+  soundManager: {fileID: 0}
   forward: {x: 0, y: 0, z: 1}
   isPerformingAction: 0
   canRotate: 1
@@ -1204,9 +1210,11 @@ MonoBehaviour:
   combatStanceState: {fileID: 11400000, guid: e27565ebc7a082c41b7641d3647403d3, type: 2}
   attackState: {fileID: 11400000, guid: ec17c9e7c57c5e14b804257870864ddb, type: 2}
   blockState: {fileID: 11400000, guid: 474dec19c2b1609489dcab994370c4b9, type: 2}
+  keepDistanceState: {fileID: 0}
   isMoving: 0
   isSleeping: 1
   guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
+  noRootMotion: 0
   spawnCost: 0
 --- !u!114 &6122519687584502322
 MonoBehaviour:
@@ -1250,6 +1258,8 @@ MonoBehaviour:
   _health: 0
   concentrationRegenerationDelay: 3
   concentrationRegenAmount: 1
+  concentrationDamageModifier: 1
+  damageModifier: 1
 --- !u!114 &7027537474258778631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,6 +1293,114 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDashing: 0
+--- !u!82 &7060674653382900052
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636145946882586761}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &4819405870479045291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636145946882586761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f4005962c6173478dd8165a27f3019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4142090216713760916
 GameObject:
   m_ObjectHideFlags: 0
@@ -7474,8 +7592,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicalDamage: 10
   mentalDamage: 0
+  withConcentrationDamage: 1
   concentrationDamage: 10
   concentrationDamageBlockMultiplier: 1.5
+  withVFX: 1
+  withBlood: 1
 --- !u!54 &5397126114991185918
 Rigidbody:
   m_ObjectHideFlags: 0

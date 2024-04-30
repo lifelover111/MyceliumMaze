@@ -44,6 +44,9 @@ public class MeleeWeaponCollider : DamageCollider
             {
                 takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
             }
+
+            if (SoundBank.instance.takeDamageSound != null)
+                target.soundManager.PlaySound(SoundBank.instance.takeDamageSound);
         }
 
         TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectManager.instance.damageEffect);
@@ -60,6 +63,9 @@ public class MeleeWeaponCollider : DamageCollider
 
         if (character.combatManager.canParry)
         {
+            if(SoundBank.instance.parrySound != null)
+                character.soundManager.PlaySound(SoundBank.instance.parrySound);
+
             concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
             concentrationDamageEffect.characterCausingDamage = character;
             var parryEffect = Instantiate(WorldEffectsManager.instance.parryEffectPrefab);
@@ -77,6 +83,10 @@ public class MeleeWeaponCollider : DamageCollider
 
             return;
         }
+
+        if (SoundBank.instance.blockSound != null)
+            character.soundManager.PlaySound(SoundBank.instance.blockSound);
+
         var blockEffect = Instantiate(WorldEffectsManager.instance.blockEffectPrefab);
         blockEffect.transform.position = character.weapon.transform.position;
         blockEffect.transform.localPosition += 0.35f*Vector3.left;

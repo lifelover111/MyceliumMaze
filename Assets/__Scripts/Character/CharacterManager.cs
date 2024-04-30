@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public AnimatorManager animatorManager;
     [HideInInspector] public CombatManager combatManager;
     [HideInInspector] public LocomotionManager locomotionManager;
+    [HideInInspector] public SoundManager soundManager;
 
     [Header("Model Forward")]
     public Vector3 forward;
@@ -50,6 +51,7 @@ public class CharacterManager : MonoBehaviour
         animator = GetComponent<Animator>();
         combatManager = GetComponent<CombatManager>();
         locomotionManager = GetComponent<LocomotionManager>();
+        soundManager = GetComponent<SoundManager>();
     }
 
     protected virtual void Start()

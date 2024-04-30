@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerAnimatorManager : AnimatorManager
 {
     private PlayerManager player;
+
+    private bool isPlayingStepSound = false;
 
     protected override void Awake()
     {
@@ -32,6 +35,24 @@ public class PlayerAnimatorManager : AnimatorManager
         player.CastSpell();
     }
 
+    public void PlayStepSound()
+    {
+        if (player.isPerformingAction)
+            return;
+
+        if (SoundBank.instance.playerStepSounds != null && !isPlayingStepSound)
+        {
+            player.soundManager.PlaySound(SoundBank.instance.playerStepSounds[Random.Range(0, SoundBank.instance.playerStepSounds.Length)]);
+            SwitchStepSoundFlag();
+        }
+    }
+
     #endregion
 
+    public async void SwitchStepSoundFlag()
+    {
+        isPlayingStepSound = true;
+        await Task.Delay(150);
+        isPlayingStepSound = false;
+    }
 }

@@ -12,6 +12,8 @@ public class PlayerLocomotionManager : LocomotionManager
     public float moveAmount;
     public bool externallyControlled = false;
 
+    public bool isMoving = false;
+
     
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
@@ -64,6 +66,11 @@ public class PlayerLocomotionManager : LocomotionManager
         player.transform.rotation = Quaternion.FromToRotation(GetForward(), transform.forward) * Quaternion.LookRotation(moveDirection, Vector3.up);
         player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, Mathf.Sqrt(speedForward / maxSpeed), false);
         player.characterController.Move(moveDirection * speedForward * Time.deltaTime);
+
+        if (Mathf.Sqrt(speedForward / maxSpeed) > 0.25f)
+            isMoving = true;
+        else
+            isMoving = false;
     }
 
     void GetVerticalAndHorizontalInputs()
@@ -99,6 +106,10 @@ public class PlayerLocomotionManager : LocomotionManager
         float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
         Vector3 walkTree = Vector3.ClampMagnitude(Quaternion.AngleAxis(angle, Vector3.down) * moveDirection, 1)* Mathf.Sqrt(speedForward/maxSpeed);
         player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z, false);
+        if (walkTree.magnitude > 0.25f)
+            isMoving = true;
+        else
+            isMoving = false;
     }
 
     private void HandleHoldWalkButtonWalk()
@@ -116,8 +127,13 @@ public class PlayerLocomotionManager : LocomotionManager
         viewDirection.y = 0;
         viewDirection.Normalize();
         float angle = Vector2.SignedAngle(new Vector2(viewDirection.x, viewDirection.z), Vector2.up);
-        Vector3 walkTree = Vector3.ClampMagnitude(Quaternion.AngleAxis(angle, Vector3.down) * moveDirection, 1) * Mathf.Sqrt(speedForward/maxSpeed);
+        Vector3 walkTree = Vector3.ClampMagnitude(Quaternion.AngleAxis(angle, Vector3.down) * moveDirection, 1) * Mathf.Sqrt(speedForward / maxSpeed);
         player.animatorManager.UpdateAnimatorMovementParameters(walkTree.x, walkTree.z, false);
+
+        if (walkTree.magnitude > 0.25f)
+            isMoving = true;
+        else 
+            isMoving = false;
 
     }
 
