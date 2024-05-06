@@ -6,6 +6,8 @@ using UnityEngine;
 public class ItemsInGameManager : MonoBehaviour
 {
     [SerializeField] List<Item> items;
+    
+    public Item increaseFlaskCountItem;
 
     public static ItemsInGameManager instance;
 

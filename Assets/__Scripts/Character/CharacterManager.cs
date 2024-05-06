@@ -124,5 +124,10 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    protected virtual void ForceKill()
+    {
+        OnDead?.Invoke();
+    }
+
 }
 

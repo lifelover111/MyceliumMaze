@@ -16,10 +16,12 @@ public class PlayerCanvas : MonoBehaviour
     public Transform ActiveItemCooldownIndicatorFrame;
     public Transform CooldownShadow;
     public Transform InteractButton;
+    public Transform PauseUI;
 
     public ItemNotification itemNotification;
 
     public PurchaseUI purchaseWindow;
+    public InventoryUI inventoryWindow;
     public Image activeItemIconRenderer;
     public GameObject menuCanvas;
 

@@ -7,11 +7,11 @@ using UnityEngine;
 public class ItemDealer : MonoBehaviour
 {
     [Header("Properties")]
+    public int sellHealChance = 50;
     public const int shopItemSize = 3;
     public float minPriceFactor = 0.85f;
     public float maxPriceFactor = 1.15f;
     public float interactionDistance = 3f;
-    private PlayerInputManager playerInputManager;
     private Item[] _itemsToPurchase = new Item[shopItemSize];
     public Dictionary<Item, int> itemPrices = new Dictionary<Item, int>();
     
@@ -23,7 +23,6 @@ public class ItemDealer : MonoBehaviour
     {
         GetItems();
         SetPrices();
-        playerInputManager = FindObjectOfType<PlayerInputManager>();
     }
 
     private void FixedUpdate()
@@ -96,8 +95,12 @@ public class ItemDealer : MonoBehaviour
     {
         for(int i = 0; i < shopItemSize; i++)
         {
-            _itemsToPurchase[i] = ItemsInGameManager.instance.GetRandomItem();
-            //TODO: выдавать хилки с каким-то шансом
+            if (WorldUtilityManager.RollForOutcomeChance(sellHealChance))
+            {
+                _itemsToPurchase[i] = Instantiate(ItemsInGameManager.instance.increaseFlaskCountItem);
+            }
+            else
+                _itemsToPurchase[i] = ItemsInGameManager.instance.GetRandomItem() ?? Instantiate(ItemsInGameManager.instance.increaseFlaskCountItem);
         }
     }
 

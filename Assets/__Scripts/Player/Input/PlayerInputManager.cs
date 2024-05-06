@@ -9,7 +9,7 @@ public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
 
-    public bool uiIsOpen = false;
+    public List<Transform> uiStack = new List<Transform>();
 
     PlayerControls playerControls;
     [SerializeField] Vector2 movementInput;
@@ -21,6 +21,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool useItemInput;
     [SerializeField] bool rightStickInput;
     [SerializeField] bool interactInput;
+
+    [SerializeField] bool pauseInput;
 
     private bool mouseInput = true;
 
@@ -38,6 +40,8 @@ public class PlayerInputManager : MonoBehaviour
     public event System.Action OnBlockStateChanged = delegate { };
     public event System.Action OnUseItem = delegate { };
     public event System.Action OnInteract = delegate { };
+
+    public event System.Action OnPause = delegate { };
 
     void Awake()
     {
@@ -57,7 +61,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerRotation.Rotation.performed += i =>
             {
-                if (uiIsOpen)
+                if (uiStack.Count > 0)
                     return;
                 if (mouseInput) 
                     mousePosition = i.ReadValue<Vector2>();
@@ -76,6 +80,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Heal.performed += i => healInput = true;
             playerControls.PlayerActions.UseItem.performed += i => useItemInput = true;
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
+
+            playerControls.InterfaceActions.Pause.performed += i => pauseInput = true;
         }
         playerControls.Enable();
     }
@@ -92,11 +98,27 @@ public class PlayerInputManager : MonoBehaviour
         HandleHealInput();
         HandleUseItemInput();
         HandleInteractInput();
+
+        HandleUIInput();
     }
-    
+
+    void HandleUIInput()
+    {
+        HandlePauseUnput();
+    }
+
+    void HandlePauseUnput()
+    {
+        if (pauseInput)
+        {
+            pauseInput = false;
+            OnPause?.Invoke();
+        }
+    }
+
     void HandleMovementInput()
     {
-        if (uiIsOpen)
+        if (uiStack.Count > 0)
         {
             verticalInput = 0;
             horizontalInput = 0;
@@ -113,7 +135,7 @@ public class PlayerInputManager : MonoBehaviour
         if(dashInput)
         {
             dashInput = false;
-            if (uiIsOpen)
+            if (uiStack.Count > 0)
                 return;
             OnDash?.Invoke();
         }
@@ -124,7 +146,7 @@ public class PlayerInputManager : MonoBehaviour
         if (attackInput)
         {
             attackInput = false;
-            if (uiIsOpen)
+            if (uiStack.Count > 0)
                 return;
             OnAttack?.Invoke();
         }
@@ -135,7 +157,7 @@ public class PlayerInputManager : MonoBehaviour
         if (healInput)
         {
             healInput = false;
-            if (uiIsOpen)
+            if (uiStack.Count > 0)
                 return;
             OnHeal?.Invoke();
         }
@@ -146,7 +168,7 @@ public class PlayerInputManager : MonoBehaviour
         if (useItemInput)
         {
             useItemInput = false;
-            if (uiIsOpen)
+            if (uiStack.Count > 0)
                 return;
             OnUseItem?.Invoke();
         }
@@ -157,7 +179,7 @@ public class PlayerInputManager : MonoBehaviour
         if(interactInput)
         {
             interactInput = false;
-            if (uiIsOpen)
+            if (uiStack.Count > 0)
                 return;
             OnInteract?.Invoke();
         }
@@ -165,7 +187,7 @@ public class PlayerInputManager : MonoBehaviour
 
     void ReadLeftStickInput(InputAction.CallbackContext context)
     {
-        if (uiIsOpen)
+        if (uiStack.Count > 0)
             return;
      
         if (mouseInput)
@@ -183,7 +205,7 @@ public class PlayerInputManager : MonoBehaviour
 
     void ReadRightStickInput(InputAction.CallbackContext context)
     {
-        if (uiIsOpen)
+        if (uiStack.Count > 0)
             return;
 
         var input = context.ReadValue<Vector2>();

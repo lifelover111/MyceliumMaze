@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class PlayerManager : CharacterManager
 {
@@ -95,6 +96,13 @@ public class PlayerManager : CharacterManager
         OnCastSpell = delegate { };
     }
 
+    public void PrepareToRestart()
+    {
+        ForceKill();
+        Destroy(gameObject);
+        SceneManager.sceneLoaded -= InitOnLoad;
+    }
+
     private void SubscribeToInputEvents()
     {
         PlayerInputManager.instance.OnDash += playerLocomotionManager.TryDash;
@@ -103,6 +111,24 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.OnBlockStateChanged += playerCombatManager.TryBlock;
         PlayerInputManager.instance.OnUseItem += itemManager.TryUseItem;
         PlayerInputManager.instance.OnInteract += TryInteract;
+
+        PlayerInputManager.instance.OnPause += () =>
+        {
+            if (PlayerInputManager.instance.uiStack.Count == 0)
+            {
+                playerUIController.pauseUI.gameObject.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                for (int i = 0; i < PlayerInputManager.instance.uiStack.Count; i++)
+                {
+                    PlayerInputManager.instance.uiStack[i].gameObject.SetActive(false);
+                }
+                PlayerInputManager.instance.uiStack.Clear();
+                Time.timeScale = 1;
+            }
+        };
     }
 
 
@@ -117,8 +143,8 @@ public class PlayerManager : CharacterManager
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
-        Destroy(gameObject);
-        SceneManager.sceneLoaded -= InitOnLoad;
+
+        PrepareToRestart();
         SceneManager.LoadScene(0);
     }
 

@@ -291,9 +291,10 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: 8385224912098989977}
+  - {fileID: 8181953030120615701}
   - {fileID: 7523450518507476760}
   - {fileID: -4370936776549466166}
-  m_RendererFeatureMap: 99976a77a14d5e7418d7ddb862aa6868caff13f2285057c3
+  m_RendererFeatureMap: 99976a77a14d5e74152f4559ee228c7118d7ddb862aa6868caff13f2285057c3
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -348,6 +349,21 @@ MonoBehaviour:
   settings:
     renderPassEvent: 550
     screenHeight: 168
+--- !u!114 &8181953030120615701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d355e8335430bf149867708d254a7bdd, type: 3}
+  m_Name: ColorMultiplierFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    multiplier: 3
 --- !u!114 &8385224912098989977
 MonoBehaviour:
   m_ObjectHideFlags: 0

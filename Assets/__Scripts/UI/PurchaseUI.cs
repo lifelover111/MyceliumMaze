@@ -30,24 +30,6 @@ public class PurchaseUI : MonoBehaviour
         this.itemDealer = itemDealer;
     }
 
-    //private void Update()
-    //{
-    //    // Проверяем нажатие клавиш клавиатуры 1, 2 и 3
-    //    if (Input.GetKeyDown(KeyCode.Alpha1))
-    //    {
-    //        PurchaseItem(0); // Вызываем метод покупки предмета с индексом 0
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha2))
-    //    {
-    //        PurchaseItem(1); // Вызываем метод покупки предмета с индексом 1
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha3))
-    //    {
-    //        PurchaseItem(2); // Вызываем метод покупки предмета с индексом 2
-    //    }
-    //}
-    // Метод для покупки предмета по индексу
-
     public void SelectItem(int index)
     {
         var selectedItem = itemDealer.itemsToPurchase[index];
@@ -100,12 +82,12 @@ public class PurchaseUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInputManager.instance.uiIsOpen = true;
+        PlayerInputManager.instance.uiStack.Add(transform);
     }
 
     private void OnDisable()
     {
-        PlayerInputManager.instance.uiIsOpen = false;
+        PlayerInputManager.instance.uiStack.Remove(transform);
     }
 
 }

@@ -20,7 +20,10 @@ public class PlayerUIController : MonoBehaviour
     private Transform InteractButton;
     private ItemNotification itemNotification;
 
+    public Transform pauseUI;
+
     public PurchaseUI purchaseWindow;
+    public InventoryUI inventoryWindow;
 
 
     public Image activeItemIconRenderer;
@@ -101,7 +104,7 @@ public class PlayerUIController : MonoBehaviour
         concentrationLine.transform.localScale = Vector3.Lerp(concentrationLine.transform.localScale, new Vector3(player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1, 1), 10 * Time.deltaTime);
         concentrationLineImg.color = new Color(0.8f, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration, 1 - player.playerStatsManager.Concentration / player.playerStatsManager.MaxConcentration);
 
-        InteractButton.gameObject.SetActive(player.CanInteract && !PlayerInputManager.instance.uiIsOpen);
+        InteractButton.gameObject.SetActive(player.CanInteract && !(PlayerInputManager.instance.uiStack.Count > 0));
 
 
         if (player.itemManager.activeItem is not null)
@@ -159,6 +162,11 @@ public class PlayerUIController : MonoBehaviour
         activeItemIconRenderer = PlayerCanvas.instance.activeItemIconRenderer;
         itemNotification = PlayerCanvas.instance.itemNotification;
         menuCanvas = PlayerCanvas.instance.menuCanvas;
+
+        pauseUI = PlayerCanvas.instance.PauseUI;
+
+        inventoryWindow = PlayerCanvas.instance.inventoryWindow;
+        inventoryWindow.OnEnabled += () => inventoryWindow.UpdateItems(player.itemManager);
     }
 
     public void NotifyPlayerItemAdded(Item item)
@@ -189,4 +197,5 @@ public class PlayerUIController : MonoBehaviour
 
         itemNotification.gameObject.SetActive(false);
     }
+
 }

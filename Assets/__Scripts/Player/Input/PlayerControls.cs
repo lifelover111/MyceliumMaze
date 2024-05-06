@@ -927,6 +927,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""InterfaceActions"",
+            ""id"": ""69a55c7d-bcf4-46da-becc-dad996491da6"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""76956513-80d1-421d-8932-cbb5c6f4c76a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""414a71db-5db4-4bc0-a529-6675844a5395"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -959,6 +987,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // InterfaceActions
+        m_InterfaceActions = asset.FindActionMap("InterfaceActions", throwIfNotFound: true);
+        m_InterfaceActions_Pause = m_InterfaceActions.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1328,6 +1359,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // InterfaceActions
+    private readonly InputActionMap m_InterfaceActions;
+    private List<IInterfaceActionsActions> m_InterfaceActionsActionsCallbackInterfaces = new List<IInterfaceActionsActions>();
+    private readonly InputAction m_InterfaceActions_Pause;
+    public struct InterfaceActionsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public InterfaceActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_InterfaceActions_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_InterfaceActions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InterfaceActionsActions set) { return set.Get(); }
+        public void AddCallbacks(IInterfaceActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InterfaceActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InterfaceActionsActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IInterfaceActionsActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IInterfaceActionsActions instance)
+        {
+            if (m_Wrapper.m_InterfaceActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInterfaceActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InterfaceActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InterfaceActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InterfaceActionsActions @InterfaceActions => new InterfaceActionsActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -1359,5 +1436,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IInterfaceActionsActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }
