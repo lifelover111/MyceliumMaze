@@ -76,6 +76,7 @@ public class Door : MonoBehaviour
         var playerManager = player.GetComponent<PlayerManager>();
         playerManager.playerLocomotionManager.externallyControlled = true;
         playerManager.playerLocomotionManager.GoTowards(Vector3.Project((transitionTo.transform.position - transform.position).normalized, Vector3.forward));
+        playerManager.CurrentRoom = transitionTo.room;
 
         while (transitionSpeed * Mathf.Sin(Time.time - time) < 0.99)
         {

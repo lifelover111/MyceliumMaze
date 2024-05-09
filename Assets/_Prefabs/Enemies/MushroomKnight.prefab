@@ -6658,7 +6658,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 2.675
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -7569,6 +7569,7 @@ MonoBehaviour:
   guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
   noRootMotion: 0
   spawnCost: 10
+  movable: 1
 --- !u!114 &5538556854098537758
 MonoBehaviour:
   m_ObjectHideFlags: 0

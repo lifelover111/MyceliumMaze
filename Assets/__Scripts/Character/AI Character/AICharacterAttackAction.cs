@@ -15,6 +15,8 @@ public class AICharacterAttackAction : ScriptableObject
     public float maxAttackDistance = 3;
     public float minAttackAngle = -30;
     public float maxAttackAngle = 30;
+    [Header("Animation Key")]
+    public string key = "CommonAttack";
 
     public void AttemptToPerformAction(AICharacterManager aiCharacter, bool combo = false)
     {
@@ -23,6 +25,6 @@ public class AICharacterAttackAction : ScriptableObject
             aiCharacter.animatorManager.PlayComboAnimation(comboActionTrigger, true);
             return;
         }
-        aiCharacter.animatorManager.PlayTargetAttackAnimation(aiCharacter.animationKeys.Attack, true);
+        aiCharacter.animatorManager.PlayTargetAttackAnimation(key, true);
     }
 }

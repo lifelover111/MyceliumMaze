@@ -39,8 +39,13 @@ public class AICharacterManager : CharacterManager
     [Header("Animator options")]
     public bool noRootMotion = false;
 
+
     [Header("Level generation")]
     [SerializeField] private int spawnCost = 0;
+
+    [Header("Options")]
+    public bool movable = true;
+
     public int SpawnCost => spawnCost;
 
     protected override void Awake()
@@ -99,7 +104,7 @@ public class AICharacterManager : CharacterManager
 
             if(remainingDistance > navMeshAgent.stoppingDistance)
             {
-                isMoving = true;
+                isMoving = movable;
             }
             else
             {

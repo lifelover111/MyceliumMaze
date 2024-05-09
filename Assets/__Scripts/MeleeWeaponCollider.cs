@@ -25,7 +25,7 @@ public class MeleeWeaponCollider : DamageCollider
 
         if (target.isBlocking && angleHitFrom < target.maxBlockAngle && angleHitFrom > target.minBlockAngle)
         {
-            BlockDamage(target);
+            target.combatManager.BlockDamage(weaponOwner, this);
             return;
         }
         if (withConcentrationDamage)
@@ -38,6 +38,9 @@ public class MeleeWeaponCollider : DamageCollider
 
         if (withVFX)
         {
+            if (target.isInvulnerable)
+                return;
+
             var takeDamageVFX = Instantiate(WorldEffectsManager.instance.takeDamageEffectPrefab);
             takeDamageVFX.transform.position = contactPoint;
             if (target is PlayerManager)
@@ -57,43 +60,6 @@ public class MeleeWeaponCollider : DamageCollider
         target.effectsManager.ProcessInstantEffect(damageEffect);
     }
 
-    protected virtual void BlockDamage(CharacterManager character)
-    {
-        TakeConcentrationDamageEffect concentrationDamageEffect = Instantiate(WorldCharacterEffectManager.instance.concentrationDamageEffect);
-
-        if (character.combatManager.canParry)
-        {
-            if(SoundBank.instance.parrySound != null)
-                character.soundManager.PlaySound(SoundBank.instance.parrySound);
-
-            concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
-            concentrationDamageEffect.characterCausingDamage = character;
-            var parryEffect = Instantiate(WorldEffectsManager.instance.parryEffectPrefab);
-            parryEffect.transform.position = character.weapon.transform.position;
-            parryEffect.transform.localPosition += 0.35f * Vector3.left;
-            weaponOwner.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
-            character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Parry, true, true);
-
-            if (weaponOwner.statsManager.Concentration >= weaponOwner.statsManager.MaxConcentration)
-            {
-                weaponOwner.statsManager.OverflowConcentration();
-                weaponOwner.animatorManager.CancelAttack();
-                weaponOwner.animatorManager.PlayTargetHitAnimation(character.animationKeys.ParriedToStun, true);
-            }
-
-            return;
-        }
-
-        if (SoundBank.instance.blockSound != null)
-            character.soundManager.PlaySound(SoundBank.instance.blockSound);
-
-        var blockEffect = Instantiate(WorldEffectsManager.instance.blockEffectPrefab);
-        blockEffect.transform.position = character.weapon.transform.position;
-        blockEffect.transform.localPosition += 0.35f*Vector3.left;
-        concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
-        concentrationDamageEffect.characterCausingDamage = weaponOwner;
-        character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
-    }
 
 
 }

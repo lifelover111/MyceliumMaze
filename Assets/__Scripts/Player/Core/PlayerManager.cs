@@ -19,6 +19,7 @@ public class PlayerManager : CharacterManager
     public event System.Action<PlayerManager> OnCastSpell = delegate { };
     public event System.Action OnSporeCountChanged = delegate { };
 
+    public Room CurrentRoom { get; set; }
     public bool CanInteract => OnInteract is not null;
 
     [Header("Player's spores")]

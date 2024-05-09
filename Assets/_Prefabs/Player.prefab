@@ -1981,6 +1981,7 @@ MonoBehaviour:
   horizontalMovement: 0
   moveAmount: 0
   externallyControlled: 0
+  isMoving: 0
   speedForward: 6
   speedBackward: 6
   speedToSide: 6
@@ -1998,7 +1999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bcab24808a0714faa175bda16acbee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiIsOpen: 0
+  uiStack: []
   movementInput: {x: 0, y: 0}
   autoMoveInput: 0
   attackInput: 0
@@ -2008,6 +2009,7 @@ MonoBehaviour:
   useItemInput: 0
   rightStickInput: 0
   interactInput: 0
+  pauseInput: 0
   mousePosition: {x: 0, y: 0}
   verticalInput: 0
   horizontalInput: 0
@@ -2062,7 +2064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f98a036dda51a418f8e9c01f4c0405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseUI: {fileID: 0}
   purchaseWindow: {fileID: 0}
+  inventoryWindow: {fileID: 0}
   activeItemIconRenderer: {fileID: 0}
   menuCanvas: {fileID: 0}
 --- !u!114 &6059932507783162032

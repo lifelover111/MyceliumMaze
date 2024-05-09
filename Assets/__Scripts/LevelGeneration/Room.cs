@@ -14,7 +14,7 @@ public class Room : MonoBehaviour
     [Header("Sets dynamycally")]
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
-    List<GameObject> enemies = new List<GameObject>();
+    List<AICharacterManager> enemies = new List<AICharacterManager>();
     int enemyCount = 0;
     int depth;
 
@@ -28,6 +28,8 @@ public class Room : MonoBehaviour
     [Header("Long Fight Parameters")]
     private int waveCount = 0;
     private int currentWave = 0;
+
+    public List<AICharacterManager> Enemies => enemies;
 
     protected virtual void Awake()
     {
@@ -126,6 +128,9 @@ public class Room : MonoBehaviour
         if (EnemyPrefabManager.instance.weightedEnemyPrefabs.Count == 0)
             return;
 
+
+        enemies.Clear();
+
         var potentialSpawnPoints = enemySpawnPoints.ToList();
         int currentSpawnCost = 0;
 
@@ -140,9 +145,9 @@ public class Room : MonoBehaviour
             potentialSpawnPoints.Remove(currentSpawnPoint);
             enemy.transform.position = currentSpawnPoint.position;
 
-            enemies.Add(enemy);
-            var characterManager = enemy.GetComponent<CharacterManager>();
-            characterManager.OnDead += EnemyDied;
+            var aiCharacter = enemy.GetComponent<AICharacterManager>();
+            enemies.Add(aiCharacter);
+            aiCharacter.OnDead += EnemyDied;
             enemy.SetActive(false);
             enemy.transform.SetParent(EnemyAnchor, true);
             enemyCount++;
@@ -177,14 +182,13 @@ public class Room : MonoBehaviour
         if (EnemyAnchor.childCount == 0)
             return;
         
-        foreach (GameObject e in enemies)
+        foreach (var e in enemies)
         {
             if (currentWave == 1)
-                e.SetActive(true);
+                e.gameObject.SetActive(true);
             else
                 StartCoroutine(WakeEnemyCoroutine(e));
         }
-        enemies.Clear();
         CloseAllDoors();
     }
 
@@ -197,19 +201,18 @@ public class Room : MonoBehaviour
         depth = d;
     }
 
-    private IEnumerator WakeEnemyCoroutine(GameObject enemyGameObject)
+    private IEnumerator WakeEnemyCoroutine(AICharacterManager enemy)
     {
-        var enemy = enemyGameObject.GetComponent<AICharacterManager>();
         enemy.isSleeping = true;
-        var normalPosition = enemyGameObject.transform.position;
-        enemy.transform.position += Vector3.down * enemy.characterController.height*enemyGameObject.transform.localScale.y;
+        var normalPosition = enemy.transform.position;
+        enemy.transform.position += Vector3.down * enemy.characterController.height*enemy.transform.localScale.y;
         var startPosition = enemy.transform.position;
-        enemyGameObject.SetActive(true);
+        enemy.gameObject.SetActive(true);
         yield return new WaitForEndOfFrame();
         enemy.DisableColliders();
 
         var invokation = Instantiate(WorldEffectsManager.instance.invokationEffectPrefab);
-        invokation.transform.position = new Vector3(enemyGameObject.transform.position.x, invokation.transform.position.y, enemyGameObject.transform.position.z);
+        invokation.transform.position = new Vector3(enemy.transform.position.x, invokation.transform.position.y, enemy.transform.position.z);
 
         float risingDuration = 3f;
 

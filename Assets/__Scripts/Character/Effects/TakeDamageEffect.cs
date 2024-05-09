@@ -44,6 +44,10 @@ public class TakeDamageEffect : InstantCharacterEffect
             player.playerStatsManager.Sanity -= mentalDamage;
             player.playerStatsManager.Sanity = player.playerStatsManager.Sanity > 0 ? player.playerStatsManager.Sanity : 0;
         }
+        else if(character is BossCharacterManager boss)
+        {
+            playDamageAnimation = boss.playHitAnimation;
+        }
 
         if(!character.isDead)
         {

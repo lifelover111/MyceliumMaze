@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f37d0d084c3827a44bde9bb42b5c9ff3, type: 3}
+  m_Name: UseToStopEnemiesItem
+  m_EditorClassIdentifier: 
+  id: 8
+  itemName: 
+  descriptionShort: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435,
+    \u0447\u0442\u043E\u0431\u044B \u0437\u0430\u0434\u0435\u0440\u0436\u0430\u0442\u044C
+    \u0432\u0440\u0430\u0433\u043E\u0432"
+  description: 
+  icon: {fileID: 0}
+  meanPrice: 560
+  cooldownUnits: 130
+  currentCooldown: 560
+  seconds: 4
+  effectPrefab: {fileID: 2708598583397607911, guid: 994c36ea8b5c56347a771e68277612b8, type: 3}
