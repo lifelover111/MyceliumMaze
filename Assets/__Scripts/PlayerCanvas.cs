@@ -23,7 +23,6 @@ public class PlayerCanvas : MonoBehaviour
     public PurchaseUI purchaseWindow;
     public InventoryUI inventoryWindow;
     public Image activeItemIconRenderer;
-    public GameObject menuCanvas;
 
     private void Awake()
     {

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0602d69e7471604891e27ba419154ad, type: 3}
+  m_Name: Boss_0_SecondPhase
+  m_EditorClassIdentifier: 
+  healthThreshold: 0.6
+  key: PhaseTwo
+  quitAnimationTrigger: _completePhaseTransition
+  firstConstantAttck: {fileID: 11400000, guid: 8187221d8fa3d334f9eb247ab69a0db6, type: 2}
+  stunDuration: 5
+  newAttacks:
+  - {fileID: 11400000, guid: 8187221d8fa3d334f9eb247ab69a0db6, type: 2}
+  - {fileID: 11400000, guid: 53fdef7d745a653408f0abfbae63ba04, type: 2}
+  effectPrefab: {fileID: 8656522925564163052, guid: ec9e84cafbf7b1a41a0fe2d3dd764e38, type: 3}

@@ -31,7 +31,8 @@ public class UseToStopEnemiesItem : ActiveItem
 
         foreach (var enemy in player.CurrentRoom.Enemies)
         {
-            enemy.StartCoroutine(StopEnemyCoroutine(enemy));
+            if(enemy != null)
+                enemy.StartCoroutine(StopEnemyCoroutine(enemy));
         }
 
         return true;

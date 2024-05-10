@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 [CreateAssetMenu(menuName = "AI/States/Combat Stance")]
 public class CombatStanceState : AIState
@@ -126,6 +127,15 @@ public class CombatStanceState : AIState
                 return;
             }
         }
+    }
+
+    public virtual void ForceSetNextAttackAction(AICharacterManager aiCharacter, AICharacterAttackAction attack, bool forceCombo = false)
+    {
+        previousAttack = choosenAttack;
+        choosenAttack = attack;
+        hasAttack = true;
+        aiCharacter.attackState.willPerformCombo = canPerformCombo && (forceCombo || WorldUtilityManager.RollForOutcomeChance(chanceToPerformCombo));
+        
     }
 
     protected override void ResetStateFlags(AICharacterManager aiCharacter)

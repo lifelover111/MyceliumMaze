@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7dcf3200828dc743a433d6e24682dc8, type: 3}
-  m_Name: Boss_0_Attack_1_Action
+  m_Name: Boss_0_Attack_4_Action
   m_EditorClassIdentifier: 
-  comboActionTrigger: Attack
+  comboActionTrigger: 
   attackWeight: 40
-  actionRecoveryTime: 1.5
-  minAttackDistance: 4
-  maxAttackDistance: 10
-  minAttackAngle: -30
-  maxAttackAngle: 30
-  key: CommonAttack
+  actionRecoveryTime: 2
+  minAttackDistance: 3
+  maxAttackDistance: 7
+  minAttackAngle: -45
+  maxAttackAngle: 45
+  key: Attack_4

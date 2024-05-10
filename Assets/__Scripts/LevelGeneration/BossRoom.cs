@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -56,7 +57,10 @@ public class BossRoom : Room
 
         player.canMove = false;
         CameraPivot.instance.target = boss.transform;
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSecondsRealtime(1.5f);
+        BossUI.instance.SetBoss(boss);
+        boss.OnDead += async () => { await Task.Delay(1500); BossUI.instance.gameObject.SetActive(false); };
+        yield return new WaitForSecondsRealtime(1.5f);
         CameraPivot.instance.target = player.transform;
         player.canMove = true;
         boss.isSleeping = false;

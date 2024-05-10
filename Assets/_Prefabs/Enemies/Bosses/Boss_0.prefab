@@ -5599,7 +5599,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.215, y: 0.215, z: 0.215}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6339156867594644213}
@@ -5716,11 +5716,15 @@ MonoBehaviour:
   keepDistanceState: {fileID: 0}
   isMoving: 0
   isSleeping: 1
-  guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
+  guiPrefab: {fileID: 0}
   noRootMotion: 0
   spawnCost: 0
   movable: 1
+  Name: "\u0421\u0442\u0440\u0430\u0436"
   playHitAnimation: 0
+  playStunAnimation: 1
+  phases:
+  - {fileID: 11400000, guid: e8f6668f7a9510a4782889fea5f576ca, type: 2}
 --- !u!114 &6628928484929002649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5780,6 +5784,9 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   canCombo: 0
   canParry: 0
+  commonPhysicalDamage: 10
+  commonMentalDamage: 0
+  commonConcentrationDamage: 20
   actionRecoveryTimer: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
@@ -7617,7 +7624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138f446ded848e643afdff5b2cb1621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalDamage: 12
+  physicalDamage: 10
   mentalDamage: 0
   withConcentrationDamage: 1
   concentrationDamage: 20

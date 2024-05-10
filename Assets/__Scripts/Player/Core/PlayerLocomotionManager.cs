@@ -25,6 +25,9 @@ public class PlayerLocomotionManager : LocomotionManager
     [SerializeField] float rotationSpeed;
     [SerializeField] float movementAcceleration = 10;
 
+    [Header("Aim Assist")]
+    public float aimAssistRadius = 6f;
+    public float aimAssistMaxAngle = 17.5f;
 
     private static float maxSpeed = 12;
 
@@ -142,11 +145,14 @@ public class PlayerLocomotionManager : LocomotionManager
         if (!player.canRotate)
             return;
 
+
         targetRotationDirection = Vector3.ProjectOnPlane(Camera.main.ScreenToWorldPoint(PlayerInputManager.instance.mousePosition) - Camera.main.transform.position, Vector3.up).normalized;
         targetRotationDirection.y = 0;
         targetRotationDirection.Normalize();
 
-        if(targetRotationDirection == Vector3.zero)
+        targetRotationDirection = HandleAimAssist(targetRotationDirection);
+
+        if (targetRotationDirection == Vector3.zero)
             targetRotationDirection = transform.forward;
 
         Quaternion newRotation = Quaternion.LookRotation(Quaternion.FromToRotation(GetForward(), transform.forward) * targetRotationDirection);
@@ -156,6 +162,20 @@ public class PlayerLocomotionManager : LocomotionManager
         float p = Mathf.Cos(Mathf.Deg2Rad * Vector3.SignedAngle(transform.rotation * Vector3.left, targetRotationDirection, Vector3.up));
         player.animatorManager.UpdateAnimatorRotationParameters(p);
 
+    }
+
+    private Vector3 HandleAimAssist(Vector3 direction)
+    {
+        var colliders = Physics.OverlapSphere(transform.position, aimAssistRadius, 1 << LayerMask.NameToLayer("Character"));
+        var enemies = colliders.Where(c => c.gameObject.CompareTag("Enemy"));
+        var relativePositions = enemies.Select(e => (e.transform.position - transform.position).normalized);
+        var potentialDirections = relativePositions.Where(p => Mathf.Abs(Vector3.SignedAngle(direction, p, Vector3.up)) < aimAssistMaxAngle);
+
+        if (potentialDirections is null || potentialDirections.Count() == 0)
+            return direction;
+
+        var targetDirection = potentialDirections.Where(d => Mathf.Abs(Vector3.SignedAngle(direction, d, Vector3.up)) == potentialDirections.Min(p => Mathf.Abs(Vector3.SignedAngle(direction, p, Vector3.up)))).First();
+        return targetDirection.normalized;
     }
 
     public void TryDash()

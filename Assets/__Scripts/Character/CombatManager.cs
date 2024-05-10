@@ -14,6 +14,13 @@ public class CombatManager : MonoBehaviour
     public bool canCombo = false;
     public bool canParry = false;
 
+
+    [Header("Damage")]
+    public float commonPhysicalDamage;
+    public float commonMentalDamage;
+    public float commonConcentrationDamage;
+
+
     public event System.Action<CharacterManager> OnParry;
 
 
@@ -21,7 +28,11 @@ public class CombatManager : MonoBehaviour
     {
         character = GetComponent<CharacterManager>();
         if (character.weapon.TryGetComponent(out DamageCollider damageCollider))
+        {
             weaponDamageCollider = damageCollider;
+            SetDamage(commonPhysicalDamage, commonMentalDamage);
+            SetConcentrationDamage(commonConcentrationDamage);
+        }
         if (character.weapon.TryGetComponent(out RangeWeapon rangeWeapon))
             this.rangeWeapon = rangeWeapon;
     }
@@ -88,6 +99,7 @@ public class CombatManager : MonoBehaviour
             var parryEffect = Instantiate(WorldEffectsManager.instance.parryEffectPrefab);
             parryEffect.transform.position = character.weapon.transform.position;
             parryEffect.transform.localPosition += 0.35f * Vector3.left;
+            weaponOwner.animatorManager.DisableWeaponSlash();
             weaponOwner.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Parry, true, true);
 
@@ -111,6 +123,23 @@ public class CombatManager : MonoBehaviour
         concentrationDamageEffect.characterCausingDamage = weaponOwner;
         character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
     }
+
+    public void SetDamage(float physicalDamage, float mentalDamage = 0)
+    {
+        if (weaponDamageCollider != null)
+        {
+            weaponDamageCollider.physicalDamage = physicalDamage;
+            weaponDamageCollider.mentalDamage = mentalDamage;
+        }
+    }
+    public void SetConcentrationDamage(float damage)
+    {
+        if (weaponDamageCollider != null)
+        {
+            weaponDamageCollider.concentrationDamage = damage;
+        }
+    }
+
 
     public virtual void DisableDamagableColliders()
     {

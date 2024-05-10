@@ -31,6 +31,7 @@ public class PlayerCombatManager : CombatManager
 
     }
 
+
     public void SubscribeToHitEnemy(System.Action handler)
     {
         character.weapon.GetComponent<DamageCollider>().OnHitEnemy += handler;

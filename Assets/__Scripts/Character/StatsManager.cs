@@ -15,7 +15,7 @@ public class StatsManager : MonoBehaviour
     public float MaxConcentration => _maxConcentration;
     public float MaxHealth => _maxHealth;
     public float Concentration { get { return _concentration; } set { ResetConcentrationRegenerationTimer(_concentration, value); _concentration = value; } }
-    public float Health { get { return _health; } set { _health = value > _maxHealth ? _maxHealth : value; if (_health <= 0) HandleDeath(); } }
+    public float Health { get { return _health; } set { _health = value > _maxHealth ? _maxHealth : value; OnHealthChanged?.Invoke(); if (_health <= 0) HandleDeath(); } }
     public bool IsDead => character.isDead;
 
     [Header("Concentration Regeneration")]
@@ -27,6 +27,8 @@ public class StatsManager : MonoBehaviour
     [Header("Modifiers")]
     public float concentrationDamageModifier = 1;
     public float damageModifier = 1;
+
+    public event System.Action OnHealthChanged;
     
     protected virtual void Awake()
     {

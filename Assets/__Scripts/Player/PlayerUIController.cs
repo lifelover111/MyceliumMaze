@@ -40,23 +40,6 @@ public class PlayerUIController : MonoBehaviour
 
     Coroutine sporeCountCoroutine;
 
-
-    public GameObject menuCanvas;
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bonfire") && Input.GetKeyDown(KeyCode.E))
-        {
-            ShowMenuCanvas();
-        }
-    }
-
-    public void ShowMenuCanvas()
-    {
-        if (menuCanvas != null)
-        {
-            menuCanvas.SetActive(true);
-        }
-    }
     void Awake()
     {
         OnStart();
@@ -161,7 +144,6 @@ public class PlayerUIController : MonoBehaviour
         purchaseWindow = PlayerCanvas.instance.purchaseWindow;
         activeItemIconRenderer = PlayerCanvas.instance.activeItemIconRenderer;
         itemNotification = PlayerCanvas.instance.itemNotification;
-        menuCanvas = PlayerCanvas.instance.menuCanvas;
 
         pauseUI = PlayerCanvas.instance.PauseUI;
 

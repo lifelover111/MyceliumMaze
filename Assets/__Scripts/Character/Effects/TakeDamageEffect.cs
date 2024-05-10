@@ -17,6 +17,7 @@ public class TakeDamageEffect : InstantCharacterEffect
     public Vector3 contactPoint;
     [Header("Animation")]
     public bool playDamageAnimation = true;
+    public bool playStunAnimation = true;
     public bool manuallySelectDamageAnimation = false;
 
     [Header("Blood")]
@@ -47,6 +48,7 @@ public class TakeDamageEffect : InstantCharacterEffect
         else if(character is BossCharacterManager boss)
         {
             playDamageAnimation = boss.playHitAnimation;
+            playStunAnimation = boss.playStunAnimation;
         }
 
         if(!character.isDead)
@@ -54,10 +56,13 @@ public class TakeDamageEffect : InstantCharacterEffect
             var angleHitFrom = Vector3.SignedAngle((new Vector3(contactPoint.x, 0, contactPoint.z) - character.transform.position).normalized, character.locomotionManager.GetForward(), Vector3.up);
             if (character.statsManager.Concentration >= character.statsManager.MaxConcentration)
             {
-                character.canMove = false;
-                character.canRotate = false;
+                if (playStunAnimation)
+                {
+                    character.canMove = false;
+                    character.canRotate = false;
 
-                PlayStunAnimation(character, angleHitFrom);
+                    PlayStunAnimation(character, angleHitFrom);
+                }
                 character.statsManager.OverflowConcentration();
                 return;
             }

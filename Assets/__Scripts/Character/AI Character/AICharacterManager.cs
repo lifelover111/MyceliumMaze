@@ -126,12 +126,15 @@ public class AICharacterManager : CharacterManager
         characterController.enabled = !isSleeping;
         isInvulnerable = isSleeping;
         
-        if(gui is not null)
+        if(gui != null)
             gui.gameObject.SetActive(!isSleeping);
     }
 
     public void EnableGUI()
     {
+        if (guiPrefab == null)
+            return;
+
         gui = Instantiate(guiPrefab).GetComponent<EnemyUIManager>();
         gui.Enable(statsManager);
     }

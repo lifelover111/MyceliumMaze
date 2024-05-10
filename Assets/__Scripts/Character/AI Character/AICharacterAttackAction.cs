@@ -6,7 +6,7 @@ using UnityEngine;
 public class AICharacterAttackAction : ScriptableObject
 {
     [Header("Combo Action")]
-    public string? comboActionTrigger;
+    public string comboActionTrigger;
 
     [Header("Action Values")]
     public int attackWeight = 50;
@@ -15,11 +15,16 @@ public class AICharacterAttackAction : ScriptableObject
     public float maxAttackDistance = 3;
     public float minAttackAngle = -30;
     public float maxAttackAngle = 30;
+    public float damageModifier = 1;
+    public float concentrationDamageModifier = 1;
+
     [Header("Animation Key")]
     public string key = "CommonAttack";
 
     public void AttemptToPerformAction(AICharacterManager aiCharacter, bool combo = false)
     {
+        aiCharacter.aiCombatManager.SetDamage(damageModifier * aiCharacter.aiCombatManager.commonPhysicalDamage, damageModifier * aiCharacter.aiCombatManager.commonMentalDamage);
+        aiCharacter.aiCombatManager.SetConcentrationDamage(concentrationDamageModifier * aiCharacter.aiCombatManager.commonConcentrationDamage);
         if(combo)
         {
             aiCharacter.animatorManager.PlayComboAnimation(comboActionTrigger, true);
