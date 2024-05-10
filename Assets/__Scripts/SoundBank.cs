@@ -14,7 +14,12 @@ public class SoundBank : MonoBehaviour
     public AudioClip takeDamageSound;
     [Header("Шаги ГГ")]
     public AudioClip[] playerStepSounds;
-
+    [Header("Сундук")]
+    public AudioClip openingChestSound;
+    [Header("Дэш")]
+    public AudioClip dashSound;
+    [Header("Поднятие предмета")]
+    public AudioClip itemPickup;
     private void Awake()
     {
         instance = this;

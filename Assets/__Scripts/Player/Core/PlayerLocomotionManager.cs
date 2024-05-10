@@ -210,6 +210,7 @@ public class PlayerLocomotionManager : LocomotionManager
         player.canMove = false;
         player.animatorManager.SetAnimatorMovementParameters(intTree.x, intTree.y);
         player.animatorManager.PlayTargetActionAnimation(player.animationKeys.Dash, true, true);
+        player.soundManager.PlaySound(SoundBank.instance.dashSound);
     }
 
     private float GetSpeed(Vector3 direction)

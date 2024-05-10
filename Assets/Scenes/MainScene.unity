@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276813, g: 0.21589187, b: 0.29782563, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5715,12 +5715,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d41097d6d6bf84b921e6dc48892c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parrySound: {fileID: 8300000, guid: 9c4ae9e41683af14db745545601c2310, type: 3}
-  blockSound: {fileID: 8300000, guid: a3d07dfeec4276a43abecdd1060d7ca2, type: 3}
-  takeDamageSound: {fileID: 8300000, guid: f89884bc22fb7494c93d5c792b876ab9, type: 3}
+  parrySound: {fileID: 8300000, guid: 8df5c6daab122f246b0b8a0390ebf305, type: 3}
+  blockSound: {fileID: 8300000, guid: 8ad367cbd45ad354c946a5236168babe, type: 3}
+  takeDamageSound: {fileID: 8300000, guid: 5c4e54b50230f5348acead03dda8ca77, type: 3}
   playerStepSounds:
-  - {fileID: 8300000, guid: 5e34f48a16db86d49bb631d5daedf50e, type: 3}
-  - {fileID: 8300000, guid: a698114c847a0b542819462def693c8a, type: 3}
+  - {fileID: 8300000, guid: ee6a6c12e92b76347881600e494ea047, type: 3}
+  - {fileID: 8300000, guid: 0810c6bbffb6c0143984f3145f710f69, type: 3}
+  openingChestSound: {fileID: 8300000, guid: c39e45959d59e3248bc9b8d2b3000a0b, type: 3}
+  dashSound: {fileID: 8300000, guid: 49adbcba82202904991fd4320d54b67f, type: 3}
+  itemPickup: {fileID: 8300000, guid: 76f92609b71c8d04584b272bbfa3993b, type: 3}
 --- !u!1 &1699073359
 GameObject:
   m_ObjectHideFlags: 0

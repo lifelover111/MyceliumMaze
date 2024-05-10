@@ -23,6 +23,8 @@ public class ItemManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        player.soundManager.PlaySound(SoundBank.instance.itemPickup);
+
         player.playerUIController.NotifyPlayerItemAdded(item);
 
         if (item is PassiveItem passiveItem)

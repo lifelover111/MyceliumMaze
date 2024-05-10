@@ -18,6 +18,7 @@ public class PlayerAnimatorManager : AnimatorManager
     #region Animation events
     public void StartFlaskHealing()
     {
+
         player.playerStatsManager.Heal(player.playerStatsManager.healAmount, 1);
     }
 

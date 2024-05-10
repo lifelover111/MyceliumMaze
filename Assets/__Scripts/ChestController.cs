@@ -54,6 +54,7 @@ public class ChestController : MonoBehaviour
         isOpen = true;
         chestAnimator.enabled = true;
         chestAnimator.SetBool("isOpen", true);
+        player.soundManager.PlaySound(SoundBank.instance.openingChestSound);
         DropItem();
         player.OnInteract -= OpenChest;
     }
