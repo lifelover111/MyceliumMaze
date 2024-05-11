@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comboActionTrigger: Attack
   attackWeight: 40
-  actionRecoveryTime: 1.5
+  actionRecoveryTime: 2
   minAttackDistance: 4
   maxAttackDistance: 10
   minAttackAngle: -30
   maxAttackAngle: 30
+  damageModifier: 1
+  concentrationDamageModifier: 1
   key: CommonAttack

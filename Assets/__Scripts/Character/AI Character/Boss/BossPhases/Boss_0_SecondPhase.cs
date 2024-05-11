@@ -23,7 +23,10 @@ public class Boss_0_SecondPhase : BossPhase
 
     private void Awake()
     {
-        newAttacks.ForEach(a => a = Instantiate(a));
+        for (int i = 0; i < newAttacks.Count; i++)
+        {
+            newAttacks[i] = Instantiate(newAttacks[i]);
+        }
     }
 
     public override void InitializePhaseListeners(BossCharacterManager boss)

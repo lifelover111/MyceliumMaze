@@ -142,6 +142,7 @@ public class AICharacterManager : CharacterManager
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         navMeshAgent.enabled = false;
+        animatorManager.UpdateAnimatorBlockParameters(false);
         yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
