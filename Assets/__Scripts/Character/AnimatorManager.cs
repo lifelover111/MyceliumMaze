@@ -117,6 +117,14 @@ public class AnimatorManager : MonoBehaviour
 
 
     #region Animation Events
+    public void PlaySwordSwingSound()
+    {
+        if (SoundBank.instance.swordSwingSounds != null)
+        {
+            character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.swordSwingSounds[Random.Range(0, SoundBank.instance.swordSwingSounds.Length)]);
+        }
+    }
+
     public virtual void EnableCanDoCombo()
     {
         character.combatManager.canCombo = true;

@@ -47,13 +47,12 @@ public class PlayerAnimatorManager : AnimatorManager
             SwitchStepSoundFlag();
         }
     }
-
     #endregion
 
     public async void SwitchStepSoundFlag()
     {
         isPlayingStepSound = true;
-        await Task.Delay(150);
+        await Task.Delay(350);
         isPlayingStepSound = false;
     }
 }

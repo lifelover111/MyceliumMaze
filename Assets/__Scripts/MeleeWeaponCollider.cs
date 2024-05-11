@@ -8,14 +8,18 @@ public class MeleeWeaponCollider : DamageCollider
 {
     private CharacterManager weaponOwner;
 
+    public SoundManager soundManager;
+
     protected override void Awake()
     {
         base.Awake();
         weaponOwner = GetComponentInParent<CharacterManager>();
+        soundManager = GetComponent<SoundManager>();
     }
     protected override void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
         if (target == weaponOwner || target.CompareTag(weaponOwner.tag)) return;
+        if (target.isInvulnerable) return;
         base.DamageTarget(target, withConcentrationDamage);
 
         if (charactersDamaged.Contains(target)) return;
@@ -64,7 +68,7 @@ public class MeleeWeaponCollider : DamageCollider
         if (character.combatManager.canParry)
         {
             if(SoundBank.instance.parrySound != null)
-                character.soundManager.PlaySound(SoundBank.instance.parrySound);
+                character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.parrySound);
 
             concentrationDamageEffect.concentrationDamage = concentrationDamage * concentrationDamageBlockMultiplier;
             concentrationDamageEffect.characterCausingDamage = character;
@@ -84,8 +88,8 @@ public class MeleeWeaponCollider : DamageCollider
             return;
         }
 
-        if (SoundBank.instance.blockSound != null)
-            character.soundManager.PlaySound(SoundBank.instance.blockSound);
+        if (SoundBank.instance.blockSounds != null)
+            character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.blockSounds[Random.Range(0, SoundBank.instance.blockSounds.Length)]);
 
         var blockEffect = Instantiate(WorldEffectsManager.instance.blockEffectPrefab);
         blockEffect.transform.position = character.weapon.transform.position;

@@ -8,17 +8,17 @@ public class CombatManager : MonoBehaviour
 
     public CharacterManager currentTarget;
 
-    private DamageCollider weaponDamageCollider;
+    private MeleeWeaponCollider weaponDamageCollider;
     private RangeWeapon rangeWeapon;
 
     public bool canCombo = false;
     public bool canParry = false;
-
+    public MeleeWeaponCollider Weapon => weaponDamageCollider;
 
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
-        if (character.weapon.TryGetComponent(out DamageCollider damageCollider))
+        if (character.weapon.TryGetComponent(out MeleeWeaponCollider damageCollider))
             weaponDamageCollider = damageCollider;
         if (character.weapon.TryGetComponent(out RangeWeapon rangeWeapon))
             this.rangeWeapon = rangeWeapon;
