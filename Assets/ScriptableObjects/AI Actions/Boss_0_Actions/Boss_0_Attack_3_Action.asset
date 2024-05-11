@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Boss_0_Attack_3_Action
   m_EditorClassIdentifier: 
   comboActionTrigger: Attack
-  attackWeight: 10
+  attackWeight: 25
   actionRecoveryTime: 1
-  minAttackDistance: 1.6
+  minAttackDistance: 3
   maxAttackDistance: 9
   minAttackAngle: -180
   maxAttackAngle: 180
+  damageModifier: 0.5
+  concentrationDamageModifier: 0.75
   key: Attack_3

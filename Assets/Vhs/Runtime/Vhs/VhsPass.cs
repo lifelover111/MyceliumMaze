@@ -42,10 +42,10 @@ namespace VolFx
 			if (_xScanline <= 0 || Random.value < 0.05)
 				_xScanline = Random.value;
             
-            mat.SetFloat(s_Intensity, settings._weight.value);
+            mat.SetFloat(s_Intensity, VhsVol._weight.value);
 			mat.SetFloat(s_YScanline, _yScanline);
 			mat.SetFloat(s_XScanline, _xScanline);
-			mat.SetFloat(s_Rocking, settings._rocking.value * settings._weight.value);
+			mat.SetFloat(s_Rocking, settings._rocking.value * VhsVol._weight.value);
             
             // params
 			_playTime = (_playTime + Time.unscaledDeltaTime) % (_clip.Length / _frameRate);

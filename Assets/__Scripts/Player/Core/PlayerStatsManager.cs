@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using VolFx;
 
 public class PlayerStatsManager : StatsManager
 {
@@ -12,7 +14,7 @@ public class PlayerStatsManager : StatsManager
     [SerializeField] float _sanity;
     public int healingFlasksCount;
     public float MaxSanity => _maxSanity;
-    public float Sanity { get { return _sanity; } set { _sanity = value; if (_sanity <= 0) HandleDeath(); } }
+    public float Sanity { get { return _sanity; } set { _sanity = value; VhsVol._weight.SetValue(new ClampedFloatParameter(1 - (Sanity/MaxSanity),0,1)); if (_sanity <= 0) HandleDeath(); } }
 
     public event System.Action OnFlaskCountChanged = delegate { };
 

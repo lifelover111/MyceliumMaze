@@ -5761,8 +5761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785dda68c317e9e4baf726367691a7f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxConcentration: 85
-  _maxHealth: 600
+  _maxConcentration: 90
+  _maxHealth: 660
   _concentration: 0
   _health: 0
   concentrationRegenerationDelay: 4
@@ -5784,9 +5784,9 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   canCombo: 0
   canParry: 0
-  commonPhysicalDamage: 10
+  commonPhysicalDamage: 11
   commonMentalDamage: 0
-  commonConcentrationDamage: 20
+  commonConcentrationDamage: 18
   actionRecoveryTimer: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
