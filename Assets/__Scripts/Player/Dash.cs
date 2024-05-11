@@ -21,7 +21,6 @@ public class Dash : StateMachineBehaviour
         dir = Quaternion.Euler(0, -45, 0) * dir;
         if (dir.magnitude == 0)
             dir = (player.transform.rotation * Vector3.left).normalized;
-        
         player.GetComponent<Rigidbody>().velocity = dir*10;
     }
 

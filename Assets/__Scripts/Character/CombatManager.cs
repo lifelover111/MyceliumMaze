@@ -8,12 +8,12 @@ public class CombatManager : MonoBehaviour
 
     public CharacterManager currentTarget;
 
-    private DamageCollider weaponDamageCollider;
+    private MeleeWeaponCollider weaponDamageCollider;
     private RangeWeapon rangeWeapon;
 
     public bool canCombo = false;
     public bool canParry = false;
-
+    public MeleeWeaponCollider Weapon => weaponDamageCollider;
 
     [Header("Damage")]
     public float commonPhysicalDamage;
@@ -27,7 +27,7 @@ public class CombatManager : MonoBehaviour
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
-        if (character.weapon.TryGetComponent(out DamageCollider damageCollider))
+        if (character.weapon.TryGetComponent(out MeleeWeaponCollider damageCollider))
         {
             weaponDamageCollider = damageCollider;
             SetDamage(commonPhysicalDamage, commonMentalDamage);

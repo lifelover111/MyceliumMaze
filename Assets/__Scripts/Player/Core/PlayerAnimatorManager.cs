@@ -18,6 +18,7 @@ public class PlayerAnimatorManager : AnimatorManager
     #region Animation events
     public void StartFlaskHealing()
     {
+
         player.playerStatsManager.Heal(player.playerStatsManager.healAmount, 1);
     }
 
@@ -46,13 +47,12 @@ public class PlayerAnimatorManager : AnimatorManager
             SwitchStepSoundFlag();
         }
     }
-
     #endregion
 
     public async void SwitchStepSoundFlag()
     {
         isPlayingStepSound = true;
-        await Task.Delay(150);
+        await Task.Delay(350);
         isPlayingStepSound = false;
     }
 }

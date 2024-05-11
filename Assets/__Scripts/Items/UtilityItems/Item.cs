@@ -56,6 +56,7 @@ public abstract class ActiveItem : Item
 
     public override void PickUp(PlayerManager player)
     {
+        
         base.PickUp(player);
         player.playerCombatManager.SubscribeToHitEnemy(() => HandleCooldownTick(cooldownTickRegeneration));
     }

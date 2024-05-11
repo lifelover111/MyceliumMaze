@@ -9,12 +9,19 @@ public class SoundBank : MonoBehaviour
     [Header("Парирование")]
     public AudioClip parrySound;
     [Header("Блок удара")]
-    public AudioClip blockSound;
+    public AudioClip[] blockSounds;
     [Header("Получение урона")]
     public AudioClip takeDamageSound;
     [Header("Шаги ГГ")]
     public AudioClip[] playerStepSounds;
-
+    [Header("Сундук")]
+    public AudioClip openingChestSound;
+    [Header("Дэш")]
+    public AudioClip dashSound;
+    [Header("Поднятие предмета")]
+    public AudioClip itemPickup;
+    [Header("Sword swing")]
+    public AudioClip[] swordSwingSounds;
     private void Awake()
     {
         instance = this;

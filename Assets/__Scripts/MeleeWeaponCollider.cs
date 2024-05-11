@@ -8,14 +8,18 @@ public class MeleeWeaponCollider : DamageCollider
 {
     private CharacterManager weaponOwner;
 
+    public SoundManager soundManager;
+
     protected override void Awake()
     {
         base.Awake();
         weaponOwner = GetComponentInParent<CharacterManager>();
+        soundManager = GetComponent<SoundManager>();
     }
     protected override void DamageTarget(CharacterManager target, bool withConcentrationDamage = true)
     {
         if (target == weaponOwner || target.CompareTag(weaponOwner.tag)) return;
+        if (target.isInvulnerable) return;
         base.DamageTarget(target, withConcentrationDamage);
 
         if (charactersDamaged.Contains(target)) return;

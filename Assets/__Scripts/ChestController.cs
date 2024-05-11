@@ -11,9 +11,12 @@ public class ChestController : MonoBehaviour
     private PlayerManager player;
     private bool isOpen = false;
 
+    private SoundManager soundManager;
+
     void Start()
     {
         chestAnimator.SetBool("isOpen", false);
+        soundManager = GetComponent<SoundManager>();
     }
 
     private void FixedUpdate()
@@ -54,6 +57,7 @@ public class ChestController : MonoBehaviour
         isOpen = true;
         chestAnimator.enabled = true;
         chestAnimator.SetBool("isOpen", true);
+        soundManager.PlaySound(SoundBank.instance.openingChestSound);
         DropItem();
         player.OnInteract -= OpenChest;
     }
