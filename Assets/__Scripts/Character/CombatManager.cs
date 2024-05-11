@@ -92,7 +92,7 @@ public class CombatManager : MonoBehaviour
         if (character.combatManager.canParry)
         {
             if (SoundBank.instance.parrySound != null)
-                character.soundManager.PlaySound(SoundBank.instance.parrySound);
+                character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.parrySound);
 
             concentrationDamageEffect.concentrationDamage = damageCollider.concentrationDamage * damageCollider.concentrationDamageBlockMultiplier;
             concentrationDamageEffect.characterCausingDamage = character;
@@ -113,8 +113,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        if (SoundBank.instance.blockSound != null)
-            character.soundManager.PlaySound(SoundBank.instance.blockSound);
+        if (SoundBank.instance.blockSounds != null)
+            character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.blockSounds[Random.Range(0, SoundBank.instance.blockSounds.Length)]);
 
         var blockEffect = Instantiate(WorldEffectsManager.instance.blockEffectPrefab);
         blockEffect.transform.position = character.weapon.transform.position;

@@ -6653,7 +6653,7 @@ MonoBehaviour:
   ActiveItemCooldownIndicatorFrame: {fileID: 727858750}
   CooldownShadow: {fileID: 1061381763}
   InteractButton: {fileID: 1463592734}
-  PauseUI: {fileID: 745958350}
+  PauseUI: {fileID: 0}
   itemNotification: {fileID: 1154846710}
   purchaseWindow: {fileID: 1012759924}
   inventoryWindow: {fileID: 416951909}
@@ -10629,8 +10629,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fe89cdce629a31a4d8921a6a5c602618, type: 3}
   takeDamageSound: {fileID: 8300000, guid: 69b35ec555200ed4292ced63bd45409c, type: 3}
   playerStepSounds:
-  - {fileID: 8300000, guid: 5e34f48a16db86d49bb631d5daedf50e, type: 3}
-  - {fileID: 8300000, guid: a698114c847a0b542819462def693c8a, type: 3}
+  - {fileID: 8300000, guid: 31c7c00d28f7c04408e9b8e11604b37e, type: 3}
+  - {fileID: 8300000, guid: 2a7468d116a73464998aa6d9c580d5d3, type: 3}
+  - {fileID: 8300000, guid: e96095659f28b9f4e92a3f2a9c8e32bc, type: 3}
+  - {fileID: 8300000, guid: 79db73cdbe902a44da16a2cd88b64c3b, type: 3}
+  - {fileID: 8300000, guid: 5f43007f7abd2b64e84bc92e4fcede4c, type: 3}
+  - {fileID: 8300000, guid: cedbe47482852114ebfeedc40fe3f9a0, type: 3}
+  openingChestSound: {fileID: 8300000, guid: c39e45959d59e3248bc9b8d2b3000a0b, type: 3}
+  dashSound: {fileID: 8300000, guid: 54e764c3649d2a346914833c9b364dac, type: 3}
+  itemPickup: {fileID: 8300000, guid: 76f92609b71c8d04584b272bbfa3993b, type: 3}
+  swordSwingSounds:
+  - {fileID: 8300000, guid: 21a12742329209949bb952cc883cc865, type: 3}
+  - {fileID: 8300000, guid: 90a08c6e24d05854981bd4dfe451756b, type: 3}
+  - {fileID: 8300000, guid: 9e1d704eb6ab5d74baf661b5b07de7e2, type: 3}
 --- !u!1 &1691589080
 GameObject:
   m_ObjectHideFlags: 0
@@ -10765,19 +10776,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691589080}
   m_CullTransparentMesh: 1
-  - {fileID: 8300000, guid: 31c7c00d28f7c04408e9b8e11604b37e, type: 3}
-  - {fileID: 8300000, guid: 2a7468d116a73464998aa6d9c580d5d3, type: 3}
-  - {fileID: 8300000, guid: e96095659f28b9f4e92a3f2a9c8e32bc, type: 3}
-  - {fileID: 8300000, guid: 79db73cdbe902a44da16a2cd88b64c3b, type: 3}
-  - {fileID: 8300000, guid: 5f43007f7abd2b64e84bc92e4fcede4c, type: 3}
-  - {fileID: 8300000, guid: cedbe47482852114ebfeedc40fe3f9a0, type: 3}
-  openingChestSound: {fileID: 8300000, guid: c39e45959d59e3248bc9b8d2b3000a0b, type: 3}
-  dashSound: {fileID: 8300000, guid: 54e764c3649d2a346914833c9b364dac, type: 3}
-  itemPickup: {fileID: 8300000, guid: 76f92609b71c8d04584b272bbfa3993b, type: 3}
-  swordSwingSounds:
-  - {fileID: 8300000, guid: 21a12742329209949bb952cc883cc865, type: 3}
-  - {fileID: 8300000, guid: 90a08c6e24d05854981bd4dfe451756b, type: 3}
-  - {fileID: 8300000, guid: 9e1d704eb6ab5d74baf661b5b07de7e2, type: 3}
 --- !u!1 &1699073359
 GameObject:
   m_ObjectHideFlags: 0
