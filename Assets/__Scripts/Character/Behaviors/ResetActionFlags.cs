@@ -29,6 +29,11 @@ public class ResetActionFlags : StateMachineBehaviour
             player.playerCombatManager.DisableCanCancelAttack();
             player.itemManager.ClearOffHand();
         }
+        //TODO: убрать отсюда
+        else if (characterManager is BossCharacterManager boss)
+        {
+            boss.StopMoving();
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

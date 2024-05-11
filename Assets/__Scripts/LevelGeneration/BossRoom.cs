@@ -41,6 +41,7 @@ public class BossRoom : Room
     {
         var bossGO = Instantiate(EnemyPrefabManager.instance.bossPrefabs[Random.Range(0, EnemyPrefabManager.instance.bossPrefabs.Length)]);
         boss = bossGO.GetComponent<BossCharacterManager>();
+        enemies.Add(boss);
         bossGO.transform.position = bossSpawnPoint.position;
         bossGO.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
         boss.isSleeping = true;

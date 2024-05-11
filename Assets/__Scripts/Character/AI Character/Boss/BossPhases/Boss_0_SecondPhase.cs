@@ -17,8 +17,14 @@ public class Boss_0_SecondPhase : BossPhase
     public float stunDuration = 5f;
     public List<AICharacterAttackAction> newAttacks;
     public GameObject effectPrefab;
+    public float firstPhaseAttackRecoveryTimeModifier = 0.5f;
 
     private BossCharacterManager bossCharacter;
+
+    private void Awake()
+    {
+        newAttacks.ForEach(a => a = Instantiate(a));
+    }
 
     public override void InitializePhaseListeners(BossCharacterManager boss)
     {
@@ -58,6 +64,7 @@ public class Boss_0_SecondPhase : BossPhase
         boss.aiCombatManager.actionRecoveryTimer = 0;
         boss.animator.SetTrigger(quitAnimationTrigger);
         boss.playStunAnimation = true;
+        boss.combatStanceState.aiCharacterAttacks.ForEach(attack => attack.actionRecoveryTime *= firstPhaseAttackRecoveryTimeModifier);
         boss.combatStanceState.aiCharacterAttacks.AddRange(newAttacks);
         boss.combatStanceState.ForceSetNextAttackAction(boss, firstConstantAttck, true);
         Destroy(effect);

@@ -24,6 +24,11 @@ public class CombatStanceState : AIState
     [SerializeField] public float maximumEngagementDistance = 8;
     [SerializeField] public float minimumEngagementDistance = 0;
 
+    private void Awake()
+    {
+        aiCharacterAttacks.ForEach(a => a = Instantiate(a));
+    }
+
     public override AIState Tick(AICharacterManager aiCharacter)
     {
         if (aiCharacter.isPerformingAction)

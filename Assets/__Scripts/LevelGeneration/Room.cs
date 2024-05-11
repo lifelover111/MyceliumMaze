@@ -14,7 +14,7 @@ public class Room : MonoBehaviour
     [Header("Sets dynamycally")]
     public Door[] transitionsForward;
     public Door[] transitionsBackward;
-    List<AICharacterManager> enemies = new List<AICharacterManager>();
+    protected List<AICharacterManager> enemies = new List<AICharacterManager>();
     int enemyCount = 0;
     int depth;
 

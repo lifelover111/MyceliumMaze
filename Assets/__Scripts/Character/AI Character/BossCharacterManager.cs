@@ -41,6 +41,8 @@ public class BossCharacterManager : AICharacterManager
 
     public void StopMoving() 
     {
+        if (movingCoroutine == null)
+            return;
         StopCoroutine(movingCoroutine);
     }
 

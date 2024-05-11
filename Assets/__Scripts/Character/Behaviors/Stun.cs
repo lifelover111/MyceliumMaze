@@ -22,5 +22,10 @@ public class Stun : StateMachineBehaviour
             player.playerCombatManager.DisableCanCancelAttack();
             player.UnsubscribeCastEvent();
         }
+        //TODO: убрать отсюда
+        else if(characterManager is BossCharacterManager boss)
+        {
+            boss.StopMoving();
+        }
     }
 }
