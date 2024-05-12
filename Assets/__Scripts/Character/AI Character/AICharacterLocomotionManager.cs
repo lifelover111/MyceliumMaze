@@ -19,6 +19,13 @@ public class AICharacterLocomotionManager : LocomotionManager
             aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation * Quaternion.FromToRotation(GetForward(), transform.forward);
         }
     }
+    public void RotateAwayFromAgent(AICharacterManager aiCharacter)
+    {
+        if (aiCharacter.isMoving)
+        {
+            aiCharacter.transform.rotation = Quaternion.LookRotation(aiCharacter.aiCombatManager.targetsDirection);
+        }
+    }
 
     public void RotateTowardsTarget(AICharacterManager aiCharacter)
     {

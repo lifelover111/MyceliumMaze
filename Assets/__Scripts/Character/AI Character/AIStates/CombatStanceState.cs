@@ -28,10 +28,19 @@ public class CombatStanceState : AIState
 
     private void Awake()
     {
-        for(int i = 0; i < aiCharacterAttacks.Count; i++)
-        {
-            aiCharacterAttacks[i] = Instantiate(_aiCharacterAttacks[i]);
-        }
+        Init();
+    }
+
+    private void OnEnable()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        aiCharacterAttacks = new List<AICharacterAttackAction>();
+        foreach(var attack in _aiCharacterAttacks)
+            aiCharacterAttacks.Add(Instantiate(attack));
     }
 
     public override AIState Tick(AICharacterManager aiCharacter)
