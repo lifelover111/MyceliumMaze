@@ -7,11 +7,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 625f6c8a530effc439fc161b7f428bc7, type: 3}
   m_Name: CombatStanceState
   m_EditorClassIdentifier: 
+  _aiCharacterAttacks:
+  - {fileID: 11400000, guid: 0963042edc4a34d4e8b4b16de7f4ae09, type: 2}
   aiCharacterAttacks:
   - {fileID: 11400000, guid: 0963042edc4a34d4e8b4b16de7f4ae09, type: 2}
   canPerformCombo: 1

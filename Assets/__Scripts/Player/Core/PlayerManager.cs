@@ -13,6 +13,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerUIController playerUIController;
     [HideInInspector] public ItemManager itemManager;
 
+    public GameObject flaskPrefab;
 
     public event System.Action OnInteract;
     public event System.Action<PlayerManager> OnCastSpell = delegate { };
@@ -40,7 +41,6 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
         playerUIController = GetComponent<PlayerUIController>();
         itemManager = GetComponent<ItemManager>();
-
     }
 
     protected override void Start()

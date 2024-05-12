@@ -42,7 +42,9 @@ public class PlayerLocomotionManager : LocomotionManager
         //if (player.isPerformingAction)
         //    return;
 
-        if(externallyControlled)
+        GroundCharacter();
+
+        if (externallyControlled)
         {
             HandleExternalControlMovement();
             return;
@@ -87,6 +89,13 @@ public class PlayerLocomotionManager : LocomotionManager
 
         horizontalMovement = PlayerInputManager.instance.horizontalInput;
         verticalMovement = PlayerInputManager.instance.verticalInput;
+    }
+
+    private void GroundCharacter()
+    {
+        if (!player.characterController.isGrounded)
+            player.characterController.SimpleMove(Vector3.down);
+
     }
 
     private void HandleWalk()

@@ -1903,10 +1903,10 @@ CharacterController:
   serializedVersion: 3
   m_Height: 12
   m_Radius: 1.57
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_SlopeLimit: 0
+  m_StepOffset: 0
+  m_SkinWidth: 0.03
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 6, z: 0}
 --- !u!114 &5047224656259581005
 MonoBehaviour:
@@ -1963,6 +1963,7 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerUIController: {fileID: 0}
   itemManager: {fileID: 0}
+  flaskPrefab: {fileID: 6872653526439449576, guid: 88c9694f6586b474599ad797f61a31fb, type: 3}
   sporeCount: 0
 --- !u!114 &5983413124452984808
 MonoBehaviour:

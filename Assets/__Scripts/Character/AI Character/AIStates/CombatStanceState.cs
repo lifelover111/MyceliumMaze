@@ -8,7 +8,8 @@ using UnityEngine.TextCore.Text;
 public class CombatStanceState : AIState
 {
     [Header("Attacks")]
-    public List<AICharacterAttackAction> aiCharacterAttacks;
+    [SerializeField] private List<AICharacterAttackAction> _aiCharacterAttacks;
+    [HideInInspector] public List<AICharacterAttackAction> aiCharacterAttacks;
     protected List<AICharacterAttackAction> potentialAttacks;
     private AICharacterAttackAction choosenAttack;
     private AICharacterAttackAction previousAttack;
@@ -24,11 +25,12 @@ public class CombatStanceState : AIState
     [SerializeField] public float maximumEngagementDistance = 8;
     [SerializeField] public float minimumEngagementDistance = 0;
 
+
     private void Awake()
     {
         for(int i = 0; i < aiCharacterAttacks.Count; i++)
         {
-            aiCharacterAttacks[i] = Instantiate(aiCharacterAttacks[i]);
+            aiCharacterAttacks[i] = Instantiate(_aiCharacterAttacks[i]);
         }
     }
 

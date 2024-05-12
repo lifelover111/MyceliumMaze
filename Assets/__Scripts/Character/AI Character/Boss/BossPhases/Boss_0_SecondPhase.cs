@@ -15,7 +15,8 @@ public class Boss_0_SecondPhase : BossPhase
     [Header("Properties")]
     public AICharacterAttackAction firstConstantAttck;
     public float stunDuration = 5f;
-    public List<AICharacterAttackAction> newAttacks;
+    [SerializeField] private List<AICharacterAttackAction> _newAttacks;
+    [HideInInspector] public List<AICharacterAttackAction> newAttacks;
     public GameObject effectPrefab;
     public float firstPhaseAttackRecoveryTimeModifier = 0.5f;
 
@@ -25,7 +26,7 @@ public class Boss_0_SecondPhase : BossPhase
     {
         for (int i = 0; i < newAttacks.Count; i++)
         {
-            newAttacks[i] = Instantiate(newAttacks[i]);
+            newAttacks[i] = Instantiate(_newAttacks[i]);
         }
     }
 

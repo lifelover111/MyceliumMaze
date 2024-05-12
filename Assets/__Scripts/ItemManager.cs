@@ -75,15 +75,15 @@ public class ItemManager : MonoBehaviour
     public void AddToHand(GameObject item)
     {
         item.transform.SetParent(OffHand, false);
-        item.transform.localPosition = Vector3.zero;
-        item.transform.rotation = Quaternion.FromToRotation(player.playerLocomotionManager.GetForward(), player.transform.forward);
+        item.transform.localPosition = Vector3.zero + 0.005f*Vector3.up + 0.01f*Vector3.forward;
+        item.transform.localRotation = Quaternion.Euler(-90, 0, 0); //Quaternion.FromToRotation(player.playerLocomotionManager.GetForward(), player.transform.forward);
     }
 
     public void ClearOffHand()
     {
         for (int i = 6; i < OffHand.childCount; i++)
         {
-            Destroy(OffHand.GetChild(i));
+            Destroy(OffHand.GetChild(i).gameObject);
         }
     }
 

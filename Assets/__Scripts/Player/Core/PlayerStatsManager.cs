@@ -30,6 +30,7 @@ public class PlayerStatsManager : StatsManager
     {
         if (character.isPerformingAction) return;
         if (healingFlasksCount < 1) return;
+        player.itemManager.AddToHand(Instantiate(player.flaskPrefab));
         character.canMove = false;
         character.canRotate = false;
         player.playerAnimatorManager.PlayTargetActionAnimation(character.animationKeys.Heal, true);
