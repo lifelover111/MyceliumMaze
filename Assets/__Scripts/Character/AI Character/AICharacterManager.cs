@@ -125,7 +125,7 @@ public class AICharacterManager : CharacterManager
 
         characterController.enabled = !isSleeping;
         isInvulnerable = isSleeping;
-        
+                
         if(gui != null)
             gui.gameObject.SetActive(!isSleeping);
     }

@@ -8,6 +8,10 @@ public class ProjectileDamageCollider : DamageCollider
     public CharacterManager weaponOwner;
     public bool playDamageAnimation = true;
 
+
+    [Header("Blockable")]
+    public bool blockable = false;
+
     private string ownerTag;
 
     private void Start()
@@ -22,6 +26,17 @@ public class ProjectileDamageCollider : DamageCollider
 
         if (charactersDamaged.Contains(target)) return;
         charactersDamaged.Add(target);
+
+        if(blockable)
+        {
+            var angleHitFrom = Vector3.SignedAngle(weaponOwner.transform.position - target.transform.position, target.locomotionManager.GetForward(), Vector3.up);
+
+            if (target.isBlocking && angleHitFrom < target.maxBlockAngle && angleHitFrom > target.minBlockAngle)
+            {
+                target.combatManager.BlockDamage(weaponOwner, this);
+                return;
+            }
+        }
 
         if (withConcentrationDamage)
         {
@@ -39,6 +54,12 @@ public class ProjectileDamageCollider : DamageCollider
             {
                 takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
             }
+        }
+
+        if(withSound)
+        {
+            if (SoundBank.instance.takeDamageSound != null)
+                target.soundManager.PlaySound(SoundBank.instance.takeDamageSound);
         }
 
         TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectManager.instance.damageEffect);

@@ -218,5 +218,15 @@ public class AnimatorManager : MonoBehaviour
         character.combatManager.DoRangeAttack();
     }
 
+    public virtual void AddArrow()
+    {
+        ((Bow)character.combatManager.RangeWeapon).AddArrow();
+    }
+
+    public virtual void LoadArrow()
+    {
+        ((Bow)character.combatManager.RangeWeapon).LoadArrow();
+    }
+
     #endregion
 }

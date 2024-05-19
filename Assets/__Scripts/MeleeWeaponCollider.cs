@@ -51,7 +51,11 @@ public class MeleeWeaponCollider : DamageCollider
             {
                 takeDamageVFX.GetComponent<CFXR_Effect>().cameraShake.enabled = true;
             }
-
+        }
+        if(withSound)
+        {
+            if (target.isInvulnerable)
+                return;
             if (SoundBank.instance.takeDamageSound != null)
                 target.soundManager.PlaySound(SoundBank.instance.takeDamageSound);
         }

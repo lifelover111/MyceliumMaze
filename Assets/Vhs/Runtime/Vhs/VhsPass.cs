@@ -15,7 +15,7 @@ namespace VolFx
 
 		[HideInInspector]
 		public  float       _frameRate = 20f;
-		//[HideInInspector]
+		[HideInInspector]
         public  Texture2D[] _clip;
 		private float       _playTime;
 		private float       _yScanline;

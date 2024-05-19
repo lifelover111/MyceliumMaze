@@ -9837,8 +9837,11 @@ MonoBehaviour:
   homingAcceleration: 1.1
   speed: 2.75
   lifetime: 10
+  shootable: 0
+  manuallySetRotation: 0
   target: {fileID: 0}
   weaponOwner: {fileID: 0}
+  baseRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &2555363933736801092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9858,8 +9861,10 @@ MonoBehaviour:
   concentrationDamageBlockMultiplier: 2
   withVFX: 0
   withBlood: 0
+  withSound: 0
   weaponOwner: {fileID: 0}
   playDamageAnimation: 0
+  blockable: 0
 --- !u!135 &3616135104272518849
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -28,6 +28,9 @@ public class DamageCollider : MonoBehaviour
     [Header("Blood")]
     public bool withBlood = true;
 
+    [Header("SFX")]
+    public bool withSound = true;
+
     public event System.Action OnHitEnemy = delegate { };
 
     public virtual void Enable()

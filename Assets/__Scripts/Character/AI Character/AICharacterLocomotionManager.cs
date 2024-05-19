@@ -39,7 +39,8 @@ public class AICharacterLocomotionManager : LocomotionManager
     {
         if(aiCharacter.isMoving)
         {
-            aiCharacter.animatorManager.UpdateAnimatorMovementParameters(moveDirection.x, moveDirection.z, true, 0.05f);
+            var inputTree = Quaternion.FromToRotation(moveDirection, aiCharacter.aiLocomotionManager.GetForward()) * aiCharacter.aiLocomotionManager.GetForward();
+            aiCharacter.animatorManager.UpdateAnimatorMovementParameters(inputTree.x, inputTree.z, true, 0.05f);
             if(aiCharacter.noRootMotion)
             {
                 var direction = aiCharacter.aiLocomotionManager.GetForward();

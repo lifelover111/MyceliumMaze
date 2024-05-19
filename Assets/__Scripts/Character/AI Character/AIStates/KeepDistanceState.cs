@@ -23,9 +23,17 @@ public class KeepDistanceState : AIState
         if (!aiCharacter.navMeshAgent.enabled)
             aiCharacter.navMeshAgent.enabled = true;
 
-        aiCharacter.navMeshAgent.SetDestination(aiCharacter.transform.position - aiCharacter.aiLocomotionManager.GetForward()*aiCharacter.navMeshAgent.stoppingDistance*1.25f);
+        if(aiCharacter.aiCombatManager.distanceFromTarget < aiCharacter.navMeshAgent.stoppingDistance)
+            aiCharacter.navMeshAgent.SetDestination(aiCharacter.transform.position + aiCharacter.aiCombatManager.targetsDirection.normalized * aiCharacter.navMeshAgent.stoppingDistance * 1.25f); //aiCharacter.transform.position - aiCharacter.aiLocomotionManager.GetForward()*aiCharacter.navMeshAgent.stoppingDistance*1.25f);
+        else
+        {
+            NavMeshPath path = new NavMeshPath();
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.SetPath(path);
+        }
 
-        aiCharacter.aiLocomotionManager.RotateAwayFromAgent(aiCharacter);
+
+        aiCharacter.aiLocomotionManager.RotateTowardsAgent(aiCharacter);
 
         if (aiCharacter.aiCombatManager.distanceFromTarget >= targetDistance)
             return SwitchState(aiCharacter, aiCharacter.combatStanceState);

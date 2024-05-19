@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class RangeWeapon : MonoBehaviour
 {
-    [SerializeField] private Transform projectileSpawnPoint;
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] protected Transform projectileSpawnPoint;
+    [SerializeField] protected GameObject projectilePrefab;
 
-    private CharacterManager weaponOwner;
+    protected CharacterManager weaponOwner;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         weaponOwner = GetComponentInParent<CharacterManager>();
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         var go = Instantiate(projectilePrefab);
         go.transform.position = projectileSpawnPoint.position;

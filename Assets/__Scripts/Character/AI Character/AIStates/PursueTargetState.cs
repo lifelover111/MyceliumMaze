@@ -81,7 +81,8 @@ public class PursueTargetState : AIState
         trySwitchTimer = switchSurroundFrequency;
         if (WorldUtilityManager.RollForOutcomeChance(switchSurroundChance))
         {
-            var allies = Physics.OverlapSphere(aiCharacter.aiCombatManager.currentTarget.transform.position, checkAlliesRadius);
+            //var allies = Physics.OverlapSphere(aiCharacter.aiCombatManager.currentTarget.transform.position, checkAlliesRadius, 1 << LayerMask.NameToLayer("Character"));
+            var allies = Physics.OverlapSphere(aiCharacter.transform.position, checkAlliesRadius, 1 << LayerMask.NameToLayer("Character"));
             if (allies.Where(a => a.tag == aiCharacter.tag).Count() > minAlliesCount)
                 return true;
         }

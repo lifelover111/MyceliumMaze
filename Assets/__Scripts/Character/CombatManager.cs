@@ -14,6 +14,7 @@ public class CombatManager : MonoBehaviour
     public bool canCombo = false;
     public bool canParry = false;
     public MeleeWeaponCollider Weapon => weaponDamageCollider;
+    public RangeWeapon RangeWeapon => rangeWeapon;
 
     [Header("Damage")]
     public float commonPhysicalDamage;
@@ -94,11 +95,16 @@ public class CombatManager : MonoBehaviour
             if (SoundBank.instance.parrySound != null)
                 character.combatManager.Weapon.soundManager.PlaySound(SoundBank.instance.parrySound);
 
-            concentrationDamageEffect.concentrationDamage = damageCollider.concentrationDamage * damageCollider.concentrationDamageBlockMultiplier;
-            concentrationDamageEffect.characterCausingDamage = character;
             var parryEffect = Instantiate(WorldEffectsManager.instance.parryEffectPrefab);
             parryEffect.transform.position = character.weapon.transform.position;
             parryEffect.transform.localPosition += 0.35f * Vector3.left;
+
+
+            if (damageCollider is ProjectileDamageCollider)
+                return;
+
+            concentrationDamageEffect.concentrationDamage = damageCollider.concentrationDamage * damageCollider.concentrationDamageBlockMultiplier;
+            concentrationDamageEffect.characterCausingDamage = character;
             weaponOwner.animatorManager.DisableWeaponSlash();
             weaponOwner.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
             character.animatorManager.PlayTargetActionAnimation(character.animationKeys.Parry, true, true);
