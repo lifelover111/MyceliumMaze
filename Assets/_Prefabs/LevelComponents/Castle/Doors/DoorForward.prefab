@@ -404,7 +404,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.33804613, g: 0.077162705, b: 0.9622642, a: 0.99215686}
   m_Intensity: 0
-  m_Range: 8.5
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -756,7 +756,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.33804613, g: 0.077162705, b: 0.9622642, a: 0.99215686}
   m_Intensity: 0
-  m_Range: 8.5
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1968,6 +1968,10 @@ PrefabInstance:
     - target: {fileID: 3726740952248020482, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451108686957127469, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
+      propertyPath: m_Range
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8583780524957933453, guid: 5fbfbee0f9885764383291c4c5e18668, type: 3}
       propertyPath: m_Name
