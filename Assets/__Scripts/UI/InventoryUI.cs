@@ -20,7 +20,7 @@ public class InventoryUI : MonoBehaviour
         set {
             selectedItemIcon.sprite = value.icon;
             selectedItemTitle.text = value.itemName;
-            selectedItemDescription.text = value.description;
+            selectedItemDescription.text = string.Join("\n\n", value.descriptionShort, value.description);
         }
     }
 

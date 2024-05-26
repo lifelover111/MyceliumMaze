@@ -38,7 +38,7 @@ public class PurchaseUI : MonoBehaviour
             return;
 
         itemName.text = selectedItem.itemName;
-        itemDescription.text = selectedItem.description;
+        itemDescription.text = string.Join("\n\n", selectedItem.descriptionShort, selectedItem.description);
 
     }
 

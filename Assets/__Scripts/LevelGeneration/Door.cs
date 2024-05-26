@@ -15,16 +15,20 @@ public class Door : MonoBehaviour
     [SerializeField] public DoorSelector doorSelector;
     [SerializeField] Light[] lights;
 
+    private SoundManager soundManager;
+
     public static float transitionSpeed = 1;
 
     public void OpenDoor()
     {
         doorSelector.OpenDoor();
+        soundManager.PlaySound(SoundBank.instance.doorSound);
     }
 
     public void CloseDoor()
     {
         doorSelector.CloseDoor();
+        soundManager.PlaySound(SoundBank.instance.doorSound);
     }
 
     private void Awake()
@@ -32,6 +36,7 @@ public class Door : MonoBehaviour
         OnTransition = () => { };
         coll = GetComponent<Collider>();
         currentRoom = GetComponentInParent<Room>();
+        soundManager = GetComponent<SoundManager>();
     }
     private void Start()
     {

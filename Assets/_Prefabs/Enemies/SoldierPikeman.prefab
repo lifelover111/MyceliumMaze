@@ -1063,6 +1063,7 @@ MonoBehaviour:
   concentrationDamageBlockMultiplier: 2.5
   withVFX: 1
   withBlood: 1
+  withSound: 1
   soundManager: {fileID: 0}
 --- !u!65 &8822816529695349070
 BoxCollider:
@@ -2870,7 +2871,7 @@ MonoBehaviour:
   canParry: 0
   commonPhysicalDamage: 4
   commonMentalDamage: 0
-  commonConcentrationDamage: 7
+  commonConcentrationDamage: 6
   actionRecoveryTimer: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}

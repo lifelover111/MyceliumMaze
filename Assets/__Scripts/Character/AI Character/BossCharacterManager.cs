@@ -14,6 +14,9 @@ public class BossCharacterManager : AICharacterManager
     [Header("Phases")]
     public List<BossPhase> phases;
 
+    [Header("Slash Sound")]
+    [SerializeField] private AudioClip slashSound;
+
 
     protected override void Start()
     {
@@ -57,6 +60,11 @@ public class BossCharacterManager : AICharacterManager
             characterController.Move(aiLocomotionManager.GetForward() * 5f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    public void PlaySlashSound()
+    {
+        soundManager.PlaySound(slashSound);
     }
     #endregion
 }

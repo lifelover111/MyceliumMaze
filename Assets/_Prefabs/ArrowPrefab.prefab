@@ -133,13 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b210401c28c985d43b6a08936007fa4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalDamage: 12
+  physicalDamage: 8
   mentalDamage: 0
   withConcentrationDamage: 1
   concentrationDamage: 5
-  concentrationDamageBlockMultiplier: 2
+  concentrationDamageBlockMultiplier: 1.2
   withVFX: 1
   withBlood: 1
+  withSound: 1
   weaponOwner: {fileID: 0}
   playDamageAnimation: 0
   blockable: 1

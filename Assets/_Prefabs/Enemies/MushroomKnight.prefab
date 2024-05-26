@@ -7553,7 +7553,7 @@ MonoBehaviour:
   maxBlockAngle: 45
   aiCombatManager: {fileID: 0}
   aiLocomotionManager: {fileID: 0}
-  minSporeCount: 0
+  minSporeCount: 5
   maxSporeCount: 20
   currentState: {fileID: 0}
   navMeshAgent: {fileID: 0}
@@ -7631,7 +7631,7 @@ MonoBehaviour:
   canParry: 0
   commonPhysicalDamage: 5
   commonMentalDamage: 0
-  commonConcentrationDamage: 10
+  commonConcentrationDamage: 11
   actionRecoveryTimer: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
@@ -7926,10 +7926,11 @@ MonoBehaviour:
   physicalDamage: 5
   mentalDamage: 0
   withConcentrationDamage: 1
-  concentrationDamage: 10
+  concentrationDamage: 11
   concentrationDamageBlockMultiplier: 2
   withVFX: 1
   withBlood: 0
+  withSound: 1
   soundManager: {fileID: 0}
 --- !u!65 &4513406751506119403
 BoxCollider:

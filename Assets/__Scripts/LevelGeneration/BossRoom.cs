@@ -45,10 +45,15 @@ public class BossRoom : Room
         bossGO.transform.position = bossSpawnPoint.position;
         bossGO.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
         boss.isSleeping = true;
+
+        MusicManager.instance.EnableBossTheme();
+
         boss.OnDead += () =>
         {
             bossDoor.OpenDoor();
             nextLevelDoor.OpenDoor();
+            MusicManager.instance.DisableBossTheme();
+            MusicManager.instance.DisableMusic();
         };
     }
 

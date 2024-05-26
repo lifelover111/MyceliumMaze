@@ -6,6 +6,7 @@ public class Bow : RangeWeapon
 {
     [SerializeField] Transform rightHand;
     
+    private SoundManager soundManager;
     private Animator animator;
     private Projectile currentArrow;
 
@@ -13,6 +14,7 @@ public class Bow : RangeWeapon
     {
         base.Awake();
         animator = GetComponent<Animator>();
+        soundManager = GetComponent<SoundManager>();
     }
 
     public override void Attack()
@@ -39,6 +41,11 @@ public class Bow : RangeWeapon
     public void LoadArrow()
     {
         animator.CrossFade("Load", Time.deltaTime);
+    }
+
+    public void PlayShootSound()
+    {
+        soundManager.PlaySound(SoundBank.instance.bowShootSound);
     }
 
 }

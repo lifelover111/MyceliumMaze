@@ -228,5 +228,10 @@ public class AnimatorManager : MonoBehaviour
         ((Bow)character.combatManager.RangeWeapon).LoadArrow();
     }
 
+    public virtual void PlayBowShootSound()
+    {
+        ((Bow)character.combatManager.RangeWeapon).PlayShootSound();
+    }
+
     #endregion
 }

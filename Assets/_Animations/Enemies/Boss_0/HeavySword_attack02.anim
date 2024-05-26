@@ -125379,6 +125379,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.3
+    functionName: PlaySlashSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.36666667
     functionName: EnableCanRotate
     data: 
@@ -125401,14 +125408,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.0666667
-    functionName: DisableCanRotate
+    functionName: EnableWeaponSlash
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.0666667
-    functionName: EnableWeaponSlash
+    functionName: DisableCanRotate
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -125416,6 +125423,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.1
     functionName: EnableAttackCollider
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1666666
+    functionName: PlaySlashSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -125458,6 +125472,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.8
     functionName: EnableAttackCollider
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8
+    functionName: PlaySlashSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

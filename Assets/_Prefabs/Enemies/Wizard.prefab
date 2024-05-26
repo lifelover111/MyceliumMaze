@@ -1837,7 +1837,7 @@ MonoBehaviour:
   aiCombatManager: {fileID: 0}
   aiLocomotionManager: {fileID: 0}
   minSporeCount: 5
-  maxSporeCount: 25
+  maxSporeCount: 30
   currentState: {fileID: 0}
   navMeshAgent: {fileID: 3995829715090861609}
   idleState: {fileID: 11400000, guid: 5d48405d61fe66a4591c8d54b28421cb, type: 2}
@@ -1852,6 +1852,7 @@ MonoBehaviour:
   guiPrefab: {fileID: 2005101273331140466, guid: e116f87ca4719f14ba6409448aeac0a9, type: 3}
   noRootMotion: 1
   spawnCost: 7
+  movable: 1
 --- !u!114 &6118903281805182468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1911,6 +1912,9 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   canCombo: 0
   canParry: 0
+  commonPhysicalDamage: 0
+  commonMentalDamage: 0
+  commonConcentrationDamage: 0
   actionRecoveryTimer: 4
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
