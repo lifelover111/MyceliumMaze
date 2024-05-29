@@ -1853,7 +1853,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036527954568275044}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70550054, z: -0, w: 0.70870936}
+  m_LocalRotation: {x: 0, y: 0.70550054, z: 0, w: 0.70870936}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
@@ -1902,7 +1902,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 12
-  m_Radius: 1.57
+  m_Radius: 2
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.03
@@ -2736,6 +2736,7 @@ MonoBehaviour:
   concentrationDamageBlockMultiplier: 2
   withVFX: 1
   withBlood: 1
+  withSound: 1
   soundManager: {fileID: 0}
 --- !u!54 &7932420929863585999
 Rigidbody:
