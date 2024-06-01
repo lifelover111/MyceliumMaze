@@ -4913,7 +4913,6 @@ GameObject:
   - component: {fileID: 818220273050620921}
   - component: {fileID: 653975872127146238}
   - component: {fileID: 2555363933736801092}
-  - component: {fileID: 3616135104272518849}
   m_Layer: 0
   m_Name: WizardProjectilePrefab
   m_TagString: Untagged
@@ -9865,27 +9864,6 @@ MonoBehaviour:
   weaponOwner: {fileID: 0}
   playDamageAnimation: 0
   blockable: 0
---- !u!135 &3616135104272518849
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2876784435440528526}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.7
-  m_Center: {x: 0.017941773, y: 0.0096309185, z: 0.025849521}
 --- !u!1 &2912350347665942664
 GameObject:
   m_ObjectHideFlags: 0
