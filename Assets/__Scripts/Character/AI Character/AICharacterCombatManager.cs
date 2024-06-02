@@ -23,6 +23,8 @@ public class AICharacterCombatManager : CombatManager
     {
         base.Awake();
         aiCharacter = GetComponent<AICharacterManager>();
+        OnBlock += (blockedCharacter) => actionRecoveryTimer -= 0.5f;
+        OnParry += (parriedCharacter) => actionRecoveryTimer -= 1;
     }
 
     protected override void Update()

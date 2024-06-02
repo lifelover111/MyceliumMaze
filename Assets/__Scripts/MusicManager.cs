@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
@@ -17,6 +18,14 @@ public class MusicManager : MonoBehaviour
     {
         instance = this;
         audioSource = GetComponent<AudioSource>();
+        SceneManager.sceneLoaded += ResetMusic;
+        DontDestroyOnLoad(this);
+    }
+
+    private void ResetMusic(Scene arg0, LoadSceneMode arg1)
+    {
+        if(audioSource.clip == bossTheme)
+            audioSource.Stop();
     }
 
     private void Update()
@@ -46,6 +55,10 @@ public class MusicManager : MonoBehaviour
     public void DisableMusic()
     {
         musicEnabled = false;
+    }
+    public void EnableMusic()
+    {
+        musicEnabled = true;
     }
 
     private IEnumerator BossThemeCoroutine()

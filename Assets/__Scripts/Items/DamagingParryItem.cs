@@ -29,6 +29,7 @@ public class DamagingParryItem : PassiveItem
         damageEffect.physycalDamage = damage;
         damageEffect.playDamageAnimation = false;
         damageEffect.withBlood = false;
+        damageEffect.playStunAnimation = false;
         character.effectsManager.ProcessInstantEffect(damageEffect);
     }
 }

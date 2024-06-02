@@ -72,7 +72,17 @@ public class Boss_0_SecondPhase : BossPhase
 
         boss.playStunAnimation = false;
         boss.animatorManager.PlayTargetActionAnimation(key, true);
-        yield return new WaitForSecondsRealtime(stunDuration);
+
+        float stunTime = stunDuration;
+
+        boss.statsManager.OnHealthChanged += () => stunTime -= 0.5f;
+
+        while(stunTime > 0)
+        {
+            yield return new WaitForFixedUpdate();
+            stunTime -= Time.fixedDeltaTime;
+        }
+
         boss.isPerformingAction = true;
         boss.aiCombatManager.actionRecoveryTimer = 0;
         boss.animator.SetTrigger(quitAnimationTrigger);

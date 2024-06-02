@@ -16,12 +16,12 @@ MonoBehaviour:
   key: PhaseTwo
   quitAnimationTrigger: _completePhaseTransition
   firstConstantAttck: {fileID: 11400000, guid: 8187221d8fa3d334f9eb247ab69a0db6, type: 2}
-  stunDuration: 5
+  stunDuration: 8
   _newAttacks:
   - {fileID: 11400000, guid: 8187221d8fa3d334f9eb247ab69a0db6, type: 2}
   - {fileID: 11400000, guid: 53fdef7d745a653408f0abfbae63ba04, type: 2}
   newAttacks:
-  - {fileID: 11400000, guid: 8187221d8fa3d334f9eb247ab69a0db6, type: 2}
-  - {fileID: 11400000, guid: 53fdef7d745a653408f0abfbae63ba04, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   effectPrefab: {fileID: 8656522925564163052, guid: ec9e84cafbf7b1a41a0fe2d3dd764e38, type: 3}
   firstPhaseAttackRecoveryTimeModifier: 0.5

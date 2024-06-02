@@ -28,6 +28,7 @@ public class Room : MonoBehaviour
     [Header("Long Fight Parameters")]
     private int waveCount = 0;
     private int currentWave = 0;
+    [SerializeField] private int maxWavesCount = 5;
 
     public List<AICharacterManager> Enemies => enemies;
 
@@ -53,7 +54,7 @@ public class Room : MonoBehaviour
                 waveCount = 1; 
                 break;
             case LevelGenerator.RoomNode.RoomType.longFight: 
-                waveCount = Random.Range(2, 5); 
+                waveCount = Random.Range(2, maxWavesCount); 
                 break;
         }
     }

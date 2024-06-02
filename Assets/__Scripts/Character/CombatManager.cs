@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
 
 
     public event System.Action<CharacterManager> OnParry;
+    public event System.Action<CharacterManager> OnBlock;
 
 
     protected virtual void Awake()
@@ -128,6 +129,7 @@ public class CombatManager : MonoBehaviour
         concentrationDamageEffect.concentrationDamage = damageCollider.concentrationDamage * damageCollider.concentrationDamageBlockMultiplier;
         concentrationDamageEffect.characterCausingDamage = weaponOwner;
         character.effectsManager.ProcessInstantEffect(concentrationDamageEffect);
+        OnBlock?.Invoke(weaponOwner);
     }
 
     public void SetDamage(float physicalDamage, float mentalDamage = 0)

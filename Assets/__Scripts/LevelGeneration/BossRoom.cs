@@ -90,7 +90,8 @@ public class BossRoom : Room
         player.canMove = true;
         player.canRotate = true;
         player.playerLocomotionManager.externallyControlled = false;
+        MusicManager.instance.EnableMusic();
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

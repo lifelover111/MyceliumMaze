@@ -145,7 +145,7 @@ public class PlayerManager : CharacterManager
         yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
 
         PrepareToRestart();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     private void InitOnLoad(Scene arg0, LoadSceneMode arg1)
