@@ -92,6 +92,6 @@ public class BossRoom : Room
         player.playerLocomotionManager.externallyControlled = false;
         MusicManager.instance.EnableMusic();
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

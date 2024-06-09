@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class CameraMovement : MonoBehaviour
     private readonly float[] stopPositions = { 5.5f, 16.5f, 26.0f, 36.0f, 45.0f }; 
     private readonly float[] fadeOutPositions = { 11.0f, 21.0f, 32.0f, 42.0f }; 
 
+    private bool loadingScene = false;
+
     void Start()
     {
         startPosition = transform.position;
@@ -44,6 +47,12 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        if(Input.anyKeyDown && !loadingScene)
+        {
+            loadingScene = true;
+            StopAllCoroutines();
+            SceneManager.LoadScene(1);
+        }
         if (stopMovement)
         {
             return;
@@ -166,7 +175,8 @@ public class CameraMovement : MonoBehaviour
         }
 
         mainCamera.orthographicSize = targetSize;
-        stopMovement = true; 
+        stopMovement = true;
+        SceneManager.LoadScene(1);
     }
 
     IEnumerator FlashOrderInLayer(GameObject flashObject)

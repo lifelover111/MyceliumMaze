@@ -13,11 +13,13 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Transform activeItemsAnchor;
     [SerializeField] private Transform passiveItemsAnchor;
     [SerializeField] private GameObject uiItemPrefab;
+    [SerializeField] private RectTransform descriptionScroll;
 
     public event System.Action OnEnabled = delegate { };
 
     private Item SelectedItem { 
         set {
+            descriptionScroll.anchoredPosition = new Vector2(descriptionScroll.anchoredPosition.x, 0);
             selectedItemIcon.sprite = value.icon;
             selectedItemTitle.text = value.itemName;
             selectedItemDescription.text = string.Join("\n\n", value.descriptionShort, value.description);

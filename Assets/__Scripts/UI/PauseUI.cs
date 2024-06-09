@@ -50,7 +50,7 @@ public class PauseUI : MonoBehaviour
             player.PrepareToRestart();
 
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void Exit()
