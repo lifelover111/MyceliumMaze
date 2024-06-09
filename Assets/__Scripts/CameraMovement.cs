@@ -1,38 +1,40 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject secondObject; // Второй объект для появления
-    public GameObject firstObject;  // Первый объект, который будет исчезать
-    public float moveSpeedX = 0.5f; // Скорость перемещения по оси X
-    public float moveSpeedY = 0.5f; // Скорость перемещения по оси Y
-    public float moveRightDistance = 2.0f; // Расстояние для движения вправо
-    public float moveUpDistance = 1.0f; // Расстояние для движения вверх
-    public float verticalOffset = 1.0f; // Вертикальное смещение
-    public float fadeInDelay = 5.0f; // Задержка перед появлением второго объекта
-    public float fadeDuration = 1.0f; // Продолжительность затухания
+    public GameObject secondObject; 
+    public GameObject firstFlashObject; 
+    public GameObject secondFlashObject; 
+    public float moveSpeedX = 0.5f; 
+    public float moveSpeedY = 0.5f; 
+    public float moveRightDistance = 2.0f; 
+    public float fadeDuration = 4.0f; 
+    public float moveUpOffset = 5.0f; 
+    public float zoomOutDuration = 2.0f; 
+    public float increasedMoveSpeedY = 2.0f; 
 
-    public Image fadeImage; // Image для затемнения
+    public Image fadeImage; 
 
     private Vector3 startPosition;
-    private bool movedRight = false;
-    private bool movedUp = false;
     private bool stopMovement = false;
-    private bool pausedAtY7 = false;
-    private bool fading = false;
-    private bool shouldFadeOut = false; // Флаг для выхода из затемнения
-    private bool shouldFadeIn = false; // Флаг для начала затемнения
+    private int movementPhase = 0; 
     private Camera mainCamera;
+    private float originalMoveSpeedY; 
+
+    private readonly float[] stopPositions = { 5.5f, 16.5f, 26.0f, 36.0f, 45.0f }; 
+    private readonly float[] fadeOutPositions = { 11.0f, 21.0f, 32.0f, 42.0f }; 
 
     void Start()
     {
         startPosition = transform.position;
         mainCamera = Camera.main;
+        originalMoveSpeedY = moveSpeedY; 
 
         if (fadeImage != null)
         {
-            fadeImage.color = new Color(0, 0, 0, 0); // Установите начальную альфу на 0
+            fadeImage.color = new Color(0, 0, 0, 0); 
         }
         else
         {
@@ -47,65 +49,155 @@ public class CameraMovement : MonoBehaviour
             return;
         }
 
-        if (!movedRight)
+        switch (movementPhase)
         {
-            float newX = Mathf.MoveTowards(transform.position.x, startPosition.x + moveRightDistance, moveSpeedX * Time.deltaTime);
-            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-
-            if (transform.position.x >= startPosition.x + moveRightDistance)
-            {
-                movedRight = true;
-            }
+            case 0:
+                MoveRight();
+                break;
+            default:
+                MoveUpAndPause(movementPhase - 1);
+                break;
         }
-        else if (!movedUp)
+    }
+
+    void MoveRight()
+    {
+        float newX = Mathf.MoveTowards(transform.position.x, startPosition.x + moveRightDistance, moveSpeedX * Time.deltaTime);
+        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+
+        if (transform.position.x >= startPosition.x + moveRightDistance)
         {
-            float newY = Mathf.MoveTowards(transform.position.y, startPosition.y + moveUpDistance, moveSpeedY * Time.deltaTime);
+            StartCoroutine(SmoothZoomOut(2.1f, zoomOutDuration));
+            movementPhase++;
+        }
+    }
+
+    void MoveUpAndPause(int phase)
+    {
+        if (phase < stopPositions.Length)
+        {
+            float targetY = stopPositions[phase];
+            float newY = Mathf.MoveTowards(transform.position.y, targetY, moveSpeedY * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
 
-            if (transform.position.y >= startPosition.y + moveUpDistance)
+            if (transform.position.y >= targetY)
             {
-                movedUp = true;
+                if (targetY == 45.0f)
+                {
+                    StartCoroutine(SmoothZoomInAndFixate());
+                }
+                else
+                {
+                    StartCoroutine(PauseAndFade(phase));
+                }
+                movementPhase++;
             }
-            else if (transform.position.y >= 5.5f && !pausedAtY7)
-            {
-                StartCoroutine(PauseAndFade());
-                pausedAtY7 = true;
-            }
         }
-
-        if (movedUp && !shouldFadeOut && !fading)
-        {
-            float newY = transform.position.y + verticalOffset * Time.deltaTime;
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        }
-
-        if (transform.position.y >= 15.5f && pausedAtY7)
-        {
-            StartCoroutine(FadeOut());
-            //shouldFadeOut = true;
-        }
-
-        if (transform.position.y >= 19.5f)
+        else
         {
             stopMovement = true;
         }
     }
 
-    IEnumerator PauseAndFade()
+    IEnumerator PauseAndFade(int phase)
     {
         stopMovement = true;
 
-        yield return new WaitForSeconds(2.0f);
-
         yield return StartCoroutine(FadeIn());
 
+        moveSpeedY = increasedMoveSpeedY;
+
+        float initialY = transform.position.y;
+        float targetY = initialY + moveUpOffset;
+        while (transform.position.y < targetY)
+        {
+            transform.position += new Vector3(0, moveSpeedY * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        if (phase < fadeOutPositions.Length)
+        {
+            float fadeOutTargetY = fadeOutPositions[phase];
+            while (transform.position.y < fadeOutTargetY)
+            {
+                transform.position += new Vector3(0, moveSpeedY * Time.deltaTime, 0);
+                yield return null;
+            }
+        }
+
+        yield return StartCoroutine(FadeOut());
+
+        moveSpeedY = originalMoveSpeedY;
+
+        if (transform.position.y >= 14.0f)
+        {
+            StartCoroutine(SmoothZoomOut(2.5f, zoomOutDuration)); 
+        }
+        else if (transform.position.y >= 7.0f)
+        {
+            StartCoroutine(SmoothZoomOut(2.2f, zoomOutDuration)); 
+        }
+
         stopMovement = false;
+    }
+
+    IEnumerator SmoothZoomInAndFixate()
+    {
+        float targetSize = 1.5f; 
+        float duration = 5.0f; 
+        float initialSize = mainCamera.orthographicSize;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(initialSize, targetSize, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime >= duration / 2 && elapsedTime < duration / 2 + 0.5f)
+            {
+                StartCoroutine(FlashOrderInLayer(firstFlashObject));
+            }
+            if (elapsedTime >= 2 * duration / 2 && elapsedTime < 2 * duration / 2 + 0.3f)
+            {
+                StartCoroutine(FlashOrderInLayer(secondFlashObject));
+            }
+
+            yield return null;
+        }
+
+        mainCamera.orthographicSize = targetSize;
+        stopMovement = true; 
+    }
+
+    IEnumerator FlashOrderInLayer(GameObject flashObject)
+    {
+        SpriteRenderer renderer = flashObject.GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.sortingOrder = 1; 
+            yield return new WaitForSeconds(0.1f); 
+            renderer.sortingOrder = 0;
+        }
+    }
+
+    IEnumerator SmoothZoomOut(float targetSize, float duration)
+    {
+        float initialSize = mainCamera.orthographicSize;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(initialSize, targetSize, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        mainCamera.orthographicSize = targetSize;
     }
 
     IEnumerator FadeIn()
     {
         float elapsedTime = 0f;
-        fading = true; 
         while (elapsedTime < fadeDuration)
         {
             float alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
@@ -128,15 +220,11 @@ public class CameraMovement : MonoBehaviour
             yield return null;
         }
 
-        // Убедитесь, что альфа равна 0
         fadeImage.color = new Color(0, 0, 0, 0);
-        fading = false; // Завершаем процесс затемнения
 
-        // Активировать второй объект
         if (secondObject != null)
         {
             secondObject.SetActive(true);
         }
     }
-
 }
